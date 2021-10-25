@@ -1,0 +1,24 @@
+{
+  "name": "pick2021_server_node",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DSM-PICK/PICK2021_SERVER_NODE.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DSM-PICK/PICK2021_SERVER_NODE/issues"
+  },
+  "homepage": "https://github.com/DSM-PICK/PICK2021_SERVER_NODE#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mysql2": "^2.3.2",
+    "sequelize": "^6.8.0"
+  }
+}
