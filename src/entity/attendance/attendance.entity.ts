@@ -2,8 +2,8 @@ import { Column, Entity, JoinColumn, Long, PrimaryGeneratedColumn } from 'typeor
 import { Director } from '../director/director.entity';
 import { Student } from '../student/student.entity';
 
-@Entity('attendence')
-export class Attendence {
+@Entity('attendance')
+export class Attendance {
   @PrimaryGeneratedColumn()
   attendence_id: Long;
 
