@@ -1,5 +1,5 @@
 import { EntityRepository, Repository } from 'typeorm';
-import { Schedule } from './schedule.entity';
+import { Schedule } from '../entities/schedule/schedule.entity';
 
 
 @EntityRepository(Schedule)
