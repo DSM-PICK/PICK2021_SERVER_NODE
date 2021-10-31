@@ -1,26 +1,44 @@
-import { Injectable } from '@nestjs/common';
-import { CreateAttendanceDto } from './dto/create-attendance.dto';
-import { UpdateAttendanceDto } from './dto/update-attendance.dto';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Attendance } from 'src/entities/attendance/attendance.entity';
+import { Repository } from 'typeorm';
+
 
 @Injectable()
 export class AttendanceService {
-  create(createAttendanceDto: CreateAttendanceDto) {
-    return 'This action adds a new attendance';
-  }
+    constructor(
+      @InjectRepository(Attendance)
+      private attendanceRepository: Repository<Attendance>
+    ){}
+    
+    private attendance: Attendance[] = [];
 
-  findAll() {
-    return `This action returns all attendance`;
-  }
+    public getAll():Attendance[]{
+      return this.attendance;
+    }
 
-  findOne(id: number) {
-    return `This action returns a #${id} attendance`;
-  }
+    // public getOne(id: number): Attendance{
+    //   const attendance = this.attendance.find(attendance => attendance.attendence_id == Number(id));
+    //   if (!attendance){
+    //     throw new NotFoundException(`useer id ${id} not found`);
+    //   }
+    //   return attendance;
+    // }
 
-  update(id: number, updateAttendanceDto: UpdateAttendanceDto) {
-    return `This action updates a #${id} attendance`;
-  }
+    public async updateAttendance(id:number, AttendanceReqData){
+      try{
+        await this.attendanceRepository.update(id, AttendanceReqData);
+      }catch(e){
+        console.log('error');
+      }
+    }
 
-  remove(id: number) {
-    return `This action removes a #${id} attendance`;
-  }
+     public async updateState(id: number, StateReqData){
+       try{
+         await this.attendanceRepository.update(id, StateReqData);
+       }catch(e){
+         console.log('error');
+       }
+     }
+    
 }
