@@ -1,26 +1,32 @@
 import { Injectable } from '@nestjs/common';
-import { CreateLocationDto } from './dto/create-location.dto';
-import { UpdateLocationDto } from './dto/update-location.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { Location } from '../entities/location/location.entity';
 
 @Injectable()
 export class LocationService {
-  create(createLocationDto: CreateLocationDto) {
-    return 'This action adds a new location';
+
+  constructor(
+    @InjectRepository(Location) private readonly location: Repository<Location>
+  ){}
+
+  // public getLocation(){
+  //   return this.location.findAll();
+  // }
+  
+  async deleteOne(id:number): Promise<void>{
+    try{
+      await this.location.delete(id);
+    }catch(e){
+      console.log('error')
+    }
   }
 
-  findAll() {
-    return `This action returns all location`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} location`;
-  }
-
-  update(id: number, updateLocationDto: UpdateLocationDto) {
-    return `This action updates a #${id} location`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} location`;
+  async update(id: number, updateData): Promise<void>{
+    try{
+      await this.location.update(id, updateData);
+    }catch(e){
+      console.log('error');
+    }
   }
 }
