@@ -1,34 +1,27 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Body, Controller, Get, Param, Patch, Post} from '@nestjs/common';
+import { Attendance } from 'src/entities/attendance/attendance.entity';
 import { AttendanceService } from './attendance.service';
-import { CreateAttendanceDto } from './dto/create-attendance.dto';
-import { UpdateAttendanceDto } from './dto/update-attendance.dto';
+import { AttendanceReqData } from './dto/attendanceRequest.dto';
+import { AttendanceResData } from './dto/attendanceResponse.dto';
+import { StateReqData } from './dto/stateRequestData.dto';
 
 @Controller('attendance')
 export class AttendanceController {
-  constructor(private readonly attendanceService: AttendanceService) {}
+  constructor(private readonly attendanceService: AttendanceService) {
+  }
 
-  @Post()
-  create(@Body() createAttendanceDto: CreateAttendanceDto) {
-    return this.attendanceService.create(createAttendanceDto);
+  @Patch()
+  updateAttendance(@Body() attendanceId: number, AttendanceReqData: AttendanceReqData){
+    return this.attendanceService.updateState(attendanceId, AttendanceReqData);
   }
 
   @Get()
-  findAll() {
-    return this.attendanceService.findAll();
+  getAll():Attendance[]{
+    return this.attendanceService.getAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.attendanceService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateAttendanceDto: UpdateAttendanceDto) {
-    return this.attendanceService.update(+id, updateAttendanceDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.attendanceService.remove(+id);
+  @Patch('/state')
+  updateState(@Body()id, stateReqData:StateReqData){
+    return this.attendanceService.updateState(id, stateReqData );
   }
 }
