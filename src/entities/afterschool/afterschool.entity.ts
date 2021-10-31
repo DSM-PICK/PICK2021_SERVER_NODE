@@ -1,11 +1,11 @@
-import { Column, Entity, JoinColumn, Long, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, JoinColumn,PrimaryGeneratedColumn } from 'typeorm';
 import { Teacher } from '../teacher/teacher.entity';
 import { Location } from '../location/location.entity';
 
 @Entity('aftershool')
 export class AfterSchool {
   @PrimaryGeneratedColumn()
-  after_school_id: Long;
+  after_school_id: number;
 
   @Column({ length: 20 })
   name: string;

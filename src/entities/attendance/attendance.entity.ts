@@ -1,11 +1,11 @@
-import { Column, Entity, JoinColumn, Long, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, JoinColumn,PrimaryGeneratedColumn } from 'typeorm';
 import { Director } from '../director/director.entity';
 import { Student } from '../student/student.entity';
 
 @Entity('attendance')
 export class Attendance {
   @PrimaryGeneratedColumn()
-  attendence_id: Long;
+  attendence_id: number;
 
   @Column()
   period: number;

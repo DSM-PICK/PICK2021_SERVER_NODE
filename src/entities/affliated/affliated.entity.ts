@@ -5,7 +5,7 @@ import { Student } from '../student/student.entity';
 @Entity('affliatedAfterSchool')
 export class AffliatedAfterSchool {
   @PrimaryGeneratedColumn()
-  id: Long;
+  id: number;
 
   @JoinColumn({ name: 'stuent_id'})
   student: Student;

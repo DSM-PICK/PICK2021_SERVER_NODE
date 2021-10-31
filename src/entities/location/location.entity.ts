@@ -1,9 +1,9 @@
-import { Column, Entity, JoinColumn, Long, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity('location')
 export class Location {
   @PrimaryGeneratedColumn()
-  location_id: Long;
+  location_id: number;
 
   @Column()
   floor: number;
