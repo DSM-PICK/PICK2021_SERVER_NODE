@@ -1,4 +1,4 @@
-import { IsNumber, IsString } from "class-validator";
+import { IsNumber, IsString, Length } from "class-validator";
 
 export class AttendanceResData{
     @IsNumber()
@@ -11,6 +11,7 @@ export class AttendanceResData{
     period: number;
 
     @IsString()
+    @Length(20)
     state: string;
 
     @IsString()
