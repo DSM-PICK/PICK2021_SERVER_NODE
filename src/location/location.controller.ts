@@ -1,24 +1,32 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
+import { LocationReqDto } from './dto/location-req.dto';
 import { LocationService } from './location.service';
-import { UpdateLocationDto } from './dto/update-location.dto';
+import { ModifyLocationDto } from './dto/modifyLocation.dto';
 
 @Controller('location')
 export class LocationController {
   constructor(private readonly locationService: LocationService) {}
 
-  // @Get()
-  // getAll(): Promise<Location>{
-  //   return this.locationService.getAll();
-  // }
+  @Get('/list')
+  public async getlocationlist(){
+    return await this.locationService.getLocationlist();
+  }
 
-  @Delete('/:id')
-  remove(@Param('id')locationId: number){
-    return this.locationService.deleteOne(locationId);
+  @Post()
+  public async addLocation(@Body()locationReqData: LocationReqDto){
+    await this.locationService.addLocation(locationReqData);
+    return { status :201, message: 'success'};
+  }
+
+  @Delete()
+  public async deleteLocation(@Body() location_id: number){
+    await this.locationService.deleteLocation(location_id);
+    return { status: 201, message: 'success'};
   }
   
-
-  @Patch('/:id')
-  patch(@Param('id') locationId: number, @Body()updatedate: UpdateLocationDto){
-    return this.locationService.update(locationId, updatedate);
+  @Patch()
+  public async updateLocation(@Body() modifyLocationData: ModifyLocationDto){
+    await this.locationService.updateLocation(modifyLocationData);
+    return { status: 204, message: 'success'}
   }
 }
