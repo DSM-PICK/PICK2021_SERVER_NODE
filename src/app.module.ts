@@ -6,7 +6,10 @@ import { AttendanceModule } from './attendance/attendance.module';
 import { LocationModule } from './location/location.module';
 
 @Module({
-  imports: [TypeOrmConfigModule, AttendanceModule, LocationModule],
+  imports: [
+    TypeOrmConfigModule, 
+    AttendanceModule, 
+    LocationModule],
   controllers: [AppController],
   providers: [AppService],
 })
