@@ -21,7 +21,7 @@ export class LocationController {
   @Delete()
   public async deleteLocation(@Body() location_id: number){
     await this.locationService.deleteLocation(location_id);
-    return { status: 201, message: 'success'};
+    return { status: 204, message: 'success'};
   }
   
   @Patch()
