@@ -20,8 +20,7 @@ export class Attendance {
   reason: string
 
   @ManyToOne(type => Student, student => student.student_id)
-  @JoinColumn({ name: 'student_id'})
-  student: Student;
+  student_id: number;
 
   @ManyToOne(type => Director, director => director.director_id)
   director_id: number;
