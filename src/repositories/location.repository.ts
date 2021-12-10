@@ -12,11 +12,12 @@ export class LocationRepository extends Repository<Location> {
         .select('location.floor', 'floor')
         .select('location.priority','priority')
         .select('location.name', 'name')
+        .getMany()
     }
     public async checkExistLocation(location_id: number): Promise<boolean>{
         const location = await this.createQueryBuilder('location')
         .select('location.location_id', 'location_id')
-        .where('post.post_id = :location_id', {location_id: location_id})
+        .where('loacation.location_id = :location_id', {location_id: location_id})
         .getOne();
         if(location){
             return true;
