@@ -14,7 +14,7 @@ export class AfterSchool {
   day: string;
 
   @OneToOne(type => Teacher, teacher => teacher.teacher_id)
-  teacher_id: number;
+  teacher_id: string;
 
   @OneToOne(type => Location, location => location.location_id)
   location_id: number;
