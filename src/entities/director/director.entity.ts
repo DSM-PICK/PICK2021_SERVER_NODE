@@ -1,18 +1,18 @@
-import { Column, Entity, JoinColumn,PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, JoinColumn,ManyToOne,PrimaryGeneratedColumn } from 'typeorm';
 import { Schedule } from '../schedule/schedule.entity';
 import { Teacher } from '../teacher/teacher.entity';
 
 @Entity('director')
 export class Director {
   @PrimaryGeneratedColumn()
-  Director_id: number;
+  director_id: number;
 
   @Column()
   floor: number;
 
-  @JoinColumn({ name: 'schedule_id'})
-  schedule: Schedule;
+  @ManyToOne(type => Schedule, schedule => schedule.schedule_id)
+  schedule_id: number;
 
-  @JoinColumn({ name: 'teacher_id'})
-  teacher: Teacher;
+  @ManyToOne(type => Teacher, teacher => teacher.teacher_id)
+  teacher_id: number;
 }
