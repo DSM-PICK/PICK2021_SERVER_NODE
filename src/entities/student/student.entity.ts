@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, Long, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, Long, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Location } from '../location/location.entity';
 import { Major } from '../major/major.entity';
 
@@ -6,7 +6,7 @@ import { Major } from '../major/major.entity';
 @Entity('student')
 export class Student {
   @PrimaryGeneratedColumn()
-  student_id: Long;
+  student_id: number;
 
   @Column({ length: 5 })
   name: string;
@@ -20,9 +20,9 @@ export class Student {
   @Column({ length: 2 })
   year: string;
 
-  @JoinColumn({ name: 'location_id'})
-  location: Location;
-
-  @JoinColumn({ name: 'major_id'})
-  major: Major;
+  @ManyToOne(type => Location, location => location.location_id)
+  location_id: number;
+  
+  @ManyToOne(type => Major, major => major.major_id)
+  major_id: number;
 }
