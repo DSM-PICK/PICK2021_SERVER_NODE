@@ -41,8 +41,7 @@ export class LocationRepository extends Repository<Location> {
         return this.createQueryBuilder()
             .update(Location)
             .set({ floor: floor, name: name, priority: priority})
-            .where('location.location_id = :location_id, {location_id: location}')
+            .where('location.location_id = :location_id', { location_id: location})
             .execute();
-
     }
 }
