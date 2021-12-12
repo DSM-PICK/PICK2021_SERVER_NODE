@@ -1,44 +1,36 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { stat } from 'fs';
 import { Attendance } from 'src/entities/attendance/attendance.entity';
-import { Repository } from 'typeorm';
+import { notFoundAttendanceIdException } from 'src/exception/exception.attendance';
+import { AttendanceRepository } from 'src/repositories/attendance.repository';
+import { AttendanceReqData } from './dto/attendanceRequest.dto';
+import { StateReqData } from './dto/stateRequestData.dto';
 
 
 @Injectable()
 export class AttendanceService {
     constructor(
       @InjectRepository(Attendance)
-      private attendanceRepository: Repository<Attendance>
+      private attendanceRepository: AttendanceRepository
     ){}
-    
-    private attendance: Attendance[] = [];
+  
+  public async getAttendance(){
+    return await this.attendanceRepository.get();
+  }
 
-    public getAll():Attendance[]{
-      return this.attendance;
+  public async deleteAttendance(attendance_id: number){
+    if(!(await this.attendanceRepository.checkExistAttendance(attendance_id))){
+      throw notFoundAttendanceIdException;
     }
+    return await this.attendanceRepository.delete(attendance_id);
+  }
 
-    // public getOne(id: number): Attendance{
-    //   const attendance = this.attendance.find(attendance => attendance.attendence_id == Number(id));
-    //   if (!attendance){
-    //     throw new NotFoundException(`useer id ${id} not found`);
-    //   }
-    //   return attendance;
-    // }
+  public async updateAttendance(attendanceReqData: AttendanceReqData){
+    return await this.attendanceRepository.updateAttendance(attendanceReqData);
+  }
 
-    public async updateAttendance(id:number, AttendanceReqData){
-      try{
-        await this.attendanceRepository.update(id, AttendanceReqData);
-      }catch(e){
-        console.log('error');
-      }
-    }
-
-     public async updateState(id: number, StateReqData){
-       try{
-         await this.attendanceRepository.update(id, StateReqData);
-       }catch(e){
-         console.log('error');
-       }
-     }
-    
+  public async updateState(stateReqData: StateReqData){
+    return await this.attendanceRepository.updateState(stateReqData);
+  }
 }
