@@ -1,4 +1,4 @@
-name: CI
+name: build
 
 on:
   push:
@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [ 17.x ]
+        node-version: [ 17.2.0 ]
 
     steps:
       - uses: actions/checkout@v2
@@ -30,6 +30,10 @@ jobs:
         with:
           context: .
           file: ./Dockerfile
-          platforms: linux/amd64
+          platforms: linux/arm64
           push: true
+<<<<<<< HEAD:.github/workflows/CI.yml
           tags: eogus2513/node-021:latest
+=======
+          tags: eogus2513/node-2021:latest
+>>>>>>> main:.github/workflows/build.yml
