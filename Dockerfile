@@ -1,5 +1,5 @@
 FROM node:17-alpine
 COPY . .
-RUN npm ci
+RUN npm install
 RUN npm run build
 CMD ["npm", "run", "start:prod"]
