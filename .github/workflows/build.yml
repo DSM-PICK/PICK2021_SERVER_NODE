@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [ 17.x ]
+        node-version: [ 17.2.0 ]
 
     steps:
       - uses: actions/checkout@v2
@@ -36,6 +36,6 @@ jobs:
         with:
           context: .
           file: ./Dockerfile
-          platforms: linux/arm64/v8
+          platforms: linux/arm64
           push: true
           tags: eogus2513/node-2021:latest
