@@ -3,8 +3,6 @@ name: Build
 on:
   push:
     branches: [ main ]
-  pull_request:
-    branches: [ main ]
 
 
 jobs:
@@ -21,4 +19,4 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       
       - name: Publish on Docker Hub
-        run: docker buildx build --platform linux/arm64 -t eogus2513/node-2021 --push .
+        run: docker build --platform linux/arm64 -t eogus2513/node-2021 --push .
