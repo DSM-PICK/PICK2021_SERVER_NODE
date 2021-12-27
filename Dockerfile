@@ -1,5 +1,5 @@
-FROM arm64v8/node:17-alpine
+FROM node:17-alpine
 COPY . .
-RUN yarn install
-RUN yarn build
-CMD ["yarn", "run", "start:prod"]
+RUN npm install
+RUN npm run build
+CMD ["npm", "run", "start:prod"]
