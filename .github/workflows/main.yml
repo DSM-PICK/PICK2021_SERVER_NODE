@@ -17,15 +17,6 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-
-      - name: Build and Push
-        env:
-          NODE_ENV: ${{ secrets.NODE_ENV }}
-          PRODUCTION_DATABASE_HOST: ${{ secrets.DATABASE_HOST }}
-          PRODUCTION_DATABASE_PORT: ${{ secrets.DATABASE_PORT }}
-          PRODUCTION_DATABASE_USER: ${{ secrets.DATABASE_USERNAME }}
-          PRODUCTION_DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
-          PRODUCTION_DATABASE_NAME: ${{ secrets.DATABASE_DATABASE }}
           
       - name: Publish on Docker Hub
         run: docker buildx build --platform linux/arm/v8 -t jeongdaehyun/node-2021 --push .
