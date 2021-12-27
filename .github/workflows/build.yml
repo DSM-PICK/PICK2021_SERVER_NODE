@@ -32,4 +32,4 @@ jobs:
           file: ./Dockerfile
           platforms: linux/arm64
           push: true
-          tags: eogus2513/node-021:latest
+          tags: eogus2513/node-2021:latest
