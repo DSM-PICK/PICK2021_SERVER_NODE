@@ -34,14 +34,12 @@ jobs:
           key: ${{ runner.os }}-node-modules-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-modules-
-      
-      - name: Docker build
-        run: docker buildx build --platform linux/arm64 -t jeongdaehyun/node-2021:latest .
-        
-      - name: publish to Registry
-        uses: elgohr/Publish-Docker-Github-Action@3.04
+            
+      - name: Docker Hub Login
+        uses: docker/login-action@v1
         with:
-          name: node-2021
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-          registry: ${{ secrets.DOCKER_REGISTRY }}
+
+      - name: Publish on Docker Hub
+        run: docker buildx build --platform linux/arm64 -t jeongdaehyun/node-2021:latest --push .
