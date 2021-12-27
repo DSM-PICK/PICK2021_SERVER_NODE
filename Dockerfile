@@ -1,4 +1,4 @@
-FROM node:17
+FROM arm64v8/node:17-alpine
 COPY . .
 RUN npm install
 RUN npm run build
