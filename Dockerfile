@@ -1,5 +1,3 @@
 FROM node:16.13.1
-RUN npm install
-COPY . .
-RUN npm run build
+COPY ./dist /dist
 CMD ["npm", "run", "start:prod"]
