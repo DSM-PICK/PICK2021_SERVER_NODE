@@ -19,4 +19,4 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       
       - name: Publish on Docker Hub
-        run: docker buildx build --platform linux/arm64 -t eogus2513/node-2021 --push .
+        run: docker buildx build -t eogus2513/node-2021 --push .
