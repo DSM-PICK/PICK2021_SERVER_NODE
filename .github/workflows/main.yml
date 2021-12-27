@@ -14,12 +14,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       
-      - name: npm Install
-        run: num ci
-        
-      - name: build
-        run: num run build
-      
       - name: Docker Hub Login
         uses: docker/login-action@v1
         with:
