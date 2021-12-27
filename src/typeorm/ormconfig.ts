@@ -1,5 +1,5 @@
-import 'dotenv/config';
-import { ConnectionOptions } from 'typeorm';
+import "dotenv/config";
+import { ConnectionOptions } from "typeorm";
 
 interface DBConnectionOptions {
   [env: string]: ConnectionOptions;
@@ -7,7 +7,7 @@ interface DBConnectionOptions {
 
 const connectionOptions: DBConnectionOptions = {
   development: {
-    type: 'mysql',
+    type: "mysql",
     host: process.env.DEVELOPMENT_DATABASE_HOST,
     port: +process.env.DEVELOPMENT_DATABASE_PORT,
     username: process.env.DEVELOPMENT_DATABASE_USER,
@@ -15,10 +15,10 @@ const connectionOptions: DBConnectionOptions = {
     database: process.env.DEVELOPMENT_DATABASE_NAME,
     synchronize: true,
     logging: true,
-    entities: ['./dist/**/*.entity.js'],
+    entities: ["./dist/**/*.entity.js"],
   },
   production: {
-    type: 'mysql',
+    type: "mysql",
     host: process.env.PRODUCTION_DATABASE_HOST,
     port: +process.env.PRODUCTION_DATABASE_PORT,
     username: process.env.PRODUCTION_DATABASE_USER,
@@ -26,7 +26,7 @@ const connectionOptions: DBConnectionOptions = {
     database: process.env.PRODUCTION_DATABASE_NAME,
     synchronize: false,
     logging: true,
-    entities: ['./dist/**/*.entity.js'],
+    entities: ["./dist/**/*.entity.js"],
   },
 };
 
