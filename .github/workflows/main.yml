@@ -26,11 +26,6 @@ jobs:
           PRODUCTION_DATABASE_USER: ${{ secrets.DATABASE_USERNAME }}
           PRODUCTION_DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
           PRODUCTION_DATABASE_NAME: ${{ secrets.DATABASE_DATABASE }}
-
-        uses: docker/build-push-action@v2
-        with:
-          context: .
-          file: ./Dockerfile
-          platforms: linux/amd64
-          push: true
-          tags: jeongdaehyun/node-2021:latest
+          
+      - name: Publish on Docker Hub
+        run: docker buildx build --platform linux/arm/v8 -t jeongdaehyun/node-2021 --push .
