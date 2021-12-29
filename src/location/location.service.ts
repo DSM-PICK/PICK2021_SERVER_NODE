@@ -14,9 +14,9 @@ export class LocationService {
   ) {}
 
   async getLocationlist() {
-    return await this.locationRepository.getLocationlist();
+    return await this.locationRepository.find();
   }
-
+  
   async addLocation(dto: LocationReqDto) {
     return await this.locationRepository.save({
       floor: dto.floor,

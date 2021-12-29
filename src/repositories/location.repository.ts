@@ -4,20 +4,11 @@ import { Location } from '../entities/location/location.entity'
 
 @EntityRepository(Location)
 export class LocationRepository extends Repository<Location> {
-
-    public async getLocationlist(){
-        return this.createQueryBuilder('location')
-        .innerJoin('location.major_id', 'major_id')
-        .select('location.id', 'id')
-        .select('location.floor', 'floor')
-        .select('location.priority','priority')
-        .select('location.name', 'name')
-        .getMany()
-    }
+    
     public async checkExistLocation(location_id: number): Promise<boolean>{
         const location = await this.createQueryBuilder('location')
-        .select('location.location_id', 'location_id')
-        .where('loacation.location_id = :location_id', {location_id: location_id})
+        .select('location.id', 'id')
+        .where('loacation.id = :id', {location_id: location_id})
         .getOne();
         if(location){
             return true;
@@ -29,7 +20,7 @@ export class LocationRepository extends Repository<Location> {
         return this.createQueryBuilder('location')
         .delete()
         .from(Location)
-        .where('location_id = :location_id', { location_id: location_id})
+        .where('location.id = :id', { location_id: location_id})
         .execute();
     }
 
@@ -43,7 +34,7 @@ export class LocationRepository extends Repository<Location> {
         return this.createQueryBuilder()
             .update(Location)
             .set({ floor: floor, name: name, priority: priority})
-            .where('location_id = :location_id', { location_id: id})
+            .where('id = :location.id', { location_id: id})
             .execute();
     }
 }
