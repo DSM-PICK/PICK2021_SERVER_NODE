@@ -5,7 +5,7 @@ import { Student } from '../student/student.entity';
 @Entity('attendance')
 export class Attendance {
   @PrimaryGeneratedColumn()
-  attendence_id: number;
+  id: number;
 
   @Column()
   period: number;
@@ -19,10 +19,10 @@ export class Attendance {
   @Column({ length: 256 })
   reason: string
 
-  @ManyToOne(type => Student, student => student.student_id)
+  @ManyToOne(type => Student, student => student.id)
   student_id: number;
 
-  @ManyToOne(type => Director, director => director.director_id)
+  @ManyToOne(type => Director, director => director.id)
   director_id: number;
 
 }

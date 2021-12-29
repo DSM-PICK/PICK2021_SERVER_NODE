@@ -34,14 +34,16 @@ export class LocationRepository extends Repository<Location> {
     }
 
     public async updateLocation(modifyLocationData: ModifyLocationDto){
+        let id = modifyLocationData.location_id;
         let floor = modifyLocationData.floor;
         let name = modifyLocationData.name;
         let priority = modifyLocationData.priority;
+    
 
         return this.createQueryBuilder()
             .update(Location)
             .set({ floor: floor, name: name, priority: priority})
-            .where('location.location_id = :location_id', { location_id: location})
+            .where('location_id = :location_id', { location_id: id})
             .execute();
     }
 }

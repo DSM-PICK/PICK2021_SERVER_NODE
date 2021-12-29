@@ -3,7 +3,7 @@ import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 @Entity('location')
 export class Location {
   @PrimaryGeneratedColumn()
-  location_id: number;
+  id: number;
 
   @Column()
   floor: number;

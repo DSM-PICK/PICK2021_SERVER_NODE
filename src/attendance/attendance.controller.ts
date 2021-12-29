@@ -1,5 +1,4 @@
-import { Body, Controller, Delete, Get,  Param,  Patch } from '@nestjs/common';
-import { Attendance } from 'src/entities/attendance/attendance.entity';
+import { Body, Controller, Delete, Get, Patch } from '@nestjs/common';
 import { AttendanceService } from './attendance.service';
 import { AttendanceReqData } from './dto/attendanceRequest.dto';
 import { StateReqData } from './dto/stateRequestData.dto';

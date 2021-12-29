@@ -4,7 +4,7 @@ import { Location } from '../location/location.entity';
 @Entity('teacher')
 export class Teacher {
   @PrimaryGeneratedColumn()
-  teacher_id: string;
+  id: string;
 
   @Column({ length: 5 })
   name: string;
@@ -15,6 +15,6 @@ export class Teacher {
   @Column({ length: 7 })
   role: string;
 
-  @OneToOne(type => Location, location => location.location_id)
+  @OneToOne(type => Location, location => location.id)
   location_id: number;
 }

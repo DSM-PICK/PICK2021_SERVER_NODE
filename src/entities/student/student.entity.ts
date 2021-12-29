@@ -6,7 +6,7 @@ import { Major } from '../major/major.entity';
 @Entity('student')
 export class Student {
   @PrimaryGeneratedColumn()
-  student_id: number;
+  id: number;
 
   @Column({ length: 5 })
   name: string;
@@ -20,9 +20,9 @@ export class Student {
   @Column({ length: 2 })
   year: string;
 
-  @ManyToOne(type => Location, location => location.location_id)
+  @ManyToOne(type => Location, location => location.id)
   location_id: number;
   
-  @ManyToOne(type => Major, major => major.major_id)
+  @ManyToOne(type => Major, major => major.id)
   major_id: number;
 }

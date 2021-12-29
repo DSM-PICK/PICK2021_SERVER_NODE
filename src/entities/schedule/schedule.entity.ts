@@ -3,7 +3,7 @@ import { Column, Entity, Long, PrimaryGeneratedColumn } from 'typeorm';
 @Entity('schedule')
 export class Schedule {
   @PrimaryGeneratedColumn()
-  schedule_id: number;
+  id: number;
 
   @Column({ length: 20 })
   name: string;
@@ -12,7 +12,7 @@ export class Schedule {
   month: number;
 
   @Column()
-  date: Date;
+  term: string;
 
   @Column()
   period: number;

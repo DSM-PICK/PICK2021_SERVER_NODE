@@ -6,10 +6,10 @@ import { Student } from '../student/student.entity';
 export class AffliatedAfterSchool {
   @PrimaryGeneratedColumn()
   id: number;
-
-  @ManyToOne(type => Student, student => student.student_id)
+ 
+  @ManyToOne(type => Student, student => student.id)
   student_id: number;
 
-  @ManyToOne(type => AfterSchool, afterschool => afterschool.after_school_id)
+  @ManyToOne(type => AfterSchool, afterschool => afterschool.id)
   after_school_id: number;
 }

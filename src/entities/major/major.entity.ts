@@ -6,19 +6,19 @@ import { Location } from '../location/location.entity';
 @Entity('major')
 export class Major {
   @PrimaryGeneratedColumn()
-  major_id: number;
+  id: number;
 
   @Column({ length: 20 })
   name: string;
 
-  @OneToOne(type => Student, student=> student.student_id)
+  @OneToOne(type => Student, student=> student.id)
   @JoinColumn({ name: 'head_id'})
   head_id: Student;
 
-  @OneToOne(type => Teacher, teacher => teacher.teacher_id)
+  @OneToOne(type => Teacher, teacher => teacher.id)
   teacher_id: string;
   
-  @OneToOne(type => Location, location => location.location_id)
+  @OneToOne(type => Location, location => location.id)
   location_id: number;
 
 
