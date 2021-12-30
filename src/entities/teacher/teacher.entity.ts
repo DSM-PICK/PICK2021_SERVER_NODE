@@ -15,10 +15,6 @@ export class Teacher {
   @Column({ length: 7 })
   role: string;
 
-  @OneToOne( () => Location, (location) => location.id,{
-    onUpdate:'CASCADE',
-    onDelete: 'CASCADE'
-  })
-  @JoinColumn({name: 'location_id'})
-  location: Location
+  @OneToOne(type => Location, location => location.id)
+  location_id: number;
 }

@@ -20,17 +20,9 @@ export class Student {
   @Column({ length: 2 })
   year: string;
 
-  @ManyToOne(()=> Location, (location) => location.id,{
-    onUpdate: 'CASCADE',
-    onDelete: 'CASCADE'
-  })
-  @JoinColumn({ name: 'location_id'})
-  location: Location
+  @ManyToOne(type => Location, location => location.id)
+  location_id: number;
   
-  @ManyToOne(() => Major, (major) => major.id,{
-    onUpdate: 'CASCADE',
-    onDelete:'CASCADE'
-  })
-  @JoinColumn({ name: 'major_id'})
-  major: Major
+  @ManyToOne(type => Major, major => major.id)
+  major_id: number;
 }
