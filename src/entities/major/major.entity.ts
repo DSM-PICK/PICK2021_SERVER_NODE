@@ -11,12 +11,19 @@ export class Major {
   @Column({ length: 20 })
   name: string;
 
-  @OneToOne(type => Student, student=> student.id)
+  @OneToOne( () => Student, (student) => student.id, {
+    onUpdate: 'CASCADE',
+    onDelete: 'CASCADE'
+  })
   @JoinColumn({ name: 'head_id'})
-  head_id: Student;
+  student: Student;
 
-  @OneToOne(type => Teacher, teacher => teacher.id)
-  teacher_id: string;
+  @OneToOne(() => Teacher, (teacher) => teacher.id,{
+    onUpdate: 'CASCADE',
+    onDelete: 'CASCADE'
+  })
+  @JoinColumn({ name: 'teacher_id'})
+  teacher: Teacher;
   
   @OneToOne(type => Location, location => location.id)
   location_id: number;

@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { Director } from '../director/director.entity';
 import { Student } from '../student/student.entity';
 
@@ -19,10 +19,18 @@ export class Attendance {
   @Column({ length: 256 })
   reason: string
 
-  @ManyToOne(type => Student, student => student.id)
-  student_id: number;
+  @ManyToOne(() => Student, (student) => student.id,{
+    onUpdate:'CASCADE',
+    onDelete:'CASCADE'
+  })
+  @JoinColumn({ name: 'student_id'})
+  student: Student;
 
-  @ManyToOne(type => Director, director => director.id)
-  director_id: number;
+  @ManyToOne(() => Director, (director) => director.id,{
+    onUpdate: 'CASCADE',
+    onDelete:'CASCADE'
+  })
+  @JoinColumn({ name: 'director_id'})
+  director: Director;
 
 }
