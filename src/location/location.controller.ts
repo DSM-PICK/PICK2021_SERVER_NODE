@@ -24,7 +24,7 @@ export class LocationController {
     return { status: 204, message: 'success'};
   }
   
-  @Patch()
+  @Patch('/:id')
   public async updateLocation(@Body() modifyLocationData: ModifyLocationDto){
     await this.locationService.updateLocation(modifyLocationData);
     return { status: 204, message: 'success'}
