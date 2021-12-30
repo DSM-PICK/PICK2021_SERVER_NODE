@@ -1,6 +1,7 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Major } from '../major/major.entity';
 
-@Entity('location')
+@Entity('tbl_location')
 export class Location {
   @PrimaryGeneratedColumn()
   id: number;

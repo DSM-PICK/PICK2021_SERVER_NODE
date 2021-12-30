@@ -1,7 +1,7 @@
 import { Column, Entity, JoinColumn, Long, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { Location } from '../location/location.entity';
 
-@Entity('teacher')
+@Entity('tbl_teacher')
 export class Teacher {
   @PrimaryGeneratedColumn()
   id: string;

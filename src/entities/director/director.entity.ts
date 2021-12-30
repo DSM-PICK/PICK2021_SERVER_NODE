@@ -2,7 +2,7 @@ import { Column, Entity, JoinColumn, ManyToOne,PrimaryGeneratedColumn } from 'ty
 import { Schedule } from '../schedule/schedule.entity';
 import { Teacher } from '../teacher/teacher.entity';
 
-@Entity('director')
+@Entity('tbl_director')
 export class Director {
   @PrimaryGeneratedColumn()
   id: number;

@@ -1,6 +1,6 @@
 import { Column, Entity, Long, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity('schedule')
+@Entity('tbl_schedule')
 export class Schedule {
   @PrimaryGeneratedColumn()
   id: number;

@@ -3,7 +3,7 @@ import { Location } from '../location/location.entity';
 import { Major } from '../major/major.entity';
 
 
-@Entity('student')
+@Entity('tbl_student')
 export class Student {
   @PrimaryGeneratedColumn()
   id: number;

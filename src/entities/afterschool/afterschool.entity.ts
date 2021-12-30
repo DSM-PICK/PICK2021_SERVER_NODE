@@ -3,7 +3,7 @@ import { Teacher } from '../teacher/teacher.entity';
 import { Location } from '../location/location.entity';
 import { Student } from '../student/student.entity';
 
-@Entity('aftershool')
+@Entity('tbl_after_school')
 export class AfterSchool {
   @PrimaryGeneratedColumn()
   id: number;
