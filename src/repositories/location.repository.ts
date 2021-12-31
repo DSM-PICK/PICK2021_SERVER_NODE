@@ -39,13 +39,13 @@ export class LocationRepository extends Repository<Location> {
             .execute();
     }
 
-    public async getFloorLocation(floor: number): Promise<floorResData> {
+    public async getFloorLocation(floor: number){
         return this.createQueryBuilder('location')
             .select('tbl_location.id', 'location_id')
             .addSelect('tbl_location.name', 'name')
             .innerJoin('tbl_major.id', 'major_id')
             .where('location.floor = :floor', { floor: floor })
-            .getMany() as unknown as floorResData;
+            .getMany();
         }
       
 }

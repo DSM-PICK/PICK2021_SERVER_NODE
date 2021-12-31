@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { notFoundLocationIdException } from 'src/exception/exception.location';
 import { Location } from '../entities/location/location.entity';
 import { LocationRepository } from '../repositories/location.repository';
+import { floorResData } from './dto/floorResData.dto';
 import { LocationReqDto } from './dto/location-req.dto';
 import { ModifyLocationDto } from './dto/modifyLocation.dto';
 
@@ -36,7 +37,7 @@ export class LocationService {
     return await this.locationRepository.updateLocation(modifyLocationData);
   }
 
-  async getFloorLocation(floor: number){
+  public async getFloorLocation(floor: number) {
     return await this.locationRepository.getFloorLocation(floor);
   }
 }
