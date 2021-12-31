@@ -37,6 +37,6 @@ export class LocationService {
   }
 
   public async getFloorLocation(floor: number) {
-    return await this.locationRepository.find()
+    return await this.locationRepository.findOne(floor);
   }
 }

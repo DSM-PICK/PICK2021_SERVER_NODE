@@ -1,4 +1,3 @@
-import { AttendanceReqData } from 'src/attendance/dto/attendanceRequest.dto';
 import { StateReqData } from 'src/attendance/dto/stateRequestData.dto';
 import { EntityRepository, Repository } from 'typeorm';
 import { Attendance } from '../entities/attendance/attendance.entity';
@@ -15,16 +14,6 @@ export class AttendanceRepository extends Repository<Attendance> {
             return true;
         }
         return false;
-    }
-    public async get(){
-        return this.createQueryBuilder('tbl_attendance')
-        .innerJoinAndSelect('tbl_attedance.student_id', 'student_id')
-        .innerJoinAndSelect('tbl_attendance.director_id', 'director_id')
-        .addSelect('tbl_attendance.period','period')
-        .addSelect('tbl_attendance.state', 'state')
-        .addSelect('tbl_attendance.memo', 'memo')
-        .addSelect('tbl_attendance.reason', 'reason')
-        .getMany()
     }
 
     public async updateState(stateReqData: StateReqData){
