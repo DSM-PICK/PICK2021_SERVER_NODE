@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete} from '@nestjs/common';
 import { LocationReqDto } from './dto/location-req.dto';
 import { LocationService } from './location.service';
 import { ModifyLocationDto } from './dto/modifyLocation.dto';
@@ -30,7 +30,7 @@ export class LocationController {
     return { status: 204, message: 'success'}
   }
 
-  @Get('/:floor')
+  @Get('/floor')
   public async getFloorLocation(@Param('floor') floor: number) {
     return this.locationService.getFloorLocation(floor);
   }

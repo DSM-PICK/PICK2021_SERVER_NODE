@@ -42,7 +42,7 @@ export class LocationRepository extends Repository<Location> {
         return this.createQueryBuilder('tbl_location')
             .select('tbl_location.id', 'id')
             .addSelect('tbl_location.name', 'name')
-            // .innerJoin('tbl_major.id', 'major_id')
+            .innerJoin('tbl_major.id', 'major_id')
             .where('tbl_location.floor = :floor', { floor: floor })
             .getOne()
         }
