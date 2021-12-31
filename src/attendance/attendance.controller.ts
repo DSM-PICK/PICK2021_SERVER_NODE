@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Patch } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Patch, Post } from '@nestjs/common';
 import { AttendanceService } from './attendance.service';
 import { AttendanceReqData } from './dto/attendanceRequest.dto';
 import { StateReqData } from './dto/stateRequestData.dto';
@@ -19,10 +19,10 @@ export class AttendanceController {
     return { status: 204, message: 'success'};
   }
 
-  @Patch()
-  public async updateAttendance(@Body() attendanceReqData: AttendanceReqData){
-    await this.attendanceService.updateAttendance(attendanceReqData);
-    return { status: 204, message: 'success'}
+  @Post()
+  public async postAttendance(@Body() attendanceReqData: AttendanceReqData){
+    await this.attendanceService.postAttendance(attendanceReqData);
+    return { status: 201, message: 'success'}
   }
   
   @Patch('/state')

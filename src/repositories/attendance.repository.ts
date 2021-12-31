@@ -8,8 +8,8 @@ export class AttendanceRepository extends Repository<Attendance> {
 
     public async checkExistAttendance(attendance_id: number): Promise<boolean>{
         const attendance = await this.createQueryBuilder('attendance')
-        .select('attendance.attendance_id', 'attendance_id')
-        .where('attendance.attendance_id = :attendance_id', {attendance_id: attendance_id})
+        .select('tbl_attendance.id', 'attendance_id')
+        .where('tblattendance.id = :attendance_id', {attendance_id: attendance_id})
         .getOne();
         if(attendance){
             return true;
@@ -18,12 +18,12 @@ export class AttendanceRepository extends Repository<Attendance> {
     }
     public async get(){
         return this.createQueryBuilder('attendance')
-        .innerJoinAndSelect('attedance.student_id', 'student_id')
-        .innerJoinAndSelect('attendance.director_id', 'director_id')
-        .addSelect('attendance.period','period')
-        .addSelect('attendance.state', 'state')
-        .addSelect('attendance.memo', 'memo')
-        .addSelect('attendance.reason', 'reason')
+        .innerJoinAndSelect('tbl_attedance.student_id', 'student_id')
+        .innerJoinAndSelect('tbl_attendance.director_id', 'director_id')
+        .addSelect('tbl_attendance.period','period')
+        .addSelect('tbl_attendance.state', 'state')
+        .addSelect('tbl_attendance.memo', 'memo')
+        .addSelect('tbl_attendance.reason', 'reason')
         .getMany()
     }
 
@@ -34,17 +34,6 @@ export class AttendanceRepository extends Repository<Attendance> {
         .update(Attendance)
         .set({ state: state })
         .execute();
-    }
-
-    public async updateAttendance(attendanceReqData: AttendanceReqData){
-        let state = attendanceReqData.state;
-        let memo = attendanceReqData.memo;
-        let reason = attendanceReqData.reason;
-
-        return this.createQueryBuilder()
-            .update(Attendance)
-            .set({ state: state, memo: memo, reason: reason})
-            .execute();
     }
 
 }

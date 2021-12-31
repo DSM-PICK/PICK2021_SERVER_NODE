@@ -1,4 +1,4 @@
-import { IsString, Length } from "class-validator";
+import { IsNumber, IsString, Length } from "class-validator";
 
 export class AttendanceReqData{
     @IsString()
@@ -6,8 +6,12 @@ export class AttendanceReqData{
     state: string;
 
     @IsString()
-    memo: string;
+    @Length(35)
+    term: string;
 
     @IsString()
     reason: string;
+
+    @IsNumber()
+    student_id: number;
 }

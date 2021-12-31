@@ -14,7 +14,10 @@ export class Attendance {
   state: string;
 
   @Column({ length: 256 })
-  memo: string
+  memo: string;
+
+  @Column({ length: 35 })
+  term: string;
 
   @Column({ length: 256 })
   reason: string

@@ -15,7 +15,7 @@ export class AttendanceService {
     ){}
   
   public async getAttendance(){
-    return await this.attendanceRepository.find();
+    return await this.attendanceRepository.get();
   }
 
   public async deleteAttendance(attendance_id: number){
@@ -25,8 +25,13 @@ export class AttendanceService {
     return await this.attendanceRepository.delete(attendance_id);
   }
 
-  public async updateAttendance(attendanceReqData: AttendanceReqData){
-    return await this.attendanceRepository.updateAttendance(attendanceReqData);
+  public async postAttendance(attendanceReqData: AttendanceReqData) {
+    return await this.attendanceRepository.save({
+      state: attendanceReqData.state,
+      term : attendanceReqData.term,
+      reason: attendanceReqData.reason,
+      student_id: attendanceReqData.student_id
+    });
   }
 
   public async updateState(stateReqData: StateReqData){
