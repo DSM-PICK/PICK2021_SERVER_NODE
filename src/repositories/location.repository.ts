@@ -1,3 +1,4 @@
+import { floorResData } from 'src/location/dto/floorResData.dto';
 import { ModifyLocationDto } from 'src/location/dto/modifyLocation.dto';
 import { EntityRepository, Repository } from 'typeorm';
 import { Location } from '../entities/location/location.entity'
@@ -5,10 +6,10 @@ import { Location } from '../entities/location/location.entity'
 @EntityRepository(Location)
 export class LocationRepository extends Repository<Location> {
     
-    public async checkExistLocation(location_id: number): Promise<boolean>{
+    public async checkExistLocation(id: number): Promise<boolean>{
         const location = await this.createQueryBuilder('location')
         .select('location.id', 'id')
-        .where('loacation.id = :id', {location_id: location_id})
+        .where('loacation.id = :id', {location_id: id})
         .getOne();
         if(location){
             return true;
@@ -37,4 +38,14 @@ export class LocationRepository extends Repository<Location> {
             .where('tbl_location.id = : tbl_location.id', { tbl_location_id: id})
             .execute();
     }
+
+    public async getFloorLocation(floor: number): Promise<floorResData> {
+        return this.createQueryBuilder('location')
+            .select('tbl_location.id', 'location_id')
+            .addSelect('tbl_location.name', 'name')
+            .innerJoin('tbl_major.id', 'major_id')
+            .where('location.floor = :floor', { floor: floor })
+            .getMany() as unknown as floorResData;
+        }
+      
 }

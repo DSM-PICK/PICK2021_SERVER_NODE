@@ -2,6 +2,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestj
 import { LocationReqDto } from './dto/location-req.dto';
 import { LocationService } from './location.service';
 import { ModifyLocationDto } from './dto/modifyLocation.dto';
+import { floorResData } from './dto/floorResData.dto';
 
 @Controller('location')
 export class LocationController {
@@ -25,8 +26,14 @@ export class LocationController {
   }
   
   @Patch('/:id')
-  public async updateLocation(@Body() modifyLocationData: ModifyLocationDto){
+  public async updateLocation(@Param('id') @Body() modifyLocationData: ModifyLocationDto){
     await this.locationService.updateLocation(modifyLocationData);
     return { status: 204, message: 'success'}
+  }
+
+  @Get('/:floor')
+  public async getFloorLocation(
+    @Param('floor') floor: number,): Promise<floorResData> {
+    return await this.locationService.getFloorLocation(floor);
   }
 }

@@ -35,4 +35,8 @@ export class LocationService {
   async updateLocation(modifyLocationData: ModifyLocationDto) {
     return await this.locationRepository.updateLocation(modifyLocationData);
   }
+
+  async getFloorLocation(floor: number){
+    return await this.locationRepository.getFloorLocation(floor);
+  }
 }
