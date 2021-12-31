@@ -7,7 +7,7 @@ import { Attendance } from '../entities/attendance/attendance.entity';
 export class AttendanceRepository extends Repository<Attendance> {
 
     public async checkExistAttendance(attendance_id: number): Promise<boolean>{
-        const attendance = await this.createQueryBuilder('attendance')
+        const attendance = await this.createQueryBuilder('tbl_attendance')
         .select('tbl_attendance.id', 'attendance_id')
         .where('tblattendance.id = :attendance_id', {attendance_id: attendance_id})
         .getOne();
@@ -17,7 +17,7 @@ export class AttendanceRepository extends Repository<Attendance> {
         return false;
     }
     public async get(){
-        return this.createQueryBuilder('attendance')
+        return this.createQueryBuilder('tbl_attendance')
         .innerJoinAndSelect('tbl_attedance.student_id', 'student_id')
         .innerJoinAndSelect('tbl_attendance.director_id', 'director_id')
         .addSelect('tbl_attendance.period','period')

@@ -7,9 +7,9 @@ import { Location } from '../entities/location/location.entity'
 export class LocationRepository extends Repository<Location> {
     
     public async checkExistLocation(id: number): Promise<boolean>{
-        const location = await this.createQueryBuilder('location')
-        .select('location.id', 'id')
-        .where('loacation.id = :id', {location_id: id})
+        const location = await this.createQueryBuilder('tbl_location')
+        .select('tbl_location.id', 'id')
+        .where('tbl_loacation.id = :id', {location_id: id})
         .getOne();
         if(location){
             return true;
@@ -18,10 +18,10 @@ export class LocationRepository extends Repository<Location> {
     }
 
     public async deleteLocation(location_id:number){
-        return this.createQueryBuilder('location')
+        return this.createQueryBuilder('tbl_location')
         .delete()
         .from(Location)
-        .where('location.id = :id', { location_id: location_id})
+        .where('tbl_location.id = :id', { location_id: location_id})
         .execute();
     }
 
@@ -40,11 +40,11 @@ export class LocationRepository extends Repository<Location> {
     }
 
     public async getFloorLocation(floor: number){
-        return this.createQueryBuilder('location')
-            .select('tbl_location.id', 'location_id')
+        return this.createQueryBuilder('tbl_location')
+            .select('tbl_location.id', 'id')
             .addSelect('tbl_location.name', 'name')
             .innerJoin('tbl_major.id', 'major_id')
-            .where('location.floor = :floor', { floor: floor })
+            .where('tbl_location.floor = :floor', { floor: floor })
             .getMany();
         }
       
