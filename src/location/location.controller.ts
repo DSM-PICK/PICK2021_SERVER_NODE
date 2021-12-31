@@ -33,7 +33,7 @@ export class LocationController {
 
   @Get('/:floor')
   public async getFloorLocation(
-    @Param('floor') floor: number,): Promise<floorResData> {
+    @Param('floor') floor: number ): Promise<floorResData> {
     return await this.locationService.getFloorLocation(floor);
   }
 }
