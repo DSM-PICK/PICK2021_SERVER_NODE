@@ -30,7 +30,7 @@ export class LocationController {
     return { status: 204, message: 'success'}
   }
 
-  @Get('/floor')
+  @Get('/:floor')
   public async getFloorLocation(@Param('floor') floor: number) {
     return this.locationService.getFloorLocation(floor);
   }
