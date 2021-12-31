@@ -2,7 +2,6 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestj
 import { LocationReqDto } from './dto/location-req.dto';
 import { LocationService } from './location.service';
 import { ModifyLocationDto } from './dto/modifyLocation.dto';
-import { floorResData } from './dto/floorResData.dto';
 
 @Controller('location')
 export class LocationController {
@@ -32,7 +31,7 @@ export class LocationController {
   }
 
   @Get('/:floor')
-  public async userInfo(@Param('floor') floor: number) {
+  public async getFloorLocation(@Param('floor') floor: number) {
     return this.locationService.getFloorLocation(floor);
   }
 }
