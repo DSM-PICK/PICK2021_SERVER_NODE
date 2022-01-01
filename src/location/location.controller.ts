@@ -25,8 +25,8 @@ export class LocationController {
   }
   
   @Patch('/:id')
-  public async updateLocation(@Param('id') @Body() modifyLocationData: ModifyLocationDto){
-    await this.locationService.updateLocation(modifyLocationData);
+  public async updateLocation(@Param('id') location_id: number, @Body() modifyLocationData: ModifyLocationDto){
+    await this.locationService.updateLocation(location_id, modifyLocationData);
     return { status: 204, message: 'success'}
   }
 

@@ -32,9 +32,12 @@ export class LocationService {
     return await this.locationRepository.deleteLocation(location_id);
   }
 
-  async updateLocation(modifyLocationData: ModifyLocationDto) {
-    return await this.locationRepository.updateLocation(modifyLocationData);
-  }
+  async updateLocation(location_id: number, modifyLocationData: ModifyLocationDto) {
+    if (!(await this.locationRepository.checkExistLocation(location_id))) {
+      throw notFoundLocationIdException;
+    }
+    return await this.locationRepository.updateLocation(location_id, modifyLocationData);
+    }
 
   public async getFloorLocation(floor: number) {
     return await this.locationRepository.findOne(floor);

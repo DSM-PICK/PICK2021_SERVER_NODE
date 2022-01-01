@@ -24,8 +24,7 @@ export class LocationRepository extends Repository<Location> {
         .execute();
     }
 
-    public async updateLocation(modifyLocationData: ModifyLocationDto){
-        let id = modifyLocationData.location_id;
+    public async updateLocation(id: number, modifyLocationData: ModifyLocationDto){
         let floor = modifyLocationData.floor;
         let name = modifyLocationData.name;
         let priority = modifyLocationData.priority;
