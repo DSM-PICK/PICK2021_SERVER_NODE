@@ -7,7 +7,7 @@ import { Attendance } from 'src/entities/attendance/attendance.entity';
 
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Attendance])],
+  imports: [TypeOrmModule.forFeature([AttendanceRepository])],
   controllers: [AttendanceController],
   providers: [AttendanceService]
 })

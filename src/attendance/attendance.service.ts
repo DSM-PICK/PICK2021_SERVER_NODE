@@ -9,7 +9,6 @@ import { StateReqData } from './dto/stateRequestData.dto';
 @Injectable()
 export class AttendanceService {
   constructor(
-    @InjectRepository(Attendance)
     private attendanceRepository: AttendanceRepository){}
   
   public async getAttendance(){
