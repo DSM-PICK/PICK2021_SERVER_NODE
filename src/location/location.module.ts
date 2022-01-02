@@ -6,7 +6,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Location } from 'src/entities/location/location.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Location, LocationRepository])],
+  imports: [TypeOrmModule.forFeature([LocationRepository])],
   providers: [LocationService],
   controllers: [LocationController]
 })
