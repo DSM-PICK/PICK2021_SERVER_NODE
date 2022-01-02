@@ -10,7 +10,7 @@ import { StateReqData } from './dto/stateRequestData.dto';
 @Injectable()
 export class AttendanceService {
   
-  private readonly attendanceRepository: AttendanceRepository;
+  public readonly attendanceRepository: AttendanceRepository;
   
   public async getAttendance(){
     return await this.attendanceRepository.getAttendance();
