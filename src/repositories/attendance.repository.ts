@@ -1,4 +1,6 @@
+
 import { StateReqData } from 'src/attendance/dto/stateRequestData.dto';
+import { Student } from 'src/entities/student/student.entity';
 import { EntityRepository, Repository } from 'typeorm';
 import { Attendance } from '../entities/attendance/attendance.entity';
 
@@ -23,6 +25,19 @@ export class AttendanceRepository extends Repository<Attendance> {
         .update(Attendance)
         .set({ state: state })
         .execute();
+    }
+
+    public async getAttendance(){
+        return this.createQueryBuilder('tbl_attendance')
+        .select('tbl_student.gcn', 'gcn')
+        .addSelect('tbl_student.name', 'name')
+        .addSelect('tbl_director.id', 'director_id')
+        .addSelect('tbl_attendance.term', 'term')
+        .addSelect('tbl_attendance.period', 'period')
+        .addSelect('tbl_attendance.state', 'state')
+        .addSelect('tbl_attendance.memo', 'memo')
+        .addSelect('tbl_attendance.reason', 'reason')
+        .getMany()
     }
 
 }
