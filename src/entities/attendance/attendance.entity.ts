@@ -8,7 +8,7 @@ export class Attendance {
   id: number;
 
   @Column()
-  period: number;
+  period: string;
 
   @Column({ length: 10 })
   state: string;
