@@ -38,6 +38,6 @@ export class LocationService {
     }
 
   public async getFloorLocation(floor: number) {
-    return await this.locationRepository.findOne(floor)
+    return await this.locationRepository.getFloorLocation(floor)
   }
 }
