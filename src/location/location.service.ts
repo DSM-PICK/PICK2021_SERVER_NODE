@@ -4,12 +4,11 @@ import { notFoundLocationIdException } from 'src/exception/exception.location';
 import { LocationRepository } from '../repositories/location.repository';
 import { LocationReqDto } from './dto/location-req.dto';
 import { ModifyLocationDto } from './dto/modifyLocation.dto';
+import { Location } from 'src/entities/location/location.entity';
 
 @Injectable()
 export class LocationService {
-  constructor(
-    @InjectRepository(Location)
-      private readonly locationRepository: LocationRepository) {}
+    constructor(private locationRepository: LocationRepository) {}
 
   async getLocationlist() {
     return await this.locationRepository.find();
