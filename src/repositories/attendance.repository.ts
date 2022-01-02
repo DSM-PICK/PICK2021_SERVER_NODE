@@ -1,6 +1,5 @@
 
 import { StateReqData } from 'src/attendance/dto/stateRequestData.dto';
-import { Student } from 'src/entities/student/student.entity';
 import { EntityRepository, Repository } from 'typeorm';
 import { Attendance } from '../entities/attendance/attendance.entity';
 
