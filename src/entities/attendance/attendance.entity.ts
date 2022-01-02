@@ -7,8 +7,8 @@ export class Attendance {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ length: 20})
-  period: string;
+  @Column()
+  period: number;
 
   @Column({ length: 10 })
   state: string;

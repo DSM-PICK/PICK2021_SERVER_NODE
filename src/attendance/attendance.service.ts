@@ -29,7 +29,6 @@ export class AttendanceService {
       term : attendanceReqData.term,
       reason: attendanceReqData.reason,
       student_id: attendanceReqData.student_id,
-      period: attendanceReqData.period
     });
   }
 
