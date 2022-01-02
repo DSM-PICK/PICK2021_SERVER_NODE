@@ -6,7 +6,7 @@ import { ModifyLocationDto } from './dto/modifyLocation.dto';
 
 @Injectable()
 export class LocationService {
-  public readonly locationRepository: LocationRepository;
+  constructor(private locationRepository: LocationRepository) {}
 
   async getLocationlist() {
     return await this.locationRepository.find();

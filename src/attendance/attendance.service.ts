@@ -1,16 +1,12 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Attendance } from 'src/entities/attendance/attendance.entity';
+import { Injectable } from '@nestjs/common';
 import { notFoundAttendanceIdException } from 'src/exception/exception.attendance';
 import { AttendanceRepository } from 'src/repositories/attendance.repository';
 import { AttendanceReqData } from './dto/attendanceRequest.dto';
 import { StateReqData } from './dto/stateRequestData.dto';
 
-
 @Injectable()
 export class AttendanceService {
-  
-  public readonly attendanceRepository: AttendanceRepository;
+  constructor(private attendanceRepository: AttendanceRepository) {}
   
   public async getAttendance(){
     return await this.attendanceRepository.getAttendance();
