@@ -8,7 +8,8 @@ import { Location } from 'src/entities/location/location.entity';
 
 @Injectable()
 export class LocationService {
-    constructor(private locationRepository: LocationRepository) {}
+    constructor(
+      private locationRepository: LocationRepository) {}
 
   async getLocationlist() {
     return await this.locationRepository.find();
