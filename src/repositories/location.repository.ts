@@ -30,7 +30,7 @@ export class LocationRepository extends Repository<Location> {
         let priority = modifyLocationData.priority;
     
 
-        return this.createQueryBuilder('tbl_location')
+        return this.createQueryBuilder('tbl_location') 
             .update(Location)
             .set({ floor: floor, name: name, priority: priority})
             .where('tbl_location.id = : tbl_location.id', { tbl_location_id: id})
