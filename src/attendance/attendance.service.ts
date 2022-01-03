@@ -25,7 +25,6 @@ export class AttendanceService {
 
   public async postAttendance(attendanceReqData: AttendanceReqData) {
     return await this.attendanceRepository.save([{
-
       state: attendanceReqData.state,
       term : attendanceReqData.term,
       reason: attendanceReqData.reason,

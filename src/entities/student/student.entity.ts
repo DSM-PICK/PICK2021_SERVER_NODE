@@ -1,4 +1,5 @@
 import { Column, Entity, JoinColumn, Long, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Attendance } from '../attendance/attendance.entity';
 import { Location } from '../location/location.entity';
 import { Major } from '../major/major.entity';
 
@@ -33,4 +34,11 @@ export class Student {
   })
   @JoinColumn({ name: 'major_id'})
   major: Major
+
+  @OneToMany(() => Attendance, (attendance) => attendance.student,{
+    onUpdate:'CASCADE',
+    onDelete:'CASCADE'
+  })
+  @JoinColumn({ name: 'attendance_id'})
+    attendance: Attendance;
 }

@@ -22,14 +22,14 @@ export class Attendance {
   @Column({ length: 256 })
   reason: string
 
-  @ManyToOne(() => Student, (student) => student.id,{
+  @ManyToOne(() => Student, (student) => student.attendance,{
     onUpdate:'CASCADE',
     onDelete:'CASCADE'
   })
   @JoinColumn({ name: 'student_id'})
   student: Student
 
-  @ManyToOne(() => Director, (director) => director.id,{
+  @ManyToOne(() => Director, (director) => director.attendance, {
     onUpdate: 'CASCADE',
     onDelete: 'CASCADE'
   })
