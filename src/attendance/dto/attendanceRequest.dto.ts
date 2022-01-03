@@ -12,4 +12,7 @@ export class AttendanceReqData{
 
     @IsNumber()
     student_id: number;
+
+    @IsNumber()
+    teacher_id: number;
 }

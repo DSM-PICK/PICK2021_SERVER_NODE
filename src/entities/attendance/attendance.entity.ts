@@ -1,6 +1,7 @@
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { Director } from '../director/director.entity';
 import { Student } from '../student/student.entity';
+import { Teacher } from '../teacher/teacher.entity';
 
 @Entity('tbl_attendance')
 export class Attendance {
@@ -33,6 +34,13 @@ export class Attendance {
     onUpdate:'CASCADE',
     onDelete:'CASCADE'
   })
-  @JoinColumn({ name: 'student_id'})
+  @JoinColumn({ name: 'director_id'})
   director: Director
+
+  @ManyToOne(() => Teacher, (teacher) => teacher.attendance,{
+    onUpdate:'CASCADE',
+    onDelete:'CASCADE'
+  })
+  @JoinColumn({ name: 'teacher_id'})
+  teacher: Teacher
 }
