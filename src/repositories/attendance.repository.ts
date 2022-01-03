@@ -29,7 +29,7 @@ export class AttendanceRepository extends Repository<Attendance> {
     //학번, 학생이름, 확인교사, 상태, 이유, 기간
     public async getAttendance(){
         return this.createQueryBuilder('tbl_attendance')
-        .addSelect('tbl_attendance.term') 
+        .select('tbl_attendance.term') 
         .addSelect('tbl_attendance.state')
         .addSelect('tbl_attendance.reason')
         .getMany()
