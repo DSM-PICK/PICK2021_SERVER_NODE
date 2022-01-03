@@ -12,7 +12,7 @@ export class AttendanceService {
     private attendanceRepository: AttendanceRepository){}
   
   public async getAttendance(){
-    return await this.attendanceRepository.find();
+    return await this.attendanceRepository.getAttendance();
   }
 
   public async deleteAttendance(attendance_id: number){

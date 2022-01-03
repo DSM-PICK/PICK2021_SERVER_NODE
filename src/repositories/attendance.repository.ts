@@ -32,9 +32,7 @@ export class AttendanceRepository extends Repository<Attendance> {
         .addSelect('tbl_student.name', 'name')
         .addSelect('tbl_director.id', 'director_id')
         .addSelect('tbl_attendance.term', 'term')
-        .addSelect('tbl_attendance.period', 'period')
         .addSelect('tbl_attendance.state', 'state')
-        .addSelect('tbl_attendance.memo', 'memo')
         .addSelect('tbl_attendance.reason', 'reason')
         .getMany()
     }
