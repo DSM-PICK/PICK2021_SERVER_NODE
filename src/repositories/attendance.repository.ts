@@ -32,6 +32,7 @@ export class AttendanceRepository extends Repository<Attendance> {
         .select('tbl_attendance.term') 
         .addSelect('tbl_attendance.state')
         .addSelect('tbl_attendance.reason')
+        .leftJoinAndSelect('tbl_attendance.student', 'student')
         .getMany()
     }
 }
