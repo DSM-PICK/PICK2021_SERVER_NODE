@@ -29,8 +29,6 @@ export class AttendanceRepository extends Repository<Attendance> {
     //학번, 학생이름, 확인교사, 상태, 이유, 기간
     public async getAttendance(){
         return this.createQueryBuilder('tbl_attendance')
-        .leftJoinAndSelect('tbl_attendance.student', 'student')
-        .leftJoinAndSelect('tbl_attendance.director', 'director')
         .addSelect('tbl_attendance.term') 
         .addSelect('tbl_attendance.state')
         .addSelect('tbl_attendance.reason')
