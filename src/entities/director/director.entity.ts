@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, ManyToOne,OneToMany,PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne,OneToMany,OneToOne,PrimaryGeneratedColumn } from 'typeorm';
 import { Attendance } from '../attendance/attendance.entity';
 import { Schedule } from '../schedule/schedule.entity';
 import { Teacher } from '../teacher/teacher.entity';
@@ -25,10 +25,10 @@ export class Director {
   @JoinColumn({ name: 'teacher_id'})
   teacher: Teacher
 
-  @OneToMany(() => Attendance, (attendance) => attendance.director, {
-    onUpdate: 'CASCADE',
-    onDelete: 'CASCADE'
+  @OneToMany(() => Attendance, (attendance) => attendance.director,{
+    onUpdate:'CASCADE',
+    onDelete:'CASCADE'
   })
   @JoinColumn({ name: 'attendance_id'})
-  attendance: Attendance;
+  attendance: Attendance
 }

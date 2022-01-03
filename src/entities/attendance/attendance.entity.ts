@@ -29,11 +29,10 @@ export class Attendance {
   @JoinColumn({ name: 'student_id'})
   student: Student
 
-  @ManyToOne(() => Director, (director) => director.attendance, {
-    onUpdate: 'CASCADE',
-    onDelete: 'CASCADE'
+  @ManyToOne(() => Director, (director) => director.attendance,{
+    onUpdate:'CASCADE',
+    onDelete:'CASCADE'
   })
-  @JoinColumn({ name: 'director_id'})
+  @JoinColumn({ name: 'student_id'})
   director: Director
-
 }
