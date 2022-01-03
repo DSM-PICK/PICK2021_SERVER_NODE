@@ -27,8 +27,7 @@ export class AttendanceService {
       state: attendanceReqData.state,
       term : attendanceReqData.term,
       reason: attendanceReqData.reason,
-      student_id: attendanceReqData.student_id,
-      director_id: attendanceReqData.director_id
+      student_id: attendanceReqData.student_id
     });
   }
 
