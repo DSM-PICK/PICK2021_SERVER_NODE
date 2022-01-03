@@ -9,8 +9,8 @@ import { StateReqData } from './dto/stateRequestData.dto';
 @Injectable()
 export class AttendanceService {
   constructor(
-    @InjectRepository(Attendance)
-    private attendanceRepository: AttendanceRepository){}
+    private attendanceRepository: AttendanceRepository
+  ){}
   
   public async getAttendance(){
     return await this.attendanceRepository.getAttendance();
@@ -24,12 +24,13 @@ export class AttendanceService {
   }
 
   public async postAttendance(attendanceReqData: AttendanceReqData) {
-    return await this.attendanceRepository.save({
+    return await this.attendanceRepository.save([{
+
       state: attendanceReqData.state,
       term : attendanceReqData.term,
       reason: attendanceReqData.reason,
       student_id: attendanceReqData.student_id
-    });
+    }]);
   }
 
   public async updateState(stateReqData: StateReqData){
