@@ -27,7 +27,7 @@ export class LocationService {
     if (!(await this.locationRepository.checkExistLocation(location_id))) {
       throw notFoundLocationIdException;
     }
-    return await this.locationRepository.deleteLocation(location_id);
+    return await this.locationRepository.delete(location_id);
   }
 
   async updateLocation(location_id: number, modifyLocationData: ModifyLocationDto) {
