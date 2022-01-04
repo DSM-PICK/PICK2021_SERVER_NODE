@@ -27,20 +27,20 @@ export class Attendance {
     onUpdate:'CASCADE',
     onDelete:'CASCADE'
   })
-  @JoinColumn({ name: 'student_id'})
+  @JoinColumn({ name: 'id'})
   student: Student
 
   @ManyToOne(() => Director, (director) => director.attendance,{
     onUpdate:'CASCADE',
     onDelete:'CASCADE'
   })
-  @JoinColumn({ name: 'director_id'})
+  @JoinColumn({ name: 'id'})
   director: Director
 
   @ManyToOne(() => Teacher, (teacher) => teacher.attendance,{
     onUpdate:'CASCADE',
     onDelete:'CASCADE'
   })
-  @JoinColumn({ name: 'teacher_id'})
+  @JoinColumn({ name: 'id'})
   teacher: Teacher
 }
