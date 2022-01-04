@@ -27,6 +27,6 @@ export class Teacher {
     onUpdate:'CASCADE',
     onDelete:'CASCADE'
   })
-  @JoinColumn({ name: 'attendance_id'})
+  @JoinColumn({ name: 'id'})
   attendance: Attendance
 }
