@@ -39,9 +39,9 @@ export class LocationRepository extends Repository<Location> {
 
     public async getFloorLocation(floor: number){
         return this.createQueryBuilder('tbl_location')
-            .select('tbl_location.id', 'id')
-            .addSelect('tbl_location.name', 'name')
-            .innerJoin('tbl_major.id', 'major_id')
+            .select('tbl_location.id')
+            .addSelect('tbl_location.name')
+            .leftJoinAndSelect('tbl_location.major', 'major')
             .where('tbl_location.floor = :floor', { floor: floor })
             .getMany()
         }
