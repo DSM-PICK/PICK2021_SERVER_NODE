@@ -18,15 +18,15 @@ export class LocationController {
     return { status :201, message: 'success'};
   }
 
-  @Delete()
-  public async deleteLocation(@Body() location_id: number){
-    await this.locationService.deleteLocation(location_id);
+  @Delete('/:id')
+  public async deleteLocation(@Param() id: number){
+    await this.locationService.deleteLocation(id);
     return { status: 204, message: 'success'};
   }
   
   @Patch('/:id')
-  public async updateLocation(@Param('id') location_id: number, @Body() modifyLocationData: ModifyLocationDto){
-    await this.locationService.updateLocation(location_id, modifyLocationData);
+  public async updateLocation(@Param('id') id: number, @Body() modifyLocationData: ModifyLocationDto){
+    await this.locationService.updateLocation(id, modifyLocationData);
     return { status: 204, message: 'success'}
   }
 

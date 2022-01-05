@@ -19,6 +19,6 @@ export class Location {
     onUpdate:'CASCADE',
     onDelete:'CASCADE'
   })
-  @JoinColumn({ name: 'id'})
+  @JoinColumn({ name: 'name'})
   major:Major;
 }

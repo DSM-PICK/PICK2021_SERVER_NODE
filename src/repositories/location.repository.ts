@@ -7,8 +7,8 @@ export class LocationRepository extends Repository<Location> {
     
     public async checkExistLocation(id: number): Promise<boolean>{
         const location = await this.createQueryBuilder('tbl_location')
-        .select('tbl_location.id', 'id')
-        .where('tbl_loacation.id = :id', {location_id: id})
+        .select('tbl_location.id')
+        .where('tbl_loacation.id = :id', {id: id})
         .getOne();
         if(location){
             return true;
@@ -16,11 +16,11 @@ export class LocationRepository extends Repository<Location> {
         return false;
     }
 
-    public async deleteLocation(location_id:number){
+    public async deleteLocation(id:number){
         return this.createQueryBuilder('tbl_location')
         .delete()
         .from(Location)
-        .where('tbl_location.id = :id', { location_id: location_id})
+        .where('tbl_location.id = :id', { id: id})
         .execute();
     }
 
@@ -33,7 +33,7 @@ export class LocationRepository extends Repository<Location> {
         return this.createQueryBuilder('tbl_location') 
             .update(Location)
             .set({ floor: floor, name: name, priority: priority})
-            .where('tbl_location.id = : tbl_location.id', { tbl_location_id: id})
+            .where('tbl_location.id = : id', { id: id})
             .execute();
     }
 

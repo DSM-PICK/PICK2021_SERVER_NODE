@@ -23,18 +23,18 @@ export class LocationService {
     });
   }
 
-  async deleteLocation(location_id: number) {
-    if (!(await this.locationRepository.checkExistLocation(location_id))) {
+  async deleteLocation(id: number) {
+    if (!(await this.locationRepository.checkExistLocation(id))) {
       throw notFoundLocationIdException;
     }
-    return await this.locationRepository.delete(location_id);
+    return await this.locationRepository.deleteLocation(id);
   }
 
-  async updateLocation(location_id: number, modifyLocationData: ModifyLocationDto) {
-    if (!(await this.locationRepository.checkExistLocation(location_id))) {
+  async updateLocation(id: number, modifyLocationData: ModifyLocationDto) {
+    if (!(await this.locationRepository.checkExistLocation(id))) {
       throw notFoundLocationIdException;
     }
-    return await this.locationRepository.updateLocation(location_id, modifyLocationData);
+    return await this.locationRepository.updateLocation(id, modifyLocationData);
     }
 
   public async getFloorLocation(floor: number) {
