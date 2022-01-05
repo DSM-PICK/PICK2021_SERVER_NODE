@@ -18,19 +18,17 @@ export class Major {
   @JoinColumn({ name: 'head_id'})
   student: Student;
 
-  @OneToOne(()=> Teacher, (teacher) => teacher.id,{
+  @OneToOne(()=> Teacher, (teacher) => teacher.major,{
     onUpdate:'CASCADE',
     onDelete:'CASCADE'
   })
-  @JoinColumn({ name: 'teacher_id'})
+  @JoinColumn({ name: 'id'})
   teacher: Teacher
   
-  @OneToOne(() => Location, (location) => location.id,{
+  @OneToOne(() => Location, (location) => location.major,{
     onUpdate:'CASCADE',
     onDelete:'CASCADE'
   })
-  @JoinColumn({ name: 'location_id'})
+  @JoinColumn({ name: 'id'})
   location: Location
-
-
 }
