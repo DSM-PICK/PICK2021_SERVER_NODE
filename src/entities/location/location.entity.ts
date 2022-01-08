@@ -15,10 +15,11 @@ export class Location {
   @Column({ length: 10 })
   name: string;
 
-  @OneToOne(() => Major, (major) => major.location,{
-    onUpdate:'CASCADE',
-    onDelete:'CASCADE'
+  @OneToOne(()=> Major, (major) => major.location,{
+    onUpdate: 'CASCADE',
+    onDelete: 'CASCADE'
   })
-  @JoinColumn({ name: 'name'})
-  major:Major;
+
+  @JoinColumn({ name: 'id'})
+  major: Major
 }
