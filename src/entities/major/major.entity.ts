@@ -24,11 +24,12 @@ export class Major {
   })
   @JoinColumn({ name: 'id'})
   teacher: Teacher
-  
-  @OneToOne(() => Location, (location) => location.major,{
-    onUpdate:'CASCADE',
-    onDelete:'CASCADE'
+
+  @OneToOne(()=> Location, (location) => location.major,{
+    onUpdate: 'CASCADE',
+    onDelete: 'CASCADE'
   })
+
   @JoinColumn({ name: 'id'})
   location: Location
 }
