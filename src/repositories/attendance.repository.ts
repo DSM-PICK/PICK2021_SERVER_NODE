@@ -34,6 +34,8 @@ export class AttendanceRepository extends Repository<Attendance> {
         .addSelect('tbl_attendance.reason')
         .leftJoinAndSelect('tbl_attendance.student', 'student')
         .leftJoinAndSelect('tbl_attendance.director', 'id')
+        .innerJoin('tbl_attendance.teacher', 'teacher')
+        .addSelect('teacher.name')
         .getMany()
     }
 }
