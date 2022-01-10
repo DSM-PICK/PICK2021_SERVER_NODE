@@ -26,7 +26,6 @@ export class AttendanceRepository extends Repository<Attendance> {
         .execute();
     }
 
-    //학번, 학생이름, 확인교사, 상태, 이유, 기간
     public async getAttendance(){
         return this.createQueryBuilder('tbl_attendance')
         .select('tbl_attendance.term') 
