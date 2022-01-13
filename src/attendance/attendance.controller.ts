@@ -19,10 +19,10 @@ export class AttendanceController {
     return { status: 204, message: 'success'};
   }
 
-  @Post('')
+  @Post()
   public async postAttendance(@Body() attendanceReqData: AttendanceReqData){
     await this.attendanceService.postAttendance(attendanceReqData);
-    return { status: 204, message: 'success'}
+    return { status: 201, message: 'success'}
   }
   
   @Patch('/state')
