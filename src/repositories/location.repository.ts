@@ -33,7 +33,7 @@ export class LocationRepository extends Repository<Location> {
         return this.createQueryBuilder('tbl_location') 
             .update(Location)
             .set({ floor: floor, name: name, priority: priority})
-            .where('tbl_location.id = : id', { id: id})
+            .where('tbl_location.id = :id', { id: id })
             .execute();
     }
 
