@@ -21,13 +21,16 @@ export class Attendance {
   term: string;
 
   @Column({ length: 256 })
-  reason: string
+  reason: string;
 
   @Column({ length: 10 })
-  teacher_id: string
+  teacher_id: string;
 
   @Column()
-  student_id: number
+  student_id: number;
+  
+  @Column()
+  director_id: number;
 
   @ManyToOne(() => Student, (student) => student.attendance,{
     onUpdate:'CASCADE',
