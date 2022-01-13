@@ -2,6 +2,9 @@ import { IsNumber, IsString } from "class-validator";
 
 export class AttendanceReqData{
     @IsString()
+    teacher_id: string;
+
+    @IsString()
     state: string;
 
     @IsString()
@@ -12,7 +15,4 @@ export class AttendanceReqData{
 
     @IsNumber()
     student_id: number;
-
-    @IsString()
-    teacher_id: string;
 }
