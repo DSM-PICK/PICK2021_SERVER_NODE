@@ -37,4 +37,12 @@ export class AttendanceRepository extends Repository<Attendance> {
         .addSelect('teacher.name')
         .getMany()
     }
+
+    public async deleteAttendance(id: number){
+        return this.createQueryBuilder('tbl_attendance')
+        .delete()
+        .from(Attendance)
+        .where('tbl_attendance.id = :id', { id: id})
+        .execute()
+    }
 }

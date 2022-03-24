@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
 import { AttendanceService } from './attendance.service';
 import { AttendanceReqData } from './dto/attendanceRequest.dto';
 import { StateReqData } from './dto/stateRequestData.dto';
@@ -13,9 +13,9 @@ export class AttendanceController {
     return await this.attendanceService.getAttendance();
   }
 
-  @Delete('/attendance')
-  public async deleteAttendance(@Body() attendance_id: number){
-    await this.attendanceService.deleteAttendance(attendance_id);
+  @Delete('/:id')
+  public async deleteAttendance(@Param('id') id: number){
+    await this.attendanceService.deleteAttendance(id);
     return { status: 204, message: 'success'};
   }
 
