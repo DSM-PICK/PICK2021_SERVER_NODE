@@ -8,5 +8,3 @@ import {
   
   export const ExistAttendanceError = new ConflictException('Attendance already exist');
   export const notFoundAttendanceIdException = new NotFoundException('attendanceId is not founded'); 
-  
- 

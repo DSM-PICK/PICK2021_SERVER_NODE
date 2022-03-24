@@ -38,11 +38,11 @@ export class LocationRepository extends Repository<Location> {
             .getMany()
     }
 
-    public async deleteLocation(location_id: number){
+    public async deleteLocation(id: number){
         return this.createQueryBuilder('tbl_location')
         .delete()
         .from(Location)
-        .where('tbl_attendance.id = :id', { location_id: location_id})
+        .where('tbl_attendance.id = :id', { id: id})
         .execute()
     }
 
