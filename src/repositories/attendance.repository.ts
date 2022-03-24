@@ -6,10 +6,10 @@ import { Attendance } from '../entities/attendance/attendance.entity';
 @EntityRepository(Attendance)
 export class AttendanceRepository extends Repository<Attendance> {
 
-    public async checkExistAttendance(attendance_id: number): Promise<boolean>{
+    public async checkExistAttendance(id: number): Promise<boolean>{
         const attendance = await this.createQueryBuilder('tbl_attendance')
-        .select('tbl_attendance.id', 'attendance_id')
-        .where('tbl_attendance.id = :attendance_id', {attendance_id: attendance_id})
+        .select('tbl_attendance.id', 'id')
+        .where('tbl_attendance.id = :id', { id: id})
         .getOne();
         if(attendance){
             return true;
