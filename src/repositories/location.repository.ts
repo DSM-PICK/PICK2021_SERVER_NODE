@@ -16,14 +16,6 @@ export class LocationRepository extends Repository<Location> {
         return false;
     }
 
-    public async deleteLocation(id:number){
-        return this.createQueryBuilder('tbl_location')
-        .delete()
-        .from(Location)
-        .where('tbl_location.id = :id', { id: id})
-        .execute();
-    }
-
     public async updateLocation(id: number, modifyLocationData: ModifyLocationDto){
         let floor = modifyLocationData.floor;
         let name = modifyLocationData.name;
@@ -44,5 +36,15 @@ export class LocationRepository extends Repository<Location> {
             .leftJoinAndSelect('tbl_location.major', 'major')
             .where('tbl_location.floor = :floor', { floor: floor })
             .getMany()
-        }
+    }
+
+    public async deleteLocation(location_id: number){
+        return this.createQueryBuilder('tbl_location')
+        .delete()
+        .from(Location)
+        .where('tbl_attendance.id = :id', { location_id: location_id})
+        .execute()
+    }
+
+    
 }
