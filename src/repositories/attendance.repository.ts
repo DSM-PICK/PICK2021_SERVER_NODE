@@ -42,7 +42,7 @@ export class AttendanceRepository extends Repository<Attendance> {
         return this.createQueryBuilder('tbl_attendance')
         .delete()
         .from(Attendance)
-        .where('tbl_attendance.id = :id', { id: id})
+        .where('id = :id', { id: id})
         .execute()
     }
 }
