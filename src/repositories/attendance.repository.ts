@@ -39,8 +39,8 @@ export class AttendanceRepository extends Repository<Attendance> {
     }
 
     public async deleteAttendance(id: number){
-        return this.createQueryBuilder('tbl_attendance')
         console.log(id)
+        return this.createQueryBuilder('tbl_attendance')
         .delete()
         .from(Attendance)
         .where('id = :id', { id: id})

@@ -13,8 +13,9 @@ export class AttendanceController {
     return await this.attendanceService.getAttendance();
   }
 
-  @Delete('/:id')
+  @Delete(':id')
   public async deleteAttendance(@Param('id') id: number){
+    console.log(id);
     await this.attendanceService.deleteAttendance(id);
     return { status: 204, message: 'success'};
   }
