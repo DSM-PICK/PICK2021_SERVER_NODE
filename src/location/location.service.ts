@@ -23,7 +23,7 @@ export class LocationService {
   }
 
   async deleteLocation(id: number) {
-    if (!(await this.locationRepository.checkExistLocation(id))) {
+    if (!await this.locationRepository.checkExistLocation(id)) {
       throw notFoundLocationIdException;
     }
     return await this.locationRepository.deleteLocation(id);

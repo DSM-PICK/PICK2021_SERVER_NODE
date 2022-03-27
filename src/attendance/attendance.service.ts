@@ -16,10 +16,11 @@ export class AttendanceService {
     return await this.attendanceRepository.getAttendance();
   }
 
-  public async deleteAttendance(id: number){
-    if(!(await this.attendanceRepository.checkExistAttendance(id))){
+  public async deleteAttendance(id: number){  
+    if(!await this.attendanceRepository.checkExistAttendance(id)){
       throw notFoundAttendanceIdException;
     }
+    
     return await this.attendanceRepository.deleteAttendance(id);
   }
 

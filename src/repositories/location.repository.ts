@@ -7,13 +7,17 @@ export class LocationRepository extends Repository<Location> {
     
     public async checkExistLocation(id: number): Promise<boolean>{
         const location = await this.createQueryBuilder('tbl_location')
-        .select('tbl_location.id')
+        .select('tbl_location.id', 'id')
         .where('tbl_loacation.id = :id', {id: id})
-        .getOne();
+        .getRawOne();
+
+        console.log(location)
+
         if(location){
             return true;
+        }else{
+            return false;
         }
-        return false;
     }
 
     public async updateLocation(id: number, modifyLocationData: ModifyLocationDto){

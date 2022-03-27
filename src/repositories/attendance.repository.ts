@@ -10,11 +10,13 @@ export class AttendanceRepository extends Repository<Attendance> {
         const attendance = await this.createQueryBuilder('tbl_attendance')
         .select('tbl_attendance.id', 'id')
         .where('tbl_attendance.id = :id', { id: id})
-        .getOne();
+        .getRawOne()
+        
         if(attendance){
             return true;
+        }else{
+            return false;
         }
-        return false;
     }
 
     public async updateState(stateReqData: StateReqData){
@@ -40,10 +42,10 @@ export class AttendanceRepository extends Repository<Attendance> {
 
     public async deleteAttendance(id: number){
         console.log(id)
-        return this.createQueryBuilder('tbl_attendance')
+        return await this.createQueryBuilder('tbl_attendance')
         .delete()
-        .from(Attendance)
-        .where('id = :id', { id: id})
+        //.from(Attendance)
+        .where('tbl_attendance.id=:id', { id: id})
         .execute()
     }
 }
