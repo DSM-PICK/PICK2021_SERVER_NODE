@@ -8,11 +8,8 @@ export class LocationRepository extends Repository<Location> {
     public async checkExistLocation(id: number): Promise<boolean>{
         const location = await this.createQueryBuilder('tbl_location')
         .select('tbl_location.id', 'id')
-        .where('tbl_loacation.id = :id', {id: id})
-        .getRawOne();
-
-        console.log(location)
-
+        .where('tbl_location.id = :id', { id: id})
+        .getRawOne()
         if(location){
             return true;
         }else{
@@ -43,9 +40,10 @@ export class LocationRepository extends Repository<Location> {
     }
 
     public async deleteLocation(id: number){
+        console.log(id)
         return this.createQueryBuilder('tbl_location')
         .delete()
-        .where('id = :id', { id: id})
+        .where('tbl_location.id = :id', { id: id})
         .execute()
     }
 

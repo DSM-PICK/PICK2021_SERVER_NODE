@@ -19,7 +19,7 @@ export class LocationController {
   }
 
   @Delete('/:id')
-  public async deleteLocation(@Param() id: number){
+  public async deleteLocation(@Param('id') id: number){
     await this.locationService.deleteLocation(id);
     return { status: 204, message: 'success'};
   }
