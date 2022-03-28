@@ -24,14 +24,17 @@ export class AttendanceService {
     return await this.attendanceRepository.deleteAttendance(id);
   }
 
-  public async postAttendance(attendanceReqData: AttendanceReqData) {
-    return await this.attendanceRepository.save([{
-      state: attendanceReqData.state,
-      term : attendanceReqData.term,
-      reason: attendanceReqData.reason,
-      student_id: attendanceReqData.student_id,
-      teacher_id: attendanceReqData.teacher_id
-    }]);
+  public async postAttendance(attendanceReqData: AttendanceReqData[]) {
+   return await attendanceReqData.map(item => 
+       this.attendanceRepository.save([{
+        state: item.state,
+        term : item.term,
+        reason: item.reason,
+        student_id: item.student_id,
+        teacher_id: item.teacher_id
+      }])
+    )
+ 
   }
 
   public async updateState(stateReqData: StateReqData){

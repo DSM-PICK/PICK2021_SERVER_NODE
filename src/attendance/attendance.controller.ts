@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseArrayPipe, Patch, Post } from '@nestjs/common';
 import { AttendanceService } from './attendance.service';
 import { AttendanceReqData } from './dto/attendanceRequest.dto';
 import { StateReqData } from './dto/stateRequestData.dto';
@@ -19,8 +19,11 @@ export class AttendanceController {
     return { status: 204, message: 'success'};
   }
 
+  //등록 배열로 받기
+  // (new ParseArrayPipe({ items: AttendanceReqData })) attendanceReqData:AttendanceReqData
   @Post()
-  public async postAttendance(@Body() attendanceReqData: AttendanceReqData){
+  public async postAttendance(@Body() attendanceReqData:AttendanceReqData[]){
+    console.log(attendanceReqData);
     await this.attendanceService.postAttendance(attendanceReqData);
     return { status: 201, message: 'success'}
   }
