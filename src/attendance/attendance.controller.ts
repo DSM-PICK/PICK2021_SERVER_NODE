@@ -1,6 +1,7 @@
-import { Body, Controller, Delete, Get, Param, ParseArrayPipe, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseArrayPipe, Patch, Post, Query } from '@nestjs/common';
 import { AttendanceService } from './attendance.service';
 import { AttendanceReqData } from './dto/attendanceRequest.dto';
+import { DoAttendanceReqData } from './dto/doAttendanceReq.dto';
 import { StateReqData } from './dto/stateRequestData.dto';
 
 
@@ -8,9 +9,10 @@ import { StateReqData } from './dto/stateRequestData.dto';
 export class AttendanceController {
   constructor(private readonly attendanceService: AttendanceService) {}
 
+  //오늘출결변동내역 가져오기
   @Get()
-  public async getAttendance(){
-    return await this.attendanceService.getAttendance();
+  public async getAttendanceToday(@Query('floor') floor: number){
+    return await this.attendanceService.getAttendanceToday(floor);
   }
 
   @Delete('/:id')
@@ -33,6 +35,13 @@ export class AttendanceController {
     await this.attendanceService.updateState(stateReqData);
     return { status: 204, message: 'success'}
   }
+
+  //메인페이지출석
+  // @Post()
+  // public async doAttendance(@Query('period') location_id: number, @Body() doAttendanceReqDataDto:DoAttendanceReqData){
+  //   await this.attendanceService.doAttendance(location_id,doAttendanceReqDataDto );
+  //   return{ status: 204, msessage: 'success'}
+  // }
 }
 
 
