@@ -1,7 +1,7 @@
 import { Column, Entity, JoinColumn, Long, OneToMany, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
-import { Attendance } from '../attendance/attendance.entity';
-import { Location } from '../location/location.entity';
-import { Major } from '../major/major.entity';
+import { Attendance } from './attendance.entity';
+import { Location } from './location.entity';
+import { Major } from './major.entity';
 
 @Entity('tbl_teacher')
 export class Teacher {
@@ -29,7 +29,7 @@ export class Teacher {
     onDelete:'CASCADE'
   })
   @JoinColumn({ name: 'id'})
-  attendance: Attendance
+  attendance: Attendance[];
 
   @OneToOne(()=> Major, (major) => major.teacher,{
     onUpdate:'CASCADE',

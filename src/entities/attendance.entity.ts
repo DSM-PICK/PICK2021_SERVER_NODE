@@ -1,8 +1,8 @@
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
-import { Director } from '../director/director.entity';
-import { Location } from '../location/location.entity';
-import { Student } from '../student/student.entity';
-import { Teacher } from '../teacher/teacher.entity';
+import { Director } from './director.entity';
+import { Student } from './student.entity';
+import { Teacher } from './teacher.entity';
+
 
 @Entity('tbl_attendance')
 export class Attendance {
@@ -38,26 +38,20 @@ export class Attendance {
     onDelete:'CASCADE'
   })
   @JoinColumn({ name: 'id'})
-  student: Student
+  student: Student;
 
   @ManyToOne(() => Director, (director) => director.attendance,{
     onUpdate:'CASCADE',
     onDelete:'CASCADE'
   })
   @JoinColumn({ name: 'id'})
-  director: Director
+  director: Director;
 
   @ManyToOne(() => Teacher, (teacher) => teacher.attendance,{
     onUpdate:'CASCADE',
     onDelete:'CASCADE'
   })
   @JoinColumn({ name: 'id'})
-  teacher: Teacher
-
-  @OneToOne(() => Location, (location) => location.attendance,{
-    onUpdate:'CASCADE',
-    onDelete:'CASCADE'
-  })
-  @JoinColumn({ name: 'id'})
-  location: Location
+  teacher: Teacher;
+  
 }

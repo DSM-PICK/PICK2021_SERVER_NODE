@@ -1,7 +1,7 @@
 import { Column, Entity, JoinColumn, Long, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
-import { Student } from '../student/student.entity';
-import { Teacher } from '../teacher/teacher.entity';
-import { Location } from '../location/location.entity';
+import { Student } from './student.entity';
+import { Teacher } from './teacher.entity';
+import { Location } from './location.entity';
 
 @Entity('tbl_major')
 export class Major {

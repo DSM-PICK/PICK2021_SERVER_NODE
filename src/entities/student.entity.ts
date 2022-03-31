@@ -1,7 +1,7 @@
 import { Column, Entity, JoinColumn, Long, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
-import { Attendance } from '../attendance/attendance.entity';
-import { Location } from '../location/location.entity';
-import { Major } from '../major/major.entity';
+import { Attendance } from './attendance.entity';
+import { Location } from './location.entity';
+import { Major } from './major.entity';
 
 
 @Entity('tbl_student')
@@ -40,5 +40,5 @@ export class Student {
     onDelete:'CASCADE'
   })
   @JoinColumn({ name: 'attendance_id'})
-    attendance: Attendance;
+    attendance: Attendance[];
 }

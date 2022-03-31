@@ -1,4 +1,4 @@
-import { AffliatedAfterSchool } from 'src/entities/affliatedAfterShool/affliatedAfterSchool.entity';
+import { AffliatedAfterSchool } from 'src/entities/affliatedAfterSchool.entity';
 import { EntityRepository, Repository } from 'typeorm';
 
 @EntityRepository(AffliatedAfterSchool)

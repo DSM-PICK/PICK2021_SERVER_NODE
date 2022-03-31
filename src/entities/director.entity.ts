@@ -1,7 +1,7 @@
 import { Column, Entity, JoinColumn, ManyToOne,OneToMany,OneToOne,PrimaryGeneratedColumn } from 'typeorm';
-import { Attendance } from '../attendance/attendance.entity';
-import { Schedule } from '../schedule/schedule.entity';
-import { Teacher } from '../teacher/teacher.entity';
+import { Attendance } from './attendance.entity';
+import { Schedule } from './schedule.entity';
+import { Teacher } from './teacher.entity';
 
 @Entity('tbl_director')
 export class Director {
@@ -16,19 +16,19 @@ export class Director {
     onDelete:'CASCADE'
   })
   @JoinColumn({ name: 'schedule_id'})
-  schedule: Schedule
+  schedule: Schedule[];
 
   @ManyToOne(()=> Teacher, (teacher) => teacher.id,{
     onUpdate:'CASCADE',
     onDelete:'CASCADE'
   })
   @JoinColumn({ name: 'teacher_id'})
-  teacher: Teacher
+  teacher: Teacher[];
 
   @OneToMany(() => Attendance, (attendance) => attendance.director,{
     onUpdate:'CASCADE',
     onDelete:'CASCADE'
   })
   @JoinColumn({ name: 'attendance_id'})
-  attendance: Attendance
+  attendance: Attendance[];
 }

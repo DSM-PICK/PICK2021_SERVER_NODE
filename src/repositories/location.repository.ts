@@ -1,6 +1,6 @@
 import { ModifyLocationDto } from 'src/location/dto/modifyLocation.dto';
 import { EntityRepository, Repository } from 'typeorm';
-import { Location } from '../entities/location/location.entity'
+import { Location } from '../entities/location.entity'
 
 @EntityRepository(Location)
 export class LocationRepository extends Repository<Location> {

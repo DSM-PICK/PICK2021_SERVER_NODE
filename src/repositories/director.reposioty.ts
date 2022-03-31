@@ -1,5 +1,5 @@
 import { EntityRepository, Repository } from 'typeorm';
-import { Director } from '../entities/director/director.entity';
+import { Director } from '../entities/director.entity';
 
 
 @EntityRepository(Director)

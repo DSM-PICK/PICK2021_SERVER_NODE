@@ -1,6 +1,6 @@
 import { Column, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
-import { Attendance } from '../attendance/attendance.entity';
-import { Major } from '../major/major.entity';
+import { Attendance } from './attendance.entity';
+import { Major } from './major.entity';
 
 @Entity('tbl_location')
 export class Location {
@@ -24,11 +24,6 @@ export class Location {
   @JoinColumn({ name: 'id'})
   major: Major
 
-  @OneToOne(()=> Attendance, (attendance)=> attendance.location,{
-    onUpdate: 'CASCADE',
-    onDelete: 'CASCADE'
-  })
-
-  @JoinColumn({ name: 'id'})
-  attendance: Attendance
+ 
+  
 }

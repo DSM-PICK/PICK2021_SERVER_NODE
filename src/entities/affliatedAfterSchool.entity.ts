@@ -1,6 +1,6 @@
 import { Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
-import { AfterSchool } from '../afterschool/afterschool.entity';
-import { Student } from '../student/student.entity';
+import { AfterSchool } from './afterschool.entity';
+import { Student } from './student.entity';
 
 @Entity(' tbl_affiliated_after_school')
 export class AffliatedAfterSchool {

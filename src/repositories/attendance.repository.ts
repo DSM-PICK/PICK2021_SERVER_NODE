@@ -1,10 +1,10 @@
 import { StateReqData } from 'src/attendance/dto/stateRequestData.dto';
-import { Director } from 'src/entities/director/director.entity';
-import { Student } from 'src/entities/student/student.entity';
-import { Teacher } from 'src/entities/teacher/teacher.entity';
+import { Student } from 'src/entities/student.entity';
+import { Teacher } from 'src/entities/teacher.entity';
+import { Director } from 'src/entities/director.entity';
+
 import { EntityRepository, Repository } from 'typeorm';
-import { Attendance } from '../entities/attendance/attendance.entity';
-import { Location } from '../entities/location/location.entity';
+import { Attendance } from '../entities/attendance.entity';
 
 @EntityRepository(Attendance)
 export class AttendanceRepository extends Repository<Attendance> {
@@ -40,15 +40,17 @@ export class AttendanceRepository extends Repository<Attendance> {
             'tbl_attendance.state',
             'tbl_attendance.reason',
         ])
+        .innerJoin('tbl_attendance.teacher_id', 'teacher')
         // .leftJoin(Location, 'location', 'location.id = tbl_attendance.location_id')
         // .where('location.floor = :floor', { floor: floor})
-        .leftJoin(Student, 'student','student.id = tbl_attendance.student_id')
-        .addSelect('tbl_attendance.student_id')
-        .leftJoin(Director, 'director', 'director.id = tbl_attendance.director_id')
-        .addSelect('tbl_attendance.director_id')
-        .leftJoin(Teacher, 'teacher', 'teacher.id = tbl_attendance.teacher_id')
-        .addSelect('tbl_attendance.teacher_id')
+        // .leftJoinAndSelect(Student, 'student','student.id = tbl_attendance.student_id')
+        // .addSelect('tbl_attendance.student_id')
+        // .leftJoin(Director, 'director', 'director.id = tbl_attendance.director_id')
+        // .addSelect('tbl_attendance.director_id')
+        // .leftJoin(Teacher, 'teacher', 'teacher.id = tbl_attendance.teacher_id')
+        // .addSelect('tbl_attendance.teacher_id')
         .getMany()
+
     }
 
     //출석 삭제

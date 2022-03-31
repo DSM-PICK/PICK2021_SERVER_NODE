@@ -1,7 +1,7 @@
 import { Column, Entity, JoinColumn,OneToOne,PrimaryGeneratedColumn } from 'typeorm';
-import { Teacher } from '../teacher/teacher.entity';
-import { Location } from '../location/location.entity';
-import { Student } from '../student/student.entity';
+import { Teacher } from './teacher.entity';
+import { Location } from './location.entity';
+import { Student } from './student.entity';
 
 @Entity('tbl_after_school')
 export class AfterSchool {

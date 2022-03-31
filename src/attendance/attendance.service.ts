@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Attendance } from 'src/entities/attendance/attendance.entity';
+import { Attendance } from 'src/entities/attendance.entity';
 import { notFoundAttendanceIdException } from 'src/exception/exception.attendance';
 import { AttendanceRepository } from 'src/repositories/attendance.repository';
 import { AttendanceReqData } from './dto/attendanceRequest.dto';
