@@ -23,7 +23,5 @@ export class Location {
 
   @JoinColumn({ name: 'id'})
   major: Major
-
- 
   
 }
