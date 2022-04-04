@@ -1,4 +1,12 @@
-import { Column, Entity, Long, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  Long,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+import { Attendance } from './attendance.entity';
 
 @Entity('tbl_schedule')
 export class Schedule {
@@ -16,4 +24,11 @@ export class Schedule {
 
   @Column()
   period: number;
+
+  @ManyToOne(() => Attendance, (attendance) => attendance.schedule, {
+    onUpdate: 'CASCADE',
+    onDelete: 'CASCADE',
+  })
+  @JoinColumn({ name: 'id' })
+  attendance: Attendance;
 }

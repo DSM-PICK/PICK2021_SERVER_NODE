@@ -1,4 +1,12 @@
-import { Column, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  OneToMany,
+  OneToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { Attendance } from './attendance.entity';
 import { Major } from './major.entity';
 
@@ -16,12 +24,13 @@ export class Location {
   @Column({ length: 10 })
   name: string;
 
-  @OneToOne(()=> Major, (major) => major.location,{
+  @OneToOne(() => Major, (major) => major.location, {
     onUpdate: 'CASCADE',
-    onDelete: 'CASCADE'
+    onDelete: 'CASCADE',
   })
+  @JoinColumn({ name: 'id' })
+  major: Major;
 
-  @JoinColumn({ name: 'id'})
-  major: Major
-  
+  @OneToMany(() => Attendance, (attendance) => attendance.location)
+  attendance: Attendance;
 }

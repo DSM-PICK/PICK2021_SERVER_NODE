@@ -1,4 +1,12 @@
-import { Column, Entity, JoinColumn, ManyToOne,OneToMany,OneToOne,PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  OneToMany,
+  OneToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { Attendance } from './attendance.entity';
 import { Schedule } from './schedule.entity';
 import { Teacher } from './teacher.entity';
@@ -11,24 +19,20 @@ export class Director {
   @Column()
   floor: number;
 
-  @ManyToOne(() => Schedule, (schedule) => schedule.id,{
-    onUpdate:'CASCADE',
-    onDelete:'CASCADE'
+  @ManyToOne(() => Schedule, (schedule) => schedule.id, {
+    onUpdate: 'CASCADE',
+    onDelete: 'CASCADE',
   })
-  @JoinColumn({ name: 'schedule_id'})
+  @JoinColumn({ name: 'schedule_id' })
   schedule: Schedule[];
 
-  @ManyToOne(()=> Teacher, (teacher) => teacher.id,{
-    onUpdate:'CASCADE',
-    onDelete:'CASCADE'
+  @ManyToOne(() => Teacher, (teacher) => teacher.id, {
+    onUpdate: 'CASCADE',
+    onDelete: 'CASCADE',
   })
-  @JoinColumn({ name: 'teacher_id'})
+  @JoinColumn({ name: 'teacher_id' })
   teacher: Teacher[];
 
-  @OneToMany(() => Attendance, (attendance) => attendance.director,{
-    onUpdate:'CASCADE',
-    onDelete:'CASCADE'
-  })
-  @JoinColumn({ name: 'attendance_id'})
+  @OneToMany(() => Attendance, (attendance) => attendance.director)
   attendance: Attendance[];
 }

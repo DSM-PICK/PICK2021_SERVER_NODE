@@ -1,8 +1,15 @@
-import { Column, Entity, JoinColumn, Long, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  Long,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { Attendance } from './attendance.entity';
 import { Location } from './location.entity';
 import { Major } from './major.entity';
-
 
 @Entity('tbl_student')
 export class Student {
@@ -21,24 +28,20 @@ export class Student {
   // @Column({ length: 2 })
   // year: string;
 
-  @ManyToOne(() => Location, (location) => location.id,{
-    onUpdate:'CASCADE',
-    onDelete:'CASCADE'
+  @ManyToOne(() => Location, (location) => location.id, {
+    onUpdate: 'CASCADE',
+    onDelete: 'CASCADE',
   })
-  @JoinColumn({ name: 'location_id'})
-  location: Location
-  
-  @ManyToOne(() => Major, (major) => major.id,{
-    onUpdate:'CASCADE',
-    onDelete:'CASCADE'
-  })
-  @JoinColumn({ name: 'major_id'})
-  major: Major
+  @JoinColumn({ name: 'location_id' })
+  location: Location;
 
-  @OneToMany(() => Attendance, (attendance) => attendance.student,{
-    onUpdate:'CASCADE',
-    onDelete:'CASCADE'
+  @ManyToOne(() => Major, (major) => major.id, {
+    onUpdate: 'CASCADE',
+    onDelete: 'CASCADE',
   })
-  @JoinColumn({ name: 'attendance_id'})
-    attendance: Attendance[];
+  @JoinColumn({ name: 'major_id' })
+  major: Major;
+
+  @OneToMany(() => Attendance, (attendance) => attendance.student)
+  attendance: Attendance[];
 }
