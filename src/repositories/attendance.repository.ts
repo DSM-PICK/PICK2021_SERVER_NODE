@@ -39,23 +39,29 @@ export class AttendanceRepository extends Repository<Attendance> {
     return await this.createQueryBuilder('tbl_attendance')
       .delete()
       .from(Attendance)
-      .where('tbl_attendance.id=:id', { id: id })
+      .where('tbl_attendance.id= :id', { id: id })
       .execute();
   }
 
   //오늘출결변동내역 가져오기
   public async getAttendanceToday(floor: number) {
-    return this.createQueryBuilder('tbl_attendance')
-      .select([
-        'tbl_attendance.id',
-        'tbl_attendance.state',
-        'tbl_attendance.reason',
-      ])
-      .leftJoinAndSelect('tbl_attendance.student', 'student')
-      .leftJoinAndSelect('tbl_attendance.director', 'director')
-      .leftJoinAndSelect('tbl_attendance.teacher', 'teahcer')
-      .where('floor = :floor', { floor: floor })
-      .getRawMany();
+    return (
+      this.createQueryBuilder('tbl_attendance')
+        .select([
+          'tbl_attendance.id',
+          'tbl_attendance.state',
+          'tbl_attendance.reason',
+        ])
+        .leftJoinAndSelect('tbl_attendance.student', 'student')
+        .addSelect(['student_id'])
+        .leftJoinAndSelect('tbl_attendance.director', 'director')
+        .addSelect(['director_id'])
+        .leftJoinAndSelect('tbl_attendance.teacher', 'teacher')
+        // .addSelect(['teacher_id'])
+        .leftJoinAndSelect('tbl_attendance.location', 'location')
+        // .where('floor= :floor', { floor: floor })
+        .getMany()
+    );
   }
 
   //출석조회 가져오기(필터링)
