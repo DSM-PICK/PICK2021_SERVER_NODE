@@ -34,15 +34,6 @@ export class Attendance {
   @Column({ length: 256 })
   reason: string;
 
-  @Column({ length: 10 })
-  teacher_id: string;
-
-  @Column()
-  student_id: number;
-
-  @Column()
-  director_id: number;
-
   @CreateDateColumn()
   date: Date;
 
@@ -50,28 +41,28 @@ export class Attendance {
     onUpdate: 'CASCADE',
     onDelete: 'CASCADE',
   })
-  @JoinColumn({ name: 'id' })
+  @JoinColumn({ name: 'student_id' })
   student: Student;
 
   @ManyToOne(() => Director, (director) => director.attendance, {
     onUpdate: 'CASCADE',
     onDelete: 'CASCADE',
   })
-  @JoinColumn({ name: 'id' })
+  @JoinColumn({ name: 'director_id' })
   director: Director;
 
   @ManyToOne(() => Teacher, (teacher) => teacher.attendance, {
     onUpdate: 'CASCADE',
     onDelete: 'CASCADE',
   })
-  @JoinColumn({ name: 'id' })
+  @JoinColumn({ name: 'teacher_id' })
   teacher: Teacher;
 
   @ManyToOne(() => Location, (location) => location.attendance, {
     onUpdate: 'CASCADE',
     onDelete: 'CASCADE',
   })
-  @JoinColumn({ name: 'id' })
+  @JoinColumn({ name: 'location_id' })
   location: Location;
 
   @OneToMany(() => Schedule, (schedule) => schedule.attendance)

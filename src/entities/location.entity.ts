@@ -28,7 +28,7 @@ export class Location {
     onUpdate: 'CASCADE',
     onDelete: 'CASCADE',
   })
-  @JoinColumn({ name: 'id' })
+  @JoinColumn({ name: 'major_id' })
   major: Major;
 
   @OneToMany(() => Attendance, (attendance) => attendance.location)

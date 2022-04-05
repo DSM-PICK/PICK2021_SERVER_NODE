@@ -29,6 +29,6 @@ export class Schedule {
     onUpdate: 'CASCADE',
     onDelete: 'CASCADE',
   })
-  @JoinColumn({ name: 'id' })
+  @JoinColumn({ name: 'attendance_id' })
   attendance: Attendance;
 }

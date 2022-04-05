@@ -2,7 +2,7 @@ import { Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { AfterSchool } from './afterschool.entity';
 import { Student } from './student.entity';
 
-@Entity(' tbl_affiliated_after_school')
+@Entity('tbl_affiliated_after_school')
 export class AffliatedAfterSchool {
   @PrimaryGeneratedColumn()
   id: number;

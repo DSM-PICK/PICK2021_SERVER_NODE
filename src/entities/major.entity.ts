@@ -1,4 +1,11 @@
-import { Column, Entity, JoinColumn, Long, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  Long,
+  OneToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { Student } from './student.entity';
 import { Teacher } from './teacher.entity';
 import { Location } from './location.entity';
@@ -11,25 +18,24 @@ export class Major {
   @Column({ length: 20 })
   name: string;
 
-  @OneToOne(() => Student, (student)=> student.id,{
-    onUpdate:'CASCADE',
-    onDelete: 'CASCADE'
+  @OneToOne(() => Student, (student) => student.id, {
+    onUpdate: 'CASCADE',
+    onDelete: 'CASCADE',
   })
-  @JoinColumn({ name: 'head_id'})
+  @JoinColumn({ name: 'head_id' })
   student: Student;
 
-  @OneToOne(()=> Teacher, (teacher) => teacher.major,{
-    onUpdate:'CASCADE',
-    onDelete:'CASCADE'
-  })
-  @JoinColumn({ name: 'id'})
-  teacher: Teacher
-
-  @OneToOne(()=> Location, (location) => location.major,{
+  @OneToOne(() => Teacher, (teacher) => teacher.major, {
     onUpdate: 'CASCADE',
-    onDelete: 'CASCADE'
+    onDelete: 'CASCADE',
   })
+  @JoinColumn({ name: 'teacher_id' })
+  teacher: Teacher;
 
-  @JoinColumn({ name: 'id'})
-  location: Location
+  @OneToOne(() => Location, (location) => location.major, {
+    onUpdate: 'CASCADE',
+    onDelete: 'CASCADE',
+  })
+  @JoinColumn({ name: 'location_id' })
+  location: Location;
 }
