@@ -41,7 +41,6 @@ export class LocationRepository extends Repository<Location> {
   }
 
   public async deleteLocation(id: number) {
-    console.log(id);
     return this.createQueryBuilder('tbl_location')
       .delete()
       .where('tbl_location.id = :id', { id: id })

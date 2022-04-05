@@ -1,16 +1,13 @@
 import {
   Column,
-  CreateDateColumn,
   Entity,
   JoinColumn,
   ManyToOne,
-  OneToMany,
-  OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import { State } from './Enum/state.enum';
 import { Director } from './director.entity';
 import { Location } from './location.entity';
-import { Schedule } from './schedule.entity';
 import { Student } from './student.entity';
 import { Teacher } from './teacher.entity';
 
@@ -19,23 +16,21 @@ export class Attendance {
   @PrimaryGeneratedColumn()
   id: number;
 
+  @Column({
+    type: 'enum',
+    name: 'state',
+    enum: State,
+  })
+  state!: State;
+
   @Column()
   period: number;
-
-  @Column({ length: 10 })
-  state: string;
-
-  @Column({ length: 256 })
-  memo: string;
 
   @Column({ length: 35 })
   term: string;
 
   @Column({ length: 256 })
   reason: string;
-
-  @CreateDateColumn()
-  date: Date;
 
   @ManyToOne(() => Student, (student) => student.attendance, {
     onUpdate: 'CASCADE',
@@ -64,7 +59,4 @@ export class Attendance {
   })
   @JoinColumn({ name: 'location_id' })
   location: Location;
-
-  @OneToMany(() => Schedule, (schedule) => schedule.attendance)
-  schedule: Schedule[];
 }

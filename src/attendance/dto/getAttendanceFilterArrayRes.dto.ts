@@ -1,10 +1,10 @@
 import { IsEnum, IsNumber, IsString } from 'class-validator';
 import { State } from 'src/entities/Enum/state.enum';
 
-//출결변동사항 등록
-export class AttendanceReqData {
+//출석 받아오기 필터링 res Dto
+export class GetAttendanceFilterResDto {
   @IsString()
-  teacher_id: string;
+  location_name: string;
 
   @IsEnum([
     State.ABSENCE,
@@ -15,13 +15,4 @@ export class AttendanceReqData {
     State.OUTING,
   ])
   state: State;
-
-  @IsString()
-  term: string;
-
-  @IsString()
-  reason: string;
-
-  @IsNumber()
-  student_id: number;
 }

@@ -1,9 +1,18 @@
-import { IsNumber, IsString, Length } from "class-validator";
+import { IsEnum, IsNumber, IsString, Length } from 'class-validator';
+import { State } from 'src/entities/Enum/state.enum';
 
-export class StateReqData{
-    @IsString()
-    state: string;
+//상태변경데이터
+export class StateReqData {
+  @IsEnum([
+    State.ABSENCE,
+    State.FIELDEXPER,
+    State.GETJOB,
+    State.GOHOME,
+    State.MOVE,
+    State.OUTING,
+  ])
+  state: State;
 
-    @IsNumber()
-    id: number;
+  @IsNumber()
+  id: number;
 }

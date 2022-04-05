@@ -22,7 +22,7 @@ export class AttendanceService {
 
   //출결변동내역 등록
   public async postAttendance(attendanceReqData: AttendanceReqData[]) {
-    return await attendanceReqData.map((item) => {
+    return attendanceReqData.map((item) => {
       const { state, term, reason, student_id, teacher_id } = item;
       this.attendanceRepository.save([
         {
@@ -30,11 +30,12 @@ export class AttendanceService {
           term,
           reason,
           student_id,
-          teacher_id,
+          teacher_id
         },
       ]);
     });
   }
+
 
   //출석 상태 변경
   public async updateState(stateReqData: StateReqData) {

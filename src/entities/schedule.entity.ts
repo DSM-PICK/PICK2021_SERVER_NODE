@@ -1,5 +1,6 @@
 import {
   Column,
+  CreateDateColumn,
   Entity,
   JoinColumn,
   Long,
@@ -16,6 +17,9 @@ export class Schedule {
   @Column({ length: 20 })
   name: string;
 
+  @CreateDateColumn()
+  date: Date;
+
   @Column()
   month: number;
 
@@ -24,11 +28,4 @@ export class Schedule {
 
   @Column()
   period: number;
-
-  @ManyToOne(() => Attendance, (attendance) => attendance.schedule, {
-    onUpdate: 'CASCADE',
-    onDelete: 'CASCADE',
-  })
-  @JoinColumn({ name: 'attendance_id' })
-  attendance: Attendance;
 }

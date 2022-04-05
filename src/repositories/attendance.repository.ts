@@ -7,6 +7,7 @@ import { DoAttendanceReqData } from 'src/attendance/dto/doAttendanceReq.dto';
 import { EntityRepository, Repository } from 'typeorm';
 import { Attendance } from '../entities/attendance.entity';
 import { Location } from 'src/entities/location.entity';
+import { State } from 'src/entities/Enum/state.enum';
 
 @EntityRepository(Attendance)
 export class AttendanceRepository extends Repository<Attendance> {
@@ -27,10 +28,12 @@ export class AttendanceRepository extends Repository<Attendance> {
   public async updateState(stateReqData: StateReqData) {
     let state = stateReqData.state;
 
-    return this.createQueryBuilder()
-      .update(Attendance)
-      .set({ state: state })
-      .execute();
+    return (
+      this.createQueryBuilder()
+        .update(Attendance)
+        // .set({ state: State })
+        .execute()
+    );
   }
 
   //출석 삭제
@@ -54,16 +57,25 @@ export class AttendanceRepository extends Repository<Attendance> {
       .leftJoinAndSelect('tbl_attendance.student', 'student')
       .leftJoin('tbl_attendance.director', 'director')
       .addSelect('director.id')
+      .leftJoinAndSelect('director.schedule', 'schedule')
       .leftJoin('tbl_attendance.teacher', 'teacher')
       .addSelect(['teacher.id', 'teacher.name'])
       .leftJoin('tbl_attendance.location', 'location')
+      .addSelect(['location.floor', 'location.name'])
       .where('location.floor= :floor', { floor: floor })
-      // .where(' date= :date', { date: date })
+      .andWhere('schedule.date= :date', { date: date })
       .getMany();
   }
 
   //출석조회 가져오기(필터링)
-  public async getAttendanceFilter(date, state, floor) {}
+  public async getAttendanceFilter(date, state, floor) {
+    return await this.createQueryBuilder('tbl_attendance')
+      .leftJoinAndSelect('tbl_attendance.student', 'student')
+      .leftJoin('tbl_attendance.location', 'location')
+      .where('state= :state', { state: state })
+      .where('location.floor= :floor', { floor: floor })
+      .getMany();
+  }
 
   //출석 하기
   public async doAttendance(location_id, doAttendanceReqDto) {

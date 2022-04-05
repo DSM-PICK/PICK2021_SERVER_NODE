@@ -1,16 +1,21 @@
 import {
   Body,
   Controller,
+  DefaultValuePipe,
   Delete,
   Get,
   HttpCode,
   Param,
   ParseArrayPipe,
+  ParseEnumPipe,
   ParseIntPipe,
+  ParseUUIDPipe,
   Patch,
   Post,
   Query,
+  ValidationPipe,
 } from '@nestjs/common';
+import { State } from 'src/entities/Enum/state.enum';
 import { AttendanceService } from './attendance.service';
 import { AttendanceReqData } from './dto/attendanceRequest.dto';
 import { DoAttendanceReqData } from './dto/doAttendanceReq.dto';
@@ -56,7 +61,7 @@ export class AttendanceController {
   @Get()
   public async getAttendanceFilter(
     @Query('date') date: string,
-    @Query('state') state: string,
+    @Query('state') state: State,
     @Query('floor') floor: number,
   ) {
     return await this.attendanceService.getAttendanceFilter(date, state, floor);

@@ -19,7 +19,7 @@ export class Student {
   @Column({ length: 5 })
   name: string;
 
-  @Column({ length: 4, unique: true })
+  @Column({ length: 4 })
   gcn: string;
 
   @Column({ length: 20 })
