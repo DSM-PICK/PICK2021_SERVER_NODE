@@ -25,9 +25,6 @@ export class Student {
   @Column({ length: 20 })
   state: string;
 
-  // @Column({ length: 2 })
-  // year: string;
-
   @ManyToOne(() => Location, (location) => location.id, {
     onUpdate: 'CASCADE',
     onDelete: 'CASCADE',

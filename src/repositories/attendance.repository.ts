@@ -50,12 +50,15 @@ export class AttendanceRepository extends Repository<Attendance> {
         'tbl_attendance.id',
         'tbl_attendance.state',
         'tbl_attendance.reason',
+        'tbl_attendance.date',
       ])
       .leftJoinAndSelect('tbl_attendance.student', 'student')
-      .leftJoinAndSelect('tbl_attendance.director', 'director')
+      .leftJoin('tbl_attendance.director', 'director')
+      .addSelect('director.id')
       .leftJoin('tbl_attendance.teacher', 'teacher')
-      .addSelect('teacher.name')
-      .leftJoin('tbl_attendance.location', 'loacation')
+      .addSelect(['teacher.id', 'teacher.name'])
+      .leftJoin('tbl_attendance.location', 'location')
+      .where('location.floor= :floor', { floor: floor })
       .getMany();
   }
 

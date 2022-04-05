@@ -6,6 +6,7 @@ import {
   HttpCode,
   Param,
   ParseArrayPipe,
+  ParseIntPipe,
   Patch,
   Post,
   Query,
@@ -44,7 +45,7 @@ export class AttendanceController {
 
   //오늘출결변동내역 가져오기
   @Get()
-  public async getAttendanceToday(@Query('floor') floor: number) {
+  public async getAttendanceToday(@Query('floor', ParseIntPipe) floor: number) {
     return await this.attendanceService.getAttendanceToday(floor);
   }
 
