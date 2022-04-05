@@ -48,8 +48,8 @@ export class AttendanceService {
   ) {}
 
   //오늘출결변동내역 가져오기
-  public async getAttendanceToday(floor) {
-    return await this.attendanceRepository.getAttendanceToday(floor);
+  public async getAttendanceToday(floor, date) {
+    return await this.attendanceRepository.getAttendanceToday(floor, date);
   }
 
   //출석조회 가져오기(필터링)

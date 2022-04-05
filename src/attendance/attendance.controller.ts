@@ -45,8 +45,11 @@ export class AttendanceController {
 
   //오늘출결변동내역 가져오기
   @Get()
-  public async getAttendanceToday(@Query('floor', ParseIntPipe) floor: number) {
-    return await this.attendanceService.getAttendanceToday(floor);
+  public async getAttendanceToday(
+    @Query('floor', ParseIntPipe) floor: number,
+    @Query('date') date: Date,
+  ) {
+    return await this.attendanceService.getAttendanceToday(floor, date);
   }
 
   //출석 조회(필터링)
