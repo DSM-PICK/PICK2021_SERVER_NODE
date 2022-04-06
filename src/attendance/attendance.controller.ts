@@ -49,7 +49,7 @@ export class AttendanceController {
   }
 
   //오늘출결변동내역 가져오기
-  @Get()
+  @Get('/today')
   public async getAttendanceToday(
     @Query('floor', ParseIntPipe) floor: number,
     @Query('date') date: Date,
@@ -62,7 +62,7 @@ export class AttendanceController {
   public async getAttendanceFilter(
     @Query('date') date: string,
     @Query('state') state: State,
-    @Query('floor') floor: number,
+    @Query('floor', ParseIntPipe) floor: number,
   ) {
     return await this.attendanceService.getAttendanceFilter(date, state, floor);
   }

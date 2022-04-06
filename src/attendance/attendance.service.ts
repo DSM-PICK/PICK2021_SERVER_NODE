@@ -30,12 +30,11 @@ export class AttendanceService {
           term,
           reason,
           student_id,
-          teacher_id
+          teacher_id,
         },
       ]);
     });
   }
-
 
   //출석 상태 변경
   public async updateState(stateReqData: StateReqData) {
