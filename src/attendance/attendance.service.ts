@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { first } from 'rxjs';
 import { Attendance } from 'src/entities/attendance.entity';
 import { notFoundAttendanceIdException } from 'src/exception/exception.attendance';
 import { AttendanceRepository } from 'src/repositories/attendance.repository';
@@ -22,17 +23,21 @@ export class AttendanceService {
 
   //출결변동내역 등록
   public async postAttendance(attendanceReqData: AttendanceReqData[]) {
-    return attendanceReqData.map((item) => {
+    return attendanceReqData.map(async (item) => {
       const { state, term, reason, student_id, teacher_id } = item;
-      this.attendanceRepository.save([
-        {
-          state,
-          term,
-          reason,
-          student_id,
-          teacher_id,
-        },
-      ]);
+      let firstperiod = Number(item.term.substr(11, 1));
+      let lastperiod = Number(item.term.substr(24));
+      for (firstperiod; firstperiod <= lastperiod; firstperiod++) {
+        console.log(state, term, reason, student_id, teacher_id);
+        await this.attendanceRepository.save({
+          term: term,
+          reason: reason,
+          student_id: student_id,
+          teacher_id: teacher_id,
+          state: state,
+          period: firstperiod,
+        });
+      }
     });
   }
 
@@ -44,7 +49,6 @@ export class AttendanceService {
   //출석하기
   public async doAttendance(
     location_id: number,
-    doAttendanceReqDto: DoAttendanceReqData,
   ) {}
 
   //오늘출결변동내역 가져오기

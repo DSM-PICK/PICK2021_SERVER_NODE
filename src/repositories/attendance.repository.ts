@@ -48,8 +48,6 @@ export class AttendanceRepository extends Repository<Attendance> {
 
   //오늘출결변동내역 가져오기
   public async getAttendanceToday(floor: number, date: string) {
-    // let test = date.split('T');
-    // console.log(test);
     return await this.createQueryBuilder('tbl_attendance')
       .select([
         'tbl_attendance.id',
@@ -59,10 +57,10 @@ export class AttendanceRepository extends Repository<Attendance> {
       .leftJoinAndSelect('tbl_attendance.student', 'student')
       .leftJoin('tbl_attendance.director', 'director')
       .addSelect('director.id')
-      .leftJoinAndSelect('director.schedule', 'schedule')
+      .leftJoin('director.schedule', 'schedule')
       .leftJoin('tbl_attendance.teacher', 'teacher')
       .addSelect(['teacher.id', 'teacher.name'])
-      .leftJoin('tbl_attendance.location', 'location')
+      .leftJoin('student.location', 'location')
       .addSelect(['location.floor', 'location.name'])
       .where('location.floor=:floor', { floor: floor })
       .andWhere('schedule.date=:date', { date: date })
@@ -73,9 +71,12 @@ export class AttendanceRepository extends Repository<Attendance> {
   public async getAttendanceFilter(date, state, floor) {
     return await this.createQueryBuilder('tbl_attendance')
       .leftJoinAndSelect('tbl_attendance.student', 'student')
-      .leftJoin('tbl_attendance.location', 'location')
-      .where('state= :state', { state: state })
-      .where('location.floor= :floor', { floor: floor })
+      .leftJoin('student.location', 'location')
+      .leftJoin('tbl_attendance.director', 'director')
+      .leftJoin('director.schedule', 'schedule')
+      .where('schedule.date=:date', { date: date })
+      .andWhere('state= :state', { state: state })
+      .andWhere('location.floor= :floor', { floor: floor })
       .getMany();
   }
 

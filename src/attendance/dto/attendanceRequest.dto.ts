@@ -3,9 +3,6 @@ import { State } from 'src/entities/Enum/state.enum';
 
 //출결변동사항 등록
 export class AttendanceReqData {
-  @IsString()
-  teacher_id: string;
-
   @IsEnum([
     State.ABSENCE,
     State.FIELDEXPER,
@@ -21,6 +18,9 @@ export class AttendanceReqData {
 
   @IsString()
   reason: string;
+
+  @IsString()
+  teacher_id: string;
 
   @IsNumber()
   student_id: number;

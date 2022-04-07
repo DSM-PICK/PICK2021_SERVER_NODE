@@ -30,7 +30,4 @@ export class Location {
   })
   @JoinColumn({ name: 'major_id' })
   major: Major;
-
-  @OneToMany(() => Attendance, (attendance) => attendance.location)
-  attendance: Attendance;
 }

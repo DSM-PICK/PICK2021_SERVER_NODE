@@ -73,7 +73,7 @@ export class AttendanceController {
     @Query('period') location_id: number,
     @Body() doAttendanceReqDto: DoAttendanceReqData,
   ) {
-    await this.attendanceService.doAttendance(location_id, doAttendanceReqDto);
+    await this.attendanceService.doAttendance(location_id);
     return { status: 204, msessage: 'success' };
   }
 

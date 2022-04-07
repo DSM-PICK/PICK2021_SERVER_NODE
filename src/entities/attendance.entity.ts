@@ -52,11 +52,4 @@ export class Attendance {
   })
   @JoinColumn({ name: 'teacher_id' })
   teacher: Teacher;
-
-  @ManyToOne(() => Location, (location) => location.attendance, {
-    onUpdate: 'CASCADE',
-    onDelete: 'CASCADE',
-  })
-  @JoinColumn({ name: 'location_id' })
-  location: Location;
 }
