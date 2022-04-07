@@ -28,7 +28,6 @@ export class AttendanceService {
       let firstperiod = Number(item.term.substr(11, 1));
       let lastperiod = Number(item.term.substr(24));
       for (firstperiod; firstperiod <= lastperiod; firstperiod++) {
-        console.log(state, term, reason, student_id, teacher_id);
         await this.attendanceRepository.save({
           term: term,
           reason: reason,
@@ -47,9 +46,7 @@ export class AttendanceService {
   }
 
   //출석하기
-  public async doAttendance(
-    location_id: number,
-  ) {}
+  public async doAttendance(location_id: number) {}
 
   //오늘출결변동내역 가져오기
   public async getAttendanceToday(floor, date) {

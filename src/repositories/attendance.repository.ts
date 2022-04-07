@@ -28,12 +28,10 @@ export class AttendanceRepository extends Repository<Attendance> {
   public async updateState(stateReqData: StateReqData) {
     let state = stateReqData.state;
 
-    return (
-      this.createQueryBuilder()
-        .update(Attendance)
-        // .set({ state: State })
-        .execute()
-    );
+    return this.createQueryBuilder()
+      .update(Attendance)
+      .set({ state: state })
+      .execute();
   }
 
   //출석 삭제
@@ -70,10 +68,11 @@ export class AttendanceRepository extends Repository<Attendance> {
   //출석조회 가져오기(필터링)
   public async getAttendanceFilter(date, state, floor) {
     return await this.createQueryBuilder('tbl_attendance')
-      .leftJoinAndSelect('tbl_attendance.student', 'student')
+      .leftJoin('tbl_attendance.student', 'student')
       .leftJoin('student.location', 'location')
       .leftJoin('tbl_attendance.director', 'director')
       .leftJoin('director.schedule', 'schedule')
+      .addSelect('')
       .where('schedule.date=:date', { date: date })
       .andWhere('state= :state', { state: state })
       .andWhere('location.floor= :floor', { floor: floor })
