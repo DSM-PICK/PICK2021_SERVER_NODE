@@ -51,6 +51,7 @@ export class AttendanceRepository extends Repository<Attendance> {
         'tbl_attendance.id',
         'tbl_attendance.state',
         'tbl_attendance.reason',
+        'tbl_attendance.period',
       ])
       .leftJoinAndSelect('tbl_attendance.student', 'student')
       .leftJoin('tbl_attendance.director', 'director')
@@ -59,9 +60,8 @@ export class AttendanceRepository extends Repository<Attendance> {
       .leftJoin('tbl_attendance.teacher', 'teacher')
       .addSelect(['teacher.id', 'teacher.name'])
       .leftJoin('student.location', 'location')
-      .addSelect(['location.floor', 'location.name'])
-      .where('location.floor=:floor', { floor: floor })
-      .andWhere('schedule.date=:date', { date: date })
+      .where('location.floor= :floor', { floor: floor })
+      .andWhere('schedule.date= :date', { date: date })
       .getMany();
   }
 
