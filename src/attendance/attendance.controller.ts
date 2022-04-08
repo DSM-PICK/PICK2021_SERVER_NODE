@@ -58,7 +58,7 @@ export class AttendanceController {
   }
 
   //출석 조회(필터링)
-  @Get()
+  @Get('/filter')
   public async getAttendanceFilter(
     @Query('date') date: string,
     @Query('state') state: State,

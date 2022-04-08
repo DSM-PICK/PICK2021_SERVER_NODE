@@ -67,15 +67,23 @@ export class AttendanceRepository extends Repository<Attendance> {
 
   //출석조회 가져오기(필터링)
   public async getAttendanceFilter(date, state, floor) {
+    const student_attendance = [0];
     return await this.createQueryBuilder('tbl_attendance')
       .leftJoin('tbl_attendance.student', 'student')
       .leftJoin('student.location', 'location')
+      .select([
+        'student.gcn',
+        'student.id',
+        'student.name',
+        'tbl_attendance.period',
+        'location.name',
+        'tbl_attendance.state',
+      ])
       .leftJoin('tbl_attendance.director', 'director')
       .leftJoin('director.schedule', 'schedule')
-      .addSelect('')
-      .where('schedule.date=:date', { date: date })
-      .andWhere('state= :state', { state: state })
-      .andWhere('location.floor= :floor', { floor: floor })
+      .where('location.floor= :floor', { floor: floor })
+      .andWhere('schedule.date= :date', { date: date })
+      .andWhere('tbl_attendance.state= :state', { state: state })
       .getMany();
   }
 

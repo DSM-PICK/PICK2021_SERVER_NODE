@@ -2,9 +2,6 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  JoinColumn,
-  Long,
-  ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Attendance } from './attendance.entity';
@@ -22,9 +19,6 @@ export class Schedule {
 
   @Column()
   month: number;
-
-  @Column()
-  term: string;
 
   @Column()
   period: number;
