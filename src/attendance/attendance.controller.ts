@@ -79,8 +79,7 @@ export class AttendanceController {
 
   //출석 가져오기
   @Get()
-  public async bringAttendance(@Query('period') location_id: number) {
-    await this.attendanceService.bringAttendance(location_id);
-    return { status: 204, message: 'success' };
+  public async bringAttendance(@Query('location_id') location_id: number) {
+    return await this.attendanceService.bringAttendance(location_id);
   }
 }

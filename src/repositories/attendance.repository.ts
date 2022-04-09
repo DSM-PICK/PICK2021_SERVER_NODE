@@ -67,7 +67,6 @@ export class AttendanceRepository extends Repository<Attendance> {
 
   //출석조회 가져오기(필터링)
   public async getAttendanceFilter(date, state, floor) {
-    const student_attendance = [0];
     return await this.createQueryBuilder('tbl_attendance')
       .leftJoin('tbl_attendance.student', 'student')
       .leftJoin('student.location', 'location')
@@ -98,5 +97,24 @@ export class AttendanceRepository extends Repository<Attendance> {
   }
 
   //출석가져오기
-  public async bringAttendance(location_id) {}
+  public async bringAttendance(location_id) {
+    return await this.createQueryBuilder('tbl_attendance')
+      .leftJoin('tbl_attendance.director', 'director')
+      .leftJoin('director.schedule', 'schedule')
+      .leftJoin('tbl_attendance.student', 'student')
+      .leftJoin('student.location', 'location')
+      .leftJoin('student.major', 'major')
+      .leftJoin('tbl_attendance.teacher', 'teacher')
+      .select([
+        'schedule.name',
+        'location.id',
+        'location.name',
+        'major.head',
+        'major.teacher_name',
+        'student',
+        'location.name',
+        'tbl_attendance.state',
+      ])
+      .where('location.id= :location_id', { location_id: location_id });
+  }
 }
