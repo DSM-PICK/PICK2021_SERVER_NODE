@@ -68,12 +68,15 @@ export class AttendanceController {
   }
 
   //출석하기
-  @Post()
+  @Patch('/:attendance_id')
   public async doAttendance(
-    @Query('period') location_id: number,
+    @Param('attendance_id') attendance_id,
     @Body() doAttendanceReqDto: DoAttendanceReqData,
   ) {
-    await this.attendanceService.doAttendance(location_id);
+    await this.attendanceService.updateAttendance(
+      attendance_id,
+      doAttendanceReqDto,
+    );
     return { status: 204, msessage: 'success' };
   }
 

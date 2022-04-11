@@ -1,16 +1,7 @@
 import { IsArray, IsEnum, IsNumber, IsString } from 'class-validator';
 import { State } from 'src/entities/Enum/state.enum';
-import { IsNull } from 'typeorm';
-import { StateReqData } from './stateRequestData.dto';
 
-//출석하기
-export class DoAttendanceReqData {
-  @IsNumber()
-  period: number;
-
-  @IsNumber()
-  student_id: number;
-
+export class ResFilterDataArray {
   @IsEnum([
     State.ABSENCE,
     State.FIELDEXPER,
@@ -22,5 +13,21 @@ export class DoAttendanceReqData {
   state: State;
 
   @IsNumber()
-  location_id: number;
+  period: number;
+
+  @IsString()
+  location_name: string;
+}
+
+export class ResFilterData {
+  @IsNumber()
+  student_id: number;
+
+  @IsString()
+  student_name: string;
+
+  @IsString()
+  gcn: string;
+
+  student_attendance: ResFilterDataArray[];
 }

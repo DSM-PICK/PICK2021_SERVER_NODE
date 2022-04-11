@@ -1,11 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { first } from 'rxjs';
 import { Attendance } from 'src/entities/attendance.entity';
 import { notFoundAttendanceIdException } from 'src/exception/exception.attendance';
 import { AttendanceRepository } from 'src/repositories/attendance.repository';
 import { AttendanceReqData } from './dto/attendanceRequest.dto';
-import { DoAttendanceReqData } from './dto/doAttendanceReq.dto';
+import { ResFilterData, ResFilterDataArray } from './dto/resFilterData.dto';
 import { StateReqData } from './dto/stateRequestData.dto';
 
 @Injectable()
@@ -46,7 +45,12 @@ export class AttendanceService {
   }
 
   //출석하기
-  public async doAttendance(location_id: number) {}
+  public async updateAttendance(attendance_id, doAttendanceReqDto) {
+    return await this.attendanceRepository.updateAttendance(
+      attendance_id,
+      doAttendanceReqDto,
+    );
+  }
 
   //오늘출결변동내역 가져오기
   public async getAttendanceToday(floor, date) {
@@ -54,14 +58,74 @@ export class AttendanceService {
   }
 
   //출석조회 가져오기(필터링)
-  public async getAttendanceFilter(date, state, floor) {
-    return await this.attendanceRepository.getAttendanceFilter(
-      date,
-      state,
-      floor,
-    );
+  public async getAttendanceFilter(
+    date,
+    state,
+    floor,
+  ): Promise<ResFilterData[]> {
+    const arrayIndex = [];
+    const array = [];
+    const studentAttendance = [];
+    const student = await this.attendanceRepository
+      .createQueryBuilder('tbl_attendance')
+      .leftJoin('tbl_attendance.student', 'student')
+      .leftJoin('tbl_attendance.director', 'director')
+      .leftJoin('director.schedule', 'schedule')
+      .leftJoin('student.location', 'location')
+      .select('student.id', 'student_id')
+      .addSelect('student.name', 'student_name')
+      .addSelect('student.gcn', 'gcn')
+      .addSelect('tbl_attendance.period', 'period')
+      .addSelect('tbl_attendance.state', 'state')
+      .addSelect('location.name', 'location_name')
+      .where('schedule.date: =date', { date: date })
+      .where('tbl_attendance.state: =state', { state: state })
+      .where('location.floor= :floor', { floor: floor })
+      .orderBy('student.id', 'ASC')
+      .addOrderBy('tbl_attendance.period', 'ASC')
+      .getRawMany();
+
+    let index = -1;
+    for (let i = 0; i < student.length; i++) {
+      if (arrayIndex.indexOf(student[i].student_id) === -1) {
+        arrayIndex.push(student[i].student_id);
+        array.push({
+          id: student[i].student_id,
+          name: student[i].student_name,
+          gcn: student[i].gcn,
+        });
+        studentAttendance.push(
+          new Array({
+            period: student[i].period,
+            state: student[i].state,
+            location_name: student[i].location_name,
+          }),
+        );
+        index += 1;
+      } else {
+        studentAttendance[index].push({
+          period: student[i].period,
+          state: student[i].state,
+          location_name: student[i].location_name,
+        });
+      }
+    }
+
+    const studentFilterResponse: ResFilterData[] = [];
+
+    for (let i = 0; i < array.length; i++) {
+      studentFilterResponse.push({
+        student_id: array[i].id,
+        student_name: array[i].name,
+        gcn: array[i].gcn,
+        student_attendance: studentAttendance[i],
+      });
+    }
+
+    return studentFilterResponse;
   }
 
+  //출석 가져오기
   public async bringAttendance(location_id) {
     return await this.attendanceRepository.bringAttendance(location_id);
   }

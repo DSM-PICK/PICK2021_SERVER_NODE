@@ -34,6 +34,11 @@ export class AttendanceRepository extends Repository<Attendance> {
       .execute();
   }
 
+  public async updateAttendance(
+    attendance_id,
+    doAttendanceReqDto: DoAttendanceReqData,
+  ) {}
+
   //출석 삭제
   public async deleteAttendance(id: number) {
     console.log(id);
@@ -69,27 +74,6 @@ export class AttendanceRepository extends Repository<Attendance> {
       .getRawMany();
   }
 
-  //출석조회 가져오기(필터링)
-  public async getAttendanceFilter(date, state, floor) {
-    return await this.createQueryBuilder('tbl_attendance')
-      .leftJoin('tbl_attendance.student', 'student')
-      .leftJoin('student.location', 'location')
-      .select([
-        'student.gcn',
-        'student.id',
-        'student.name',
-        'tbl_attendance.period',
-        'location.name',
-        'tbl_attendance.state',
-      ])
-      .leftJoin('tbl_attendance.director', 'director')
-      .leftJoin('director.schedule', 'schedule')
-      .where('location.floor= :floor', { floor: floor })
-      .andWhere('schedule.date= :date', { date: date })
-      .andWhere('tbl_attendance.state= :state', { state: state })
-      .getRawMany();
-  }
-
   //출석 하기
   public async doAttendance(location_id, doAttendanceReqDto) {
     let newAttendance: Attendance;
@@ -100,6 +84,7 @@ export class AttendanceRepository extends Repository<Attendance> {
     return attendance;
   }
 
+  //출석 조회
   public async bringAttendance(location_id) {
     return await this.createQueryBuilder('tbl_attendance')
       .leftJoin('tbl_attendance.student', 'student')
