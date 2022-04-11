@@ -47,22 +47,26 @@ export class AttendanceRepository extends Repository<Attendance> {
   //오늘출결변동내역 가져오기
   public async getAttendanceToday(floor: number, date: string) {
     return await this.createQueryBuilder('tbl_attendance')
-      .select([
-        'tbl_attendance.id',
-        'tbl_attendance.state',
-        'tbl_attendance.reason',
-        'tbl_attendance.period',
-      ])
-      .leftJoinAndSelect('tbl_attendance.student', 'student')
+      .select('tbl_attendance.id', 'attendance_id')
+      .addSelect('tbl_attendance.state', 'attendance_state')
+      .addSelect('tbl_attendance.reason', 'reason')
+      .addSelect('tbl_attendance.period', 'period')
+      .addSelect('tbl_attendance.term', 'term')
+      .leftJoin('tbl_attendance.student', 'student')
+      .addSelect('student.id', 'student_id')
+      .addSelect('student.name', 'name')
+      .addSelect('student.gcn', 'gcn')
+      .addSelect('student.state', 'state')
       .leftJoin('tbl_attendance.director', 'director')
-      .addSelect('director.id')
+      .addSelect('director.id', 'director_id')
       .leftJoin('director.schedule', 'schedule')
       .leftJoin('tbl_attendance.teacher', 'teacher')
-      .addSelect(['teacher.id', 'teacher.name'])
+      .addSelect('teacher.id', 'teacher_id')
+      .addSelect('teacher.name', 'teacher_name')
       .leftJoin('student.location', 'location')
       .where('location.floor= :floor', { floor: floor })
       .andWhere('schedule.date= :date', { date: date })
-      .getMany();
+      .getRawMany();
   }
 
   //출석조회 가져오기(필터링)
@@ -83,7 +87,7 @@ export class AttendanceRepository extends Repository<Attendance> {
       .where('location.floor= :floor', { floor: floor })
       .andWhere('schedule.date= :date', { date: date })
       .andWhere('tbl_attendance.state= :state', { state: state })
-      .getMany();
+      .getRawMany();
   }
 
   //출석 하기
@@ -96,25 +100,21 @@ export class AttendanceRepository extends Repository<Attendance> {
     return attendance;
   }
 
-  //출석가져오기
   public async bringAttendance(location_id) {
     return await this.createQueryBuilder('tbl_attendance')
-      .leftJoin('tbl_attendance.director', 'director')
-      .leftJoin('director.schedule', 'schedule')
       .leftJoin('tbl_attendance.student', 'student')
-      .leftJoin('student.location', 'location')
+      .leftJoinAndSelect('tbl_attendance.director', 'director')
       .leftJoin('student.major', 'major')
-      .leftJoin('tbl_attendance.teacher', 'teacher')
-      .select([
-        'schedule.name',
-        'location.id',
-        'location.name',
-        'major.head',
-        'major.teacher_name',
-        'student',
-        'location.name',
-        'tbl_attendance.state',
-      ])
-      .where('location.id= :location_id', { location_id: location_id });
+      .leftJoin('major.teacher', 'teacher')
+      .leftJoin('student.location', 'location')
+      .leftJoin('director.schedule', 'schedule')
+      .select('schedule.name', 'name')
+      .addSelect('location.name', 'location_name')
+      .addSelect(['teacher.name', 'teacher.password'])
+      .addSelect(['student.id', 'student.gcn', 'student.name'])
+      .addSelect(['tbl_attendance.state', 'tbl_attendance.period'])
+      .orderBy('student.id', 'ASC')
+      .where('location.id= :location_id', { location_id: location_id })
+      .getRawMany();
   }
 }

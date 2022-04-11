@@ -77,9 +77,9 @@ export class AttendanceController {
     return { status: 204, msessage: 'success' };
   }
 
-  //출석 가져오기
-  @Get()
-  public async bringAttendance(@Query('location_id') location_id: number) {
+  //출석 조회가져오기
+  @Get('/:location_id')
+  public async bringAttendance(@Param('location_id') location_id: number) {
     return await this.attendanceService.bringAttendance(location_id);
   }
 }

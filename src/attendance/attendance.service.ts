@@ -62,7 +62,6 @@ export class AttendanceService {
     );
   }
 
-  //출석 가져오기
   public async bringAttendance(location_id) {
     return await this.attendanceRepository.bringAttendance(location_id);
   }
