@@ -28,11 +28,11 @@ export class AttendanceService {
       let lastperiod = Number(item.term.substr(24));
       for (firstperiod; firstperiod <= lastperiod; firstperiod++) {
         await this.attendanceRepository.save({
-          term: term,
-          reason: reason,
-          student_id: student_id,
-          teacher_id: teacher_id,
-          state: state,
+          term,
+          reason,
+          student_id,
+          teacher_id,
+          state,
           period: firstperiod,
         });
       }
@@ -78,9 +78,9 @@ export class AttendanceService {
       .addSelect('tbl_attendance.period', 'period')
       .addSelect('tbl_attendance.state', 'state')
       .addSelect('location.name', 'location_name')
-      .where('schedule.date: =date', { date: date })
-      .where('tbl_attendance.state: =state', { state: state })
-      .where('location.floor= :floor', { floor: floor })
+      .where('schedule.date=:date', { date: date })
+      .andWhere('tbl_attendance.state= :state', { state: state })
+      .andWhere('location.floor= :floor', { floor: floor })
       .orderBy('student.id', 'ASC')
       .addOrderBy('tbl_attendance.period', 'ASC')
       .getRawMany();
