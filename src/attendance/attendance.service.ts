@@ -1,10 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Attendance } from 'src/entities/attendance.entity';
 import { notFoundAttendanceIdException } from 'src/exception/exception.attendance';
 import { AttendanceRepository } from 'src/repositories/attendance.repository';
 import { AttendanceReqData } from './dto/attendanceRequest.dto';
-import { ResFilterData, ResFilterDataArray } from './dto/resFilterData.dto';
+import { ResFilterData } from './dto/resFilterData.dto';
 import { StateReqData } from './dto/stateRequestData.dto';
 
 @Injectable()

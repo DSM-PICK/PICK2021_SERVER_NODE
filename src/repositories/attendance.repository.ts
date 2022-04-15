@@ -1,13 +1,8 @@
 import { StateReqData } from 'src/attendance/dto/stateRequestData.dto';
-import { Student } from 'src/entities/student.entity';
-import { Teacher } from 'src/entities/teacher.entity';
-import { Director } from 'src/entities/director.entity';
 import { DoAttendanceReqData } from 'src/attendance/dto/doAttendanceReq.dto';
 
 import { EntityRepository, Repository } from 'typeorm';
 import { Attendance } from '../entities/attendance.entity';
-import { Location } from 'src/entities/location.entity';
-import { State } from 'src/entities/Enum/state.enum';
 
 @EntityRepository(Attendance)
 export class AttendanceRepository extends Repository<Attendance> {

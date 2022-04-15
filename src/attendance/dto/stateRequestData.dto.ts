@@ -1,4 +1,4 @@
-import { IsEnum, IsNumber, IsString, Length } from 'class-validator';
+import { IsEnum, IsNumber } from 'class-validator';
 import { State } from 'src/entities/Enum/state.enum';
 
 //상태변경데이터

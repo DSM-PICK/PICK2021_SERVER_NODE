@@ -7,7 +7,6 @@ import {
 } from 'typeorm';
 import { State } from './Enum/state.enum';
 import { Director } from './director.entity';
-import { Location } from './location.entity';
 import { Student } from './student.entity';
 import { Teacher } from './teacher.entity';
 

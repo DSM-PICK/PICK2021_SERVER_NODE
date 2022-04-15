@@ -1,19 +1,13 @@
 import {
   Body,
   Controller,
-  DefaultValuePipe,
   Delete,
   Get,
-  HttpCode,
   Param,
-  ParseArrayPipe,
-  ParseEnumPipe,
   ParseIntPipe,
-  ParseUUIDPipe,
   Patch,
   Post,
   Query,
-  ValidationPipe,
 } from '@nestjs/common';
 import { State } from 'src/entities/Enum/state.enum';
 import { AttendanceService } from './attendance.service';

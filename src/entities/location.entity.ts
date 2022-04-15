@@ -2,12 +2,9 @@ import {
   Column,
   Entity,
   JoinColumn,
-  ManyToOne,
-  OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { Attendance } from './attendance.entity';
 import { Major } from './major.entity';
 
 @Entity('tbl_location')

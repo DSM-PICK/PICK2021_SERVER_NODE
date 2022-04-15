@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
 import { notFoundLocationIdException } from 'src/exception/exception.location';
 import { LocationRepository } from '../repositories/location.repository';
 import { LocationReqDto } from './dto/location-req.dto';
@@ -7,13 +6,12 @@ import { ModifyLocationDto } from './dto/modifyLocation.dto';
 
 @Injectable()
 export class LocationService {
-    constructor(
-      private locationRepository: LocationRepository) {}
+  constructor(private locationRepository: LocationRepository) {}
 
   async getLocationlist() {
     return await this.locationRepository.find();
   }
-  
+
   async addLocation(dto: LocationReqDto) {
     return await this.locationRepository.save({
       floor: dto.floor,
@@ -23,7 +21,7 @@ export class LocationService {
   }
 
   async deleteLocation(id: number) {
-    if (!await this.locationRepository.checkExistLocation(id)) {
+    if (!(await this.locationRepository.checkExistLocation(id))) {
       throw notFoundLocationIdException;
     }
     return await this.locationRepository.deleteLocation(id);
@@ -34,9 +32,9 @@ export class LocationService {
       throw notFoundLocationIdException;
     }
     return await this.locationRepository.updateLocation(id, modifyLocationData);
-    }
+  }
 
   public async getFloorLocation(floor: number) {
-    return await this.locationRepository.getFloorLocation(floor)
+    return await this.locationRepository.getFloorLocation(floor);
   }
 }

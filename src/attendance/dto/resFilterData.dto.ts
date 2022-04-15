@@ -1,4 +1,4 @@
-import { IsArray, IsEnum, IsNumber, IsString } from 'class-validator';
+import { IsEnum, IsNumber, IsString } from 'class-validator';
 import { State } from 'src/entities/Enum/state.enum';
 
 export class ResFilterDataArray {
