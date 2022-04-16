@@ -4,15 +4,19 @@ import {
   Entity,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { Attendance } from './attendance.entity';
+import { ScheduleName } from './Enum/scheduleName.enum';
 
 @Entity('tbl_schedule')
 export class Schedule {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ length: 20 })
-  name: string;
+  @Column({
+    type: 'enum',
+    name: 'name',
+    enum: ScheduleName,
+  })
+  name!: ScheduleName;
 
   @CreateDateColumn()
   date: Date;
