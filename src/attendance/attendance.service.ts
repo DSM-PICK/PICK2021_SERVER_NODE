@@ -1,13 +1,21 @@
 import { Injectable } from '@nestjs/common';
+import { last } from 'rxjs';
+import { Attendance } from 'src/entities/attendance.entity';
 import { notFoundAttendanceIdException } from 'src/exception/exception.attendance';
 import { AttendanceRepository } from 'src/repositories/attendance.repository';
+import { StudentRepository } from 'src/repositories/student.repository';
+import { TeacherRepository } from 'src/repositories/teacher.repository';
 import { AttendanceReqData } from './dto/attendanceRequest.dto';
 import { ResFilterData } from './dto/resFilterData.dto';
 import { StateReqData } from './dto/stateRequestData.dto';
 
 @Injectable()
 export class AttendanceService {
-  constructor(private attendanceRepository: AttendanceRepository) {}
+  constructor(
+    private readonly attendanceRepository: AttendanceRepository,
+    private readonly studentRepository: StudentRepository,
+    private readonly teacherRepository: TeacherRepository,
+  ) {}
 
   //출석 삭제
   public async deleteAttendance(id: number) {
@@ -24,15 +32,19 @@ export class AttendanceService {
       const { state, term, reason, student_id, teacher_id } = item;
       let firstperiod = Number(item.term.substr(11, 1));
       let lastperiod = Number(item.term.substr(24));
+
+      const student = await this.studentRepository.findOne({ id: student_id });
+      const teacher = await this.teacherRepository.findOne({ id: teacher_id });
+
       for (firstperiod; firstperiod <= lastperiod; firstperiod++) {
         await this.attendanceRepository.save({
-          term,
-          reason,
-          student_id,
-          teacher_id,
-          state,
+          term: term,
+          reason: reason,
+          student: student,
+          teacher: teacher,
+          state: state,
           period: firstperiod,
-        });
+        } as Attendance);
       }
     });
   }
