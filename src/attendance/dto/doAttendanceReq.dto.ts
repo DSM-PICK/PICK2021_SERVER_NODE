@@ -18,7 +18,4 @@ export class DoAttendanceReqData {
     State.OUTING,
   ])
   state: State;
-
-  @IsNumber()
-  location_id: number;
 }

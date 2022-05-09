@@ -32,7 +32,17 @@ export class AttendanceRepository extends Repository<Attendance> {
   public async updateAttendance(
     attendance_id,
     doAttendanceReqDto: DoAttendanceReqData,
-  ) {}
+  ) {
+    return this.createQueryBuilder()
+      .update(Attendance)
+      .set({
+        period: doAttendanceReqDto.period,
+        state: doAttendanceReqDto.state,
+        student_id: doAttendanceReqDto.student_id,
+      })
+      .where('tbl_attendance.id= :id', { id: attendance_id })
+      .execute();
+  }
 
   //출석 삭제
   public async deleteAttendance(id: number) {

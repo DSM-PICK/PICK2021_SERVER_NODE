@@ -31,6 +31,9 @@ export class Attendance {
   @Column({ length: 256 })
   reason: string;
 
+  @Column()
+  student_id: number;
+
   @ManyToOne(() => Student, (student) => student.attendance, {
     onUpdate: 'CASCADE',
     onDelete: 'CASCADE',
