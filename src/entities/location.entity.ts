@@ -2,9 +2,11 @@ import {
   Column,
   Entity,
   JoinColumn,
+  OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import { Attendance } from './attendance.entity';
 import { Major } from './major.entity';
 
 @Entity('tbl_location')
@@ -27,4 +29,7 @@ export class Location {
   })
   @JoinColumn({ name: 'major_id' })
   major: Major;
+
+  @OneToMany(() => Attendance, (attendance) => attendance.location)
+  attendance: Attendance[];
 }

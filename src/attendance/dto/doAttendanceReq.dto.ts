@@ -18,4 +18,6 @@ export class DoAttendanceReqData {
     State.OUTING,
   ])
   state: State;
+
+  location_id: number;
 }

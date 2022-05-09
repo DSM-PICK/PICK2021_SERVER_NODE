@@ -3,12 +3,14 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
+  OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { State } from './Enum/state.enum';
 import { Director } from './director.entity';
 import { Student } from './student.entity';
 import { Teacher } from './teacher.entity';
+import { Location } from './location.entity';
 
 @Entity('tbl_attendance')
 export class Attendance {
@@ -34,6 +36,15 @@ export class Attendance {
   @Column()
   student_id: number;
 
+  @Column()
+  location_id: number;
+
+  @ManyToOne(() => Location, (location) => location.attendance, {
+    onUpdate: 'CASCADE',
+    onDelete: 'CASCADE',
+  })
+  @JoinColumn({ name: 'location_id' })
+  location: Location;
   @ManyToOne(() => Student, (student) => student.attendance, {
     onUpdate: 'CASCADE',
     onDelete: 'CASCADE',

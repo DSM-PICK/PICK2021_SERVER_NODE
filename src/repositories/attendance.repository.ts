@@ -29,6 +29,7 @@ export class AttendanceRepository extends Repository<Attendance> {
       .execute();
   }
 
+  //출석하기
   public async updateAttendance(
     attendance_id,
     doAttendanceReqDto: DoAttendanceReqData,
@@ -39,6 +40,7 @@ export class AttendanceRepository extends Repository<Attendance> {
         period: doAttendanceReqDto.period,
         state: doAttendanceReqDto.state,
         student_id: doAttendanceReqDto.student_id,
+        location_id: doAttendanceReqDto.location_id,
       })
       .where('tbl_attendance.id= :id', { id: attendance_id })
       .execute();
@@ -77,16 +79,6 @@ export class AttendanceRepository extends Repository<Attendance> {
       .where('location.floor= :floor', { floor: floor })
       .andWhere('schedule.date= :date', { date: date })
       .getRawMany();
-  }
-
-  //출석 하기
-  public async doAttendance(location_id, doAttendanceReqDto) {
-    let newAttendance: Attendance;
-
-    newAttendance = this.create({});
-    let attendance = await this.save(newAttendance);
-
-    return attendance;
   }
 
   //출석 조회
