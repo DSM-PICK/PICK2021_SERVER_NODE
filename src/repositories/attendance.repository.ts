@@ -60,7 +60,7 @@ export class AttendanceRepository extends Repository<Attendance> {
   public async getAttendanceToday(floor: number, date: string) {
     return await this.createQueryBuilder('tbl_attendance')
       .select('tbl_attendance.id', 'attendance_id')
-      .addSelect('tbl_attendance.state', 'attendance_state')
+      .addSelect('tbl_attendance.state', 'state')
       .addSelect('tbl_attendance.reason', 'reason')
       .addSelect('tbl_attendance.period', 'period')
       .addSelect('tbl_attendance.term', 'term')
@@ -82,7 +82,7 @@ export class AttendanceRepository extends Repository<Attendance> {
   }
 
   //출석 조회
-  public async bringAttendance(location_id) {
+  public async getAttendance(location_id) {
     return await this.createQueryBuilder('tbl_attendance')
       .leftJoin('tbl_attendance.student', 'student')
       .leftJoinAndSelect('tbl_attendance.director', 'director')
@@ -92,10 +92,12 @@ export class AttendanceRepository extends Repository<Attendance> {
       .leftJoin('director.schedule', 'schedule')
       .select('schedule.name', 'name')
       .addSelect('location.name', 'location_name')
-      .addSelect(['teacher.name', 'teacher.password'])
+      .addSelect('teacher.name', 'teacher_name')
       .addSelect(['student.id', 'student.gcn', 'student.name'])
-      .addSelect(['tbl_attendance.state', 'tbl_attendance.period'])
+      .addSelect('tbl_attendance.state', 'attendance_state')
+      .addSelect('tbl_attendance.period', 'period')
       .orderBy('student.id', 'ASC')
+      .addOrderBy('tbl_attendance.period', 'ASC')
       .where('location.id= :location_id', { location_id: location_id })
       .getRawMany();
   }

@@ -76,7 +76,7 @@ export class AttendanceController {
 
   //출석 조회가져오기
   @Get('/:location_id')
-  public async bringAttendance(@Param('location_id') location_id: number) {
+  public async getAttendance(@Param('location_id') location_id: number) {
     return await this.attendanceService.bringAttendance(location_id);
   }
 }
