@@ -7,6 +7,7 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import { AffliatedAfterSchool } from './affliatedAfterSchool.entity';
 import { Attendance } from './attendance.entity';
 import { Location } from './location.entity';
 import { Major } from './major.entity';
@@ -41,4 +42,7 @@ export class Student {
 
   @OneToMany(() => Attendance, (attendance) => attendance.student)
   attendance: Attendance[];
+
+  @OneToMany(() => AffliatedAfterSchool, (affliated) => affliated.student)
+  affliated: AffliatedAfterSchool[];
 }

@@ -6,6 +6,7 @@ import {
   OneToOne,
   PrimaryColumn,
 } from 'typeorm';
+import { AfterSchool } from './afterschool.entity';
 import { Attendance } from './attendance.entity';
 import { Location } from './location.entity';
 import { Major } from './major.entity';
@@ -24,7 +25,7 @@ export class Teacher {
   @Column({ length: 7 })
   role: string;
 
-  @OneToOne(() => Location, (location) => location.id, {
+  @OneToOne(() => Location, (location) => location.teacher, {
     onUpdate: 'CASCADE',
     onDelete: 'CASCADE',
   })
@@ -37,4 +38,11 @@ export class Teacher {
   @OneToOne(() => Major, (major) => major.teacher)
   @JoinColumn({ name: 'major_id' })
   major: Major;
+
+  @OneToOne(() => AfterSchool, (afterschool) => afterschool.location, {
+    onUpdate: 'CASCADE',
+    onDelete: 'CASCADE',
+  })
+  @JoinColumn({ name: 'after_school_id' })
+  afterschool: AfterSchool;
 }
