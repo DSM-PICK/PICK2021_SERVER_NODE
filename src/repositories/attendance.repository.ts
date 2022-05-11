@@ -3,6 +3,12 @@ import { DoAttendanceReqData } from 'src/attendance/dto/doAttendanceReq.dto';
 
 import { EntityRepository, Repository } from 'typeorm';
 import { Attendance } from '../entities/attendance.entity';
+import { ScheduleName } from 'src/entities/Enum/scheduleName.enum';
+import {
+  ResAttendance,
+  StudentAttendance,
+  StudentList,
+} from 'src/attendance/dto/resAttendance.dto';
 
 @EntityRepository(Attendance)
 export class AttendanceRepository extends Repository<Attendance> {
@@ -83,22 +89,35 @@ export class AttendanceRepository extends Repository<Attendance> {
 
   //출석 조회
   public async getAttendance(location_id) {
-    return await this.createQueryBuilder('tbl_attendance')
+    let student_attendance = await this.createQueryBuilder('tbl_attendance')
+      .select('tbl_attendance.period', 'period')
+      .leftJoin('tbl_attendance.location', 'location')
+      .addSelect('location.name', 'location')
+      .addSelect('tbl_attendance.state', 'state');
+
+    let student_list = await this.createQueryBuilder('tbl_attendance')
       .leftJoin('tbl_attendance.student', 'student')
-      .leftJoinAndSelect('tbl_attendance.director', 'director')
-      .leftJoin('student.major', 'major')
-      .leftJoin('major.teacher', 'teacher')
-      .leftJoin('student.location', 'location')
+      .select('student.id')
+      .addSelect('student.gcn', 'gcn')
+      .addSelect('student.name')
+      .addSelect('student_attendance');
+
+    let res_attendance = await this.createQueryBuilder('tbl_attendance')
+      .leftJoin('tbl_attendance.director', 'director')
       .leftJoin('director.schedule', 'schedule')
-      .select('schedule.name', 'name')
+      .select('schedule.name', 'schedule')
+      .leftJoin('tbl_attendance.location', 'location')
       .addSelect('location.name', 'location_name')
-      .addSelect('teacher.name', 'teacher_name')
-      .addSelect(['student.id', 'student.gcn', 'student.name'])
-      .addSelect('tbl_attendance.state', 'attendance_state')
-      .addSelect('tbl_attendance.period', 'period')
-      .orderBy('student.id', 'ASC')
-      .addOrderBy('tbl_attendance.period', 'ASC')
-      .where('location.id= :location_id', { location_id: location_id })
-      .getRawMany();
+      .leftJoin('tbl_attendance.student', 'student')
+      .leftJoin('student.affliated', 'affliated')
+      .leftJoin('student.major', 'major')
+      //자습일 땐 학반, 방과후일 땐 방과후 이름, 동아리일 땐 동아리이름
+      .orderBy(
+        "(CASE WHEN schedule.name IS '자습' THEN student.location_id WHEN schedule.name IS '방과후' THEN affliated.name ELSE major.name )",
+      )
+      .addOrderBy(
+        "(CASW WHEN schedule.name IS '동아리' THEN major.head ELSE null)",
+      )
+      .where('location.id= :id', { id: location_id });
   }
 }
