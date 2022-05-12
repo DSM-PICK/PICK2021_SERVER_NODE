@@ -163,7 +163,7 @@ export class AttendanceService {
       case ScheduleName.AFTER_SCHOOL:
         break;
       case ScheduleName.MAJOR:
-        const major = await this.majorRepository.getMajorAttendance(
+        const major = await this.majorRepository.getMajorByLocationId(
           location_id,
         );
         const studentList = await this.studentRepository.queryStudentByMajorId(
