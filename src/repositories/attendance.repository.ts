@@ -9,6 +9,8 @@ import {
   StudentAttendance,
   StudentList,
 } from 'src/attendance/dto/resAttendance.dto';
+import { Major } from 'src/entities/major.entity';
+import { Student } from 'src/entities/student.entity';
 
 @EntityRepository(Attendance)
 export class AttendanceRepository extends Repository<Attendance> {
@@ -85,6 +87,21 @@ export class AttendanceRepository extends Repository<Attendance> {
       .where('location.floor= :floor', { floor: floor })
       .andWhere('schedule.date= :date', { date: date })
       .getRawMany();
+  }
+
+  public async getStudentAttendance(student_id, director_id) {
+    return await this.createQueryBuilder('tbl_attendance')
+      .leftJoin('tbl_attendance.location', 'location')
+      .addSelect('tbl_attendance.period', 'period')
+      .addSelect('tbl_attendance.state', 'state')
+      .addSelect('location.name', 'location')
+      .where('tbl_attendance.student_id= :student_id', {
+        student_id: student_id,
+      })
+      .andWhere('tbl_attendance.director_id= :director_id', {
+        director_id: director_id,
+      })
+      .getMany();
   }
 
   //출석 조회
