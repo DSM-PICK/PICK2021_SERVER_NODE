@@ -5,7 +5,9 @@ import { Schedule } from '../entities/schedule.entity';
 export class ScheduleRepository extends Repository<Schedule> {
   public async queryNowSchedule() {
     const date = new Date();
-    return (await this.findOne({ month: date.getMonth(), date: date.getDay() }))
-      .name;
+    return await this.findOne({
+      month: date.getMonth() + 1,
+      date: date.getDate(),
+    });
   }
 }
