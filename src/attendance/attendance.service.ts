@@ -163,38 +163,39 @@ export class AttendanceService {
       case ScheduleName.AFTER_SCHOOL:
         break;
       case ScheduleName.MAJOR:
-        const major = await this.majorRepository.getMajorByLocationId(
-          location_id,
-        );
-        const studentList = await this.studentRepository.queryStudentByMajorId(
-          major.id,
-        );
-        const studentAttendance = studentList.map(async (student) => {
-          const attendance = (
-            await this.attendanceRepository.getStudentAttendance(
-              student.id,
-              director.id,
-            )
-          ).map((attendance) => {
-            return {
-              period: attendance.period,
-              location_name: attendance.getLocationName(),
-              state: attendance.state,
-            };
-          });
-
-          return {
-            gcn: student.gcn,
-            student_id: student.id,
-            student_name: student.name,
-            student_attendance: attendance,
-          };
+        const major = await this.majorRepository.findOne({
+          location: location,
         });
+        const studentList = await this.studentRepository.find({ major: major });
+
+        const studentAttendance = await Promise.all(
+          studentList.map(async (student) => {
+            const attendance = (
+              await this.attendanceRepository.find({
+                student: student,
+                director: director,
+              })
+            ).map((attendance) => {
+              return {
+                period: attendance.period,
+                location_name: attendance.getLocationName(),
+                state: attendance.state,
+              };
+            });
+
+            return {
+              gcn: student.gcn,
+              student_id: student.id,
+              student_name: student.name,
+              student_attendance: attendance,
+            };
+          }),
+        );
 
         return {
           schedule: 'MAJOR',
-          class_name: major.class_name,
-          head_name: major.head_name,
+          class_name: major.name,
+          head_name: major.getHeadName(),
           student_list: studentAttendance,
         };
       case ScheduleName.SELF_STUDY:
