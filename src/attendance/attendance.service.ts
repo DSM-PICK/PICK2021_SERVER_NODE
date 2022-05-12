@@ -1,8 +1,16 @@
 import { Injectable } from '@nestjs/common';
 import { last } from 'rxjs';
 import { Attendance } from 'src/entities/attendance.entity';
+import { Director } from 'src/entities/director.entity';
+import { ScheduleName } from 'src/entities/Enum/scheduleName.enum';
+import { Location } from 'src/entities/location.entity';
+import { Schedule } from 'src/entities/schedule.entity';
 import { notFoundAttendanceIdException } from 'src/exception/exception.attendance';
 import { AttendanceRepository } from 'src/repositories/attendance.repository';
+import { DirectorRepository } from 'src/repositories/director.reposioty';
+import { LocationRepository } from 'src/repositories/location.repository';
+import { MajorRepository } from 'src/repositories/major.repository';
+import { ScheduleRepository } from 'src/repositories/shedule.repository';
 import { StudentRepository } from 'src/repositories/student.repository';
 import { TeacherRepository } from 'src/repositories/teacher.repository';
 import { AttendanceReqData } from './dto/attendanceRequest.dto';
@@ -15,6 +23,10 @@ export class AttendanceService {
     private readonly attendanceRepository: AttendanceRepository,
     private readonly studentRepository: StudentRepository,
     private readonly teacherRepository: TeacherRepository,
+    private readonly scheduleRepository: ScheduleRepository,
+    private readonly majorRepository: MajorRepository,
+    private readonly directorRepository: DirectorRepository,
+    private readonly locationRepository: LocationRepository,
   ) {}
 
   //출석 삭제
@@ -136,7 +148,57 @@ export class AttendanceService {
   }
 
   //출석 가져오기
-  public async bringAttendance(location_id) {
-    return await this.attendanceRepository.getAttendance(location_id);
+  public async bringAttendance(location_id: number) {
+    const schedule: Schedule = await this.scheduleRepository.queryNowSchedule();
+    const location: Location = await this.locationRepository.findOne({
+      id: location_id,
+    });
+    const director: Director =
+      await this.directorRepository.queryDirectorByScheduleAndFloor(
+        schedule.id,
+        location.floor,
+      );
+
+    switch (schedule.name) {
+      case ScheduleName.AFTER_SCHOOL:
+        break;
+      case ScheduleName.MAJOR:
+        const major = await this.majorRepository.getMajorAttendance(
+          location_id,
+        );
+        const studentList = await this.studentRepository.queryStudentByMajorId(
+          major.id,
+        );
+        const studentAttendance = studentList.map(async (student) => {
+          const attendance = (
+            await this.attendanceRepository.getStudentAttendance(
+              student.id,
+              director.id,
+            )
+          ).map((attendance) => {
+            return {
+              period: attendance.period,
+              location_name: attendance.getLocationName(),
+              state: attendance.state,
+            };
+          });
+
+          return {
+            gcn: student.gcn,
+            student_id: student.id,
+            student_name: student.name,
+            student_attendance: attendance,
+          };
+        });
+
+        return {
+          schedule: 'MAJOR',
+          class_name: major.class_name,
+          head_name: major.head_name,
+          student_list: studentAttendance,
+        };
+      case ScheduleName.SELF_STUDY:
+        break;
+    }
   }
 }
