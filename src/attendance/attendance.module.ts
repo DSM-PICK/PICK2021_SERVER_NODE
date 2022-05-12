@@ -8,6 +8,7 @@ import { TeacherRepository } from 'src/repositories/teacher.repository';
 import { ScheduleRepository } from 'src/repositories/shedule.repository';
 import { MajorRepository } from 'src/repositories/major.repository';
 import { DirectorRepository } from 'src/repositories/director.reposioty';
+import { LocationRepository } from 'src/repositories/location.repository';
 
 @Module({
   imports: [
@@ -16,9 +17,9 @@ import { DirectorRepository } from 'src/repositories/director.reposioty';
       StudentRepository,
       TeacherRepository,
       ScheduleRepository,
-      StudentRepository,
       MajorRepository,
       DirectorRepository,
+      LocationRepository,
     ]),
   ],
   controllers: [AttendanceController],
