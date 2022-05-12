@@ -89,21 +89,6 @@ export class AttendanceRepository extends Repository<Attendance> {
       .getRawMany();
   }
 
-  public async getStudentAttendance(student_id, director_id) {
-    return await this.createQueryBuilder('tbl_attendance')
-      .leftJoin('tbl_attendance.location', 'location')
-      .addSelect('tbl_attendance.period', 'period')
-      .addSelect('tbl_attendance.state', 'state')
-      .addSelect('location.name', 'location')
-      .where('tbl_attendance.student_id= :student_id', {
-        student_id: student_id,
-      })
-      .andWhere('tbl_attendance.director_id= :director_id', {
-        director_id: director_id,
-      })
-      .getMany();
-  }
-
   //출석 조회
   public async getAttendance(location_id) {
     let student_attendance = await this.createQueryBuilder('tbl_attendance')
