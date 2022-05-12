@@ -20,6 +20,7 @@ export class Major {
   @OneToOne(() => Student, (student) => student.id, {
     onUpdate: 'CASCADE',
     onDelete: 'CASCADE',
+    eager: true,
   })
   @JoinColumn({ name: 'head_id' })
   student: Student;
@@ -37,4 +38,8 @@ export class Major {
   })
   @JoinColumn({ name: 'location_id' })
   location: Location;
+
+  public getHeadName(): String {
+    return this.student.name;
+  }
 }
