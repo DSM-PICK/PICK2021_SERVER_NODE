@@ -18,8 +18,8 @@ export class Schedule {
   })
   name!: ScheduleName;
 
-  @CreateDateColumn()
-  date: Date;
+  @Column()
+  date: number;
 
   @Column()
   month: number;
