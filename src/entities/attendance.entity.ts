@@ -42,6 +42,7 @@ export class Attendance {
   @ManyToOne(() => Location, (location) => location.attendance, {
     onUpdate: 'CASCADE',
     onDelete: 'CASCADE',
+    eager: true,
   })
   @JoinColumn({ name: 'location_id' })
   location: Location;
@@ -65,4 +66,8 @@ export class Attendance {
   })
   @JoinColumn({ name: 'teacher_id' })
   teacher: Teacher;
+
+  public getLocationName() {
+    return this.location.name;
+  }
 }
