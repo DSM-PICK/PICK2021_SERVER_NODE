@@ -153,9 +153,6 @@ export class AttendanceService {
 
   //출석 가져오기
   public async bringAttendance(location_id: number) {
-    console.log(
-      await this.attendanceRepository.checkExistAttendanceLocation(location_id),
-    );
     if (
       !(await this.attendanceRepository.checkExistAttendanceLocation(
         location_id,
