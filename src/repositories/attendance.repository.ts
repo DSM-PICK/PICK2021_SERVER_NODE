@@ -27,6 +27,19 @@ export class AttendanceRepository extends Repository<Attendance> {
     }
   }
 
+  public async checkExistAttendanceLocation(
+    location_id: number,
+  ): Promise<boolean> {
+    const location = await this.createQueryBuilder('tbl_attendance')
+      .select('tbl_attendance.location_id', 'location_id')
+      .where('tbl_attendance.location_id = :location_id', {
+        location_id: location_id,
+      })
+      .getRawOne();
+    if (location) return true;
+    else return false;
+  }
+
   //출결 변동 내역 상태 변경
   public async updateState(stateReqData: StateReqData) {
     let state = stateReqData.state;

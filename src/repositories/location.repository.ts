@@ -9,11 +9,8 @@ export class LocationRepository extends Repository<Location> {
       .select('tbl_location.id', 'id')
       .where('tbl_location.id = :id', { id: id })
       .getRawOne();
-    if (location) {
-      return true;
-    } else {
-      return false;
-    }
+    if (location) return true;
+    else return false;
   }
 
   public async updateLocation(

@@ -1,10 +1,17 @@
 import {
-    BadRequestException,
-    NotFoundException,
-    ConflictException,
-  } from '@nestjs/common';
-  
-  export const badRequestException = new BadRequestException();
-  
-  export const ExistAttendanceError = new ConflictException('Attendance already exist');
-  export const notFoundAttendanceIdException = new NotFoundException('attendanceId is not founded'); 
+  BadRequestException,
+  NotFoundException,
+  ConflictException,
+} from '@nestjs/common';
+
+export const badRequestException = new BadRequestException();
+
+export const ExistAttendanceError = new ConflictException(
+  'Attendance already exist',
+);
+export const notFoundAttendanceIdException = new NotFoundException(
+  'attendanceId is not founded',
+);
+export const notFoundAttendanceLocationIdException = new NotFoundException(
+  'locationId is not founded',
+);

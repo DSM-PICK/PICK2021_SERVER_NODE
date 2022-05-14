@@ -1,11 +1,15 @@
 import { Injectable } from '@nestjs/common';
 import { last } from 'rxjs';
+import { AfterSchool } from 'src/entities/afterschool.entity';
 import { Attendance } from 'src/entities/attendance.entity';
 import { Director } from 'src/entities/director.entity';
 import { ScheduleName } from 'src/entities/Enum/scheduleName.enum';
 import { Location } from 'src/entities/location.entity';
 import { Schedule } from 'src/entities/schedule.entity';
-import { notFoundAttendanceIdException } from 'src/exception/exception.attendance';
+import {
+  notFoundAttendanceIdException,
+  notFoundAttendanceLocationIdException,
+} from 'src/exception/exception.attendance';
 import { AttendanceRepository } from 'src/repositories/attendance.repository';
 import { DirectorRepository } from 'src/repositories/director.reposioty';
 import { LocationRepository } from 'src/repositories/location.repository';
@@ -42,8 +46,8 @@ export class AttendanceService {
   public async postAttendance(attendanceReqData: AttendanceReqData[]) {
     return attendanceReqData.map(async (item) => {
       const { state, term, reason, student_id, teacher_id } = item;
-      let firstperiod = Number(item.term.substr(11, 1));
-      let lastperiod = Number(item.term.substr(24));
+      let firstperiod = Number(item.term.substring(11, 1));
+      let lastperiod = Number(item.term.substring(24));
 
       const student = await this.studentRepository.findOne({ id: student_id });
       const teacher = await this.teacherRepository.findOne({ id: teacher_id });
@@ -149,6 +153,16 @@ export class AttendanceService {
 
   //출석 가져오기
   public async bringAttendance(location_id: number) {
+    console.log(
+      await this.attendanceRepository.checkExistAttendanceLocation(location_id),
+    );
+    if (
+      !(await this.attendanceRepository.checkExistAttendanceLocation(
+        location_id,
+      ))
+    ) {
+      throw notFoundAttendanceLocationIdException;
+    }
     const schedule: Schedule = await this.scheduleRepository.queryNowSchedule();
     const location: Location = await this.locationRepository.findOne({
       id: location_id,
@@ -160,8 +174,6 @@ export class AttendanceService {
       );
 
     switch (schedule.name) {
-      case ScheduleName.AFTER_SCHOOL:
-        break;
       case ScheduleName.MAJOR:
         const major = await this.majorRepository.findOne({
           location: location,
@@ -194,10 +206,15 @@ export class AttendanceService {
 
         return {
           schedule: 'MAJOR',
+          location_name: location.name,
           class_name: major.name,
           head_name: major.getHeadName(),
           student_list: studentAttendance,
         };
+
+      case ScheduleName.AFTER_SCHOOL:
+        break;
+
       case ScheduleName.SELF_STUDY:
         break;
     }
