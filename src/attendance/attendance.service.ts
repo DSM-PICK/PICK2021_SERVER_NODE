@@ -5,6 +5,7 @@ import { Attendance } from 'src/entities/attendance.entity';
 import { Director } from 'src/entities/director.entity';
 import { ScheduleName } from 'src/entities/Enum/scheduleName.enum';
 import { Location } from 'src/entities/location.entity';
+import { Major } from 'src/entities/major.entity';
 import { Schedule } from 'src/entities/schedule.entity';
 import {
   notFoundAttendanceIdException,
@@ -17,6 +18,8 @@ import { MajorRepository } from 'src/repositories/major.repository';
 import { ScheduleRepository } from 'src/repositories/shedule.repository';
 import { StudentRepository } from 'src/repositories/student.repository';
 import { TeacherRepository } from 'src/repositories/teacher.repository';
+import { StudentAttendance } from 'src/repositories/vo/student/studentAttendance.vo';
+import { StudentInfo } from 'src/repositories/vo/student/studentInfo.vo';
 import { AttendanceReqData } from './dto/attendanceRequest.dto';
 import { ResFilterData } from './dto/resFilterData.dto';
 import { StateReqData } from './dto/stateRequestData.dto';
@@ -169,37 +172,37 @@ export class AttendanceService {
         schedule.id,
         location.floor,
       );
-
     switch (schedule.name) {
       case ScheduleName.MAJOR:
-        const major = await this.majorRepository.findOne({
+        const major: Major = await this.majorRepository.findOne({
           location: location,
         });
-        const studentList = await this.studentRepository.find({ major: major });
 
-        const studentAttendance = await Promise.all(
-          studentList.map(async (student) => {
-            const attendance = (
-              await this.attendanceRepository.find({
-                student: student,
-                director: director,
-              })
-            ).map((attendance) => {
-              return {
-                period: attendance.period,
-                location_name: attendance.getLocationName(),
-                state: attendance.state,
-              };
-            });
+        const studentList: StudentInfo[] =
+          await this.studentRepository.queryStudentInfo(major.id);
 
-            return {
-              gcn: student.gcn,
-              student_id: student.id,
-              student_name: student.name,
-              student_attendance: attendance,
-            };
-          }),
-        );
+        const tmp: StudentAttendance[] =
+          await this.studentRepository.queryStudentAttendance(
+            director.id,
+            major.id,
+          );
+
+        const studentAttendance = studentList.map((student) => {
+          return {
+            gcn: student.gcn,
+            student_id: student.id,
+            student_name: student.name,
+            student_attendance: tmp
+              .filter((dummy) => student.id === dummy.id)
+              .map((item) => {
+                return {
+                  period: item.period,
+                  location_name: item.locationName,
+                  state: item.state,
+                };
+              }),
+          };
+        });
 
         return {
           schedule: 'MAJOR',
