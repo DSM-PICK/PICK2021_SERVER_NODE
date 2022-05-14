@@ -101,38 +101,4 @@ export class AttendanceRepository extends Repository<Attendance> {
       .andWhere('schedule.date= :date', { date: date })
       .getRawMany();
   }
-
-  //출석 조회
-  public async getAttendance(location_id) {
-    let student_attendance = await this.createQueryBuilder('tbl_attendance')
-      .select('tbl_attendance.period', 'period')
-      .leftJoin('tbl_attendance.location', 'location')
-      .addSelect('location.name', 'location')
-      .addSelect('tbl_attendance.state', 'state');
-
-    let student_list = await this.createQueryBuilder('tbl_attendance')
-      .leftJoin('tbl_attendance.student', 'student')
-      .select('student.id')
-      .addSelect('student.gcn', 'gcn')
-      .addSelect('student.name')
-      .addSelect('student_attendance');
-
-    let res_attendance = await this.createQueryBuilder('tbl_attendance')
-      .leftJoin('tbl_attendance.director', 'director')
-      .leftJoin('director.schedule', 'schedule')
-      .select('schedule.name', 'schedule')
-      .leftJoin('tbl_attendance.location', 'location')
-      .addSelect('location.name', 'location_name')
-      .leftJoin('tbl_attendance.student', 'student')
-      .leftJoin('student.affliated', 'affliated')
-      .leftJoin('student.major', 'major')
-      //자습일 땐 학반, 방과후일 땐 방과후 이름, 동아리일 땐 동아리이름
-      .orderBy(
-        "(CASE WHEN schedule.name IS '자습' THEN student.location_id WHEN schedule.name IS '방과후' THEN affliated.name ELSE major.name )",
-      )
-      .addOrderBy(
-        "(CASW WHEN schedule.name IS '동아리' THEN major.head ELSE null)",
-      )
-      .where('location.id= :id', { id: location_id });
-  }
 }
