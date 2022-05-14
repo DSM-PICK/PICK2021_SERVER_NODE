@@ -212,10 +212,43 @@ export class AttendanceService {
           student_list: studentAttendance,
         };
 
-      case ScheduleName.AFTER_SCHOOL:
-        break;
-
       case ScheduleName.SELF_STUDY:
+        const selfStudyStudentList: StudentInfo[] =
+          await this.studentRepository.querySelfStudyStudentInfo(location_id);
+
+        const tmp2: StudentAttendance[] =
+          await this.studentRepository.querySelfStudyStudentAttendance(
+            director.id,
+            location.id,
+          );
+        const selfStudyStudentAttendance = selfStudyStudentList.map(
+          (student) => {
+            return {
+              gcn: student.gcn,
+              student_id: student.id,
+              student_name: student.name,
+              student_attendance: tmp2
+                .filter((dummy) => student.id === dummy.id)
+                .map((item) => {
+                  return {
+                    period: item.period,
+                    location_name: item.locationName,
+                    state: item.state,
+                  };
+                }),
+            };
+          },
+        );
+
+        return {
+          schedule: 'SELF_STUDY',
+          location_name: location.name,
+          class_name: location.name,
+          head_name: 'null',
+          student_list: selfStudyStudentAttendance,
+        };
+
+      case ScheduleName.AFTER_SCHOOL:
         break;
     }
   }
