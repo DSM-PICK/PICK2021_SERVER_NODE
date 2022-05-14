@@ -167,6 +167,9 @@ export class AttendanceService {
     const location: Location = await this.locationRepository.findOne({
       id: location_id,
     });
+    const studentLocation = await this.studentRepository.findStudentLocation({
+      id: location_id,
+    });
     const director: Director =
       await this.directorRepository.queryDirectorByScheduleAndFloor(
         schedule.id,
@@ -242,8 +245,8 @@ export class AttendanceService {
 
         return {
           schedule: 'SELF_STUDY',
-          location_name: location.name,
-          class_name: location.name,
+          location_name: studentLocation,
+          class_name: studentLocation,
           head_name: 'null',
           student_list: selfStudyStudentAttendance,
         };

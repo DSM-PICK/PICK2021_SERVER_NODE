@@ -78,4 +78,11 @@ export class StudentRepository extends Repository<Student> {
       );
     });
   }
+
+  public async findStudentLocation(id) {
+    return await this.createQueryBuilder('tbl_student')
+      .leftJoin('tbl_student.location', 'location')
+      .select('location.name')
+      .where('location.id= :id', { id: id });
+  }
 }
