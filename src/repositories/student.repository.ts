@@ -1,3 +1,4 @@
+import { Attendance } from 'src/entities/attendance.entity';
 import { Student } from 'src/entities/student.entity';
 import { EntityRepository, Repository } from 'typeorm';
 import { StudentAttendance } from './vo/student/studentAttendance.vo';
@@ -30,7 +31,7 @@ export class StudentRepository extends Repository<Student> {
       )
     ).map((attendance) => {
       const locationName =
-        attendance.state == '외 출' ? attendance.getLocationName() : null;
+        attendance.state === '이동' ? attendance.getLocationName() : null;
       return new StudentAttendance(
         attendance.id,
         attendance.period,
@@ -69,7 +70,7 @@ export class StudentRepository extends Repository<Student> {
       )
     ).map((attendance) => {
       const locationName =
-        attendance.state == '외 출' ? attendance.getLocationName() : null;
+        attendance.state === '이동' ? attendance.getLocationName() : null;
       return new StudentAttendance(
         attendance.id,
         attendance.period,
@@ -116,9 +117,10 @@ export class StudentRepository extends Repository<Student> {
          WHERE taa.after_school_id = ?`,
         [directorId, afterSchoolId],
       )
-    ).map((attendance) => {
+    ).map((attendance: Attendance) => {
       const locationName =
-        attendance.state == '외 출' ? attendance.getLocationName() : null;
+        attendance.state === '이동' ? attendance.getLocationName() : null;
+
       return new StudentAttendance(
         attendance.id,
         attendance.period,
