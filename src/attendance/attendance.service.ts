@@ -50,12 +50,15 @@ export class AttendanceService {
   //출결변동내역 등록
   public async postAttendance(attendanceReqData: AttendanceReqData[]) {
     return attendanceReqData.map(async (item) => {
-      const { state, term, reason, student_id, teacher_id } = item;
+      const { state, term, reason, student_id, teacher_id, location_id } = item;
       let firstperiod = Number(item.term.substring(11, 1));
       let lastperiod = Number(item.term.substring(24));
 
       const student = await this.studentRepository.findOne({ id: student_id });
       const teacher = await this.teacherRepository.findOne({ id: teacher_id });
+      const location = await this.locationRepository.findOne({
+        id: location_id,
+      });
 
       for (firstperiod; firstperiod <= lastperiod; firstperiod++) {
         await this.attendanceRepository.save({
@@ -65,6 +68,7 @@ export class AttendanceService {
           teacher: teacher,
           state: state,
           period: firstperiod,
+          location,
         } as Attendance);
       }
     });
@@ -158,13 +162,6 @@ export class AttendanceService {
 
   //출석 가져오기
   public async bringAttendance(location_id: number) {
-    if (
-      !(await this.attendanceRepository.checkExistAttendanceLocation(
-        location_id,
-      ))
-    ) {
-      throw notFoundAttendanceLocationIdException;
-    }
     const schedule: Schedule = await this.scheduleRepository.queryNowSchedule();
     const location: Location = await this.locationRepository.findOne({
       id: location_id,
@@ -220,12 +217,14 @@ export class AttendanceService {
       case ScheduleName.SELF_STUDY:
         const selfStudyStudentList: StudentInfo[] =
           await this.studentRepository.querySelfStudyStudentInfo(location_id);
+        console.log(selfStudyStudentList);
 
         const tmp2: StudentAttendance[] =
           await this.studentRepository.querySelfStudyStudentAttendance(
             director.id,
             location.id,
           );
+
         const selfStudyStudentAttendance = selfStudyStudentList.map(
           (student) => {
             return {
@@ -263,7 +262,6 @@ export class AttendanceService {
           await this.studentRepository.queryAfterSchoolStudentInfo(
             afterSchool.id,
           );
-        console.log(afterSchoolStudentList);
 
         const tmp3: StudentAttendance[] =
           await this.studentRepository.queryAfterSchoolStudentAttendance(
