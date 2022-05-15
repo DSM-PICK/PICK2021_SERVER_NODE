@@ -33,13 +33,6 @@ export class AfterSchool {
     onUpdate: 'CASCADE',
     onDelete: 'CASCADE',
   })
-  @JoinColumn({ name: 'afterschool_id' })
-  afterschool: AfterSchool;
-
-  @OneToOne(() => Location, (location) => location.afterschool, {
-    onUpdate: 'CASCADE',
-    onDelete: 'CASCADE',
-  })
   @JoinColumn({ name: 'location_id' })
   location: Location;
 
