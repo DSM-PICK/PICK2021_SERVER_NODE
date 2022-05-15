@@ -258,7 +258,6 @@ export class AttendanceService {
           await this.afterSchoolRepository.findOne({
             location: location,
           });
-        console.log(afterSchool);
 
         const afterSchoolStudentList: StudentInfo[] =
           await this.studentRepository.queryAfterSchoolStudentInfo(
