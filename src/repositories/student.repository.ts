@@ -117,9 +117,8 @@ export class StudentRepository extends Repository<Student> {
          WHERE taa.after_school_id = ?`,
         [directorId, afterSchoolId],
       )
-    ).map((attendance: Attendance) => {
-      const locationName =
-        attendance.state === '이동' ? attendance.getLocationName() : null;
+    ).map((attendance) => {
+      const locationName = attendance.state === '이동' ? attendance.name : null;
 
       return new StudentAttendance(
         attendance.id,
