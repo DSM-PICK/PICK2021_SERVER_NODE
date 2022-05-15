@@ -11,6 +11,7 @@ import {
   notFoundAttendanceIdException,
   notFoundAttendanceLocationIdException,
 } from 'src/exception/exception.attendance';
+import { AfterSchoolRepository } from 'src/repositories/aftershcool.repository';
 import { AttendanceRepository } from 'src/repositories/attendance.repository';
 import { DirectorRepository } from 'src/repositories/director.reposioty';
 import { LocationRepository } from 'src/repositories/location.repository';
@@ -34,6 +35,7 @@ export class AttendanceService {
     private readonly majorRepository: MajorRepository,
     private readonly directorRepository: DirectorRepository,
     private readonly locationRepository: LocationRepository,
+    private readonly afterSchoolRepository: AfterSchoolRepository,
   ) {}
 
   //출석 삭제
@@ -252,7 +254,49 @@ export class AttendanceService {
         };
 
       case ScheduleName.AFTER_SCHOOL:
-        break;
+        const afterSchool: AfterSchool =
+          await this.afterSchoolRepository.findOne({
+            location: location,
+          });
+        console.log(afterSchool);
+
+        const afterSchoolStudentList: StudentInfo[] =
+          await this.studentRepository.queryAfterSchoolStudentInfo(
+            afterSchool.id,
+          );
+        console.log(afterSchoolStudentList);
+
+        const tmp3: StudentAttendance[] =
+          await this.studentRepository.queryAfterSchoolStudentAttendance(
+            director.id,
+            afterSchool.id,
+          );
+        const afterSchoolStudentAttendance = afterSchoolStudentList.map(
+          (student) => {
+            return {
+              gcn: student.gcn,
+              student_id: student.id,
+              student_name: student.name,
+              student_attendance: tmp3
+                .filter((dummy) => student.id === dummy.id)
+                .map((item) => {
+                  return {
+                    period: item.period,
+                    location_name: item.locationName,
+                    state: item.state,
+                  };
+                }),
+            };
+          },
+        );
+
+        return {
+          schedule: 'AFTER_SCHOOL',
+          location_name: location.name,
+          class_name: afterSchool.name,
+          head_name: 'null',
+          student_list: afterSchoolStudentAttendance,
+        };
     }
   }
 }

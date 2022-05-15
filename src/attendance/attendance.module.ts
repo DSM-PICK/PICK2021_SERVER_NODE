@@ -9,6 +9,7 @@ import { ScheduleRepository } from 'src/repositories/shedule.repository';
 import { MajorRepository } from 'src/repositories/major.repository';
 import { DirectorRepository } from 'src/repositories/director.reposioty';
 import { LocationRepository } from 'src/repositories/location.repository';
+import { AfterSchoolRepository } from 'src/repositories/aftershcool.repository';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { LocationRepository } from 'src/repositories/location.repository';
       MajorRepository,
       DirectorRepository,
       LocationRepository,
+      AfterSchoolRepository,
     ]),
   ],
   controllers: [AttendanceController],
