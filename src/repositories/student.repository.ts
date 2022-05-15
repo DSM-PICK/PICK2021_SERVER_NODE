@@ -85,4 +85,46 @@ export class StudentRepository extends Repository<Student> {
       .select('location.name')
       .where('location.id= :id', { id: id });
   }
+
+  public async queryAfterSchoolStudentInfo(
+    afterSchoolId: number,
+  ): Promise<StudentInfo[]> {
+    return (
+      await this.createQueryBuilder('tbl_student')
+        .select(['tbl_student.id', 'tbl_student.name', 'tbl_student.gcn'])
+        .leftJoin('tbl_student.affliated', 'affliated')
+        .where('affliated.after_school_id', {
+          afterSchoolId: afterSchoolId,
+        })
+        .getMany()
+    ).map((student) => {
+      return new StudentInfo(student.id, student.name, student.gcn);
+    });
+  }
+
+  public async queryAfterSchoolStudentAttendance(
+    directorId: number,
+    afterSchoolId: number,
+  ): Promise<StudentAttendance[]> {
+    return (
+      await this.query(
+        `SELECT A.id, ta.period, tl.name, ta.state FROM pick2021.tbl_student A
+         LEFT JOIN tbl_attendance ta on A.id = ta.student_id AND director_id = ?
+         LEFT JOIN tbl_affiliated_after_school taa on A.id = taa.student_id
+         LEFT JOIN tbl_after_school tas on taa.after_school_id = tas.id
+         LEFT JOIN tbl_location tl on tas.location_id = tl.id
+         WHERE taa.after_school_id = ?`,
+        [directorId, afterSchoolId],
+      )
+    ).map((attendance) => {
+      const locationName =
+        attendance.state == '외 출' ? attendance.getLocationName() : null;
+      return new StudentAttendance(
+        attendance.id,
+        attendance.period,
+        locationName,
+        attendance.state,
+      );
+    });
+  }
 }
