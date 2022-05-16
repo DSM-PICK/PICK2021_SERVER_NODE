@@ -7,10 +7,7 @@ import { ScheduleName } from 'src/entities/Enum/scheduleName.enum';
 import { Location } from 'src/entities/location.entity';
 import { Major } from 'src/entities/major.entity';
 import { Schedule } from 'src/entities/schedule.entity';
-import {
-  notFoundAttendanceIdException,
-  notFoundAttendanceLocationIdException,
-} from 'src/exception/exception.attendance';
+import { notFoundAttendanceIdException } from 'src/exception/exception.attendance';
 import { AfterSchoolRepository } from 'src/repositories/aftershcool.repository';
 import { AttendanceRepository } from 'src/repositories/attendance.repository';
 import { DirectorRepository } from 'src/repositories/director.reposioty';
@@ -88,15 +85,16 @@ export class AttendanceService {
   }
 
   //오늘출결변동내역 가져오기
-  public async getAttendanceToday(floor, date) {
-    return await this.attendanceRepository.getAttendanceToday(floor, date);
+  public async getAttendanceToday(floor) {
+    return await this.attendanceRepository.getAttendanceToday(floor );
   }
 
   //출석조회 가져오기(필터링)
   public async getAttendanceFilter(
-    date,
+    month,
     state,
     floor,
+    date,
   ): Promise<ResFilterData[]> {
     const arrayIndex = [];
     const array = [];
@@ -113,7 +111,8 @@ export class AttendanceService {
       .addSelect('tbl_attendance.period', 'period')
       .addSelect('tbl_attendance.state', 'state')
       .addSelect('location.name', 'location_name')
-      .where('schedule.date=:date', { date: date })
+      .where('schedule.month=:month', { month: month })
+      .andWhere('schedule.date=:date', { date: date })
       .andWhere('tbl_attendance.state= :state', { state: state })
       .andWhere('location.floor= :floor', { floor: floor })
       .orderBy('student.id', 'ASC')

@@ -78,7 +78,7 @@ export class AttendanceRepository extends Repository<Attendance> {
   }
 
   //오늘출결변동내역 가져오기
-  public async getAttendanceToday(floor: number, date: string) {
+  public async getAttendanceToday(floor: number) {
     return await this.createQueryBuilder('tbl_attendance')
       .select('tbl_attendance.id', 'attendance_id')
       .addSelect('tbl_attendance.state', 'state')
@@ -98,7 +98,6 @@ export class AttendanceRepository extends Repository<Attendance> {
       .addSelect('teacher.name', 'teacher_name')
       .leftJoin('student.location', 'location')
       .where('location.floor= :floor', { floor: floor })
-      .andWhere('schedule.date= :date', { date: date })
       .getRawMany();
   }
 }

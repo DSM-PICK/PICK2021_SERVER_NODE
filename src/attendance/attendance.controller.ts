@@ -44,21 +44,24 @@ export class AttendanceController {
 
   //오늘출결변동내역 가져오기
   @Get('/today')
-  public async getAttendanceToday(
-    @Query('floor', ParseIntPipe) floor: number,
-    @Query('date') date: Date,
-  ) {
-    return await this.attendanceService.getAttendanceToday(floor, date);
+  public async getAttendanceToday(@Query('floor', ParseIntPipe) floor: number) {
+    return await this.attendanceService.getAttendanceToday(floor);
   }
 
   //출석 조회(필터링)
   @Get('/filter')
   public async getAttendanceFilter(
-    @Query('date') date: string,
+    @Query('month') month: number,
+    @Query('date') date: number,
     @Query('state') state: State,
     @Query('floor', ParseIntPipe) floor: number,
   ) {
-    return await this.attendanceService.getAttendanceFilter(date, state, floor);
+    return await this.attendanceService.getAttendanceFilter(
+      month,
+      date,
+      state,
+      floor,
+    );
   }
 
   //출석하기
