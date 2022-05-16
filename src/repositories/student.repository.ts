@@ -31,7 +31,7 @@ export class StudentRepository extends Repository<Student> {
       )
     ).map((attendance) => {
       const locationName =
-        attendance.state === '이동' ? attendance.getLocationName() : null;
+        attendance.state === '이동' ? attendance.name() : null;
       return new StudentAttendance(
         attendance.id,
         attendance.period,
@@ -69,8 +69,7 @@ export class StudentRepository extends Repository<Student> {
         [directorId, locationId],
       )
     ).map((attendance) => {
-      const locationName =
-        attendance.state === '이동' ? attendance.getLocationName() : null;
+      const locationName = attendance.state === '이동' ? attendance.name : null;
       return new StudentAttendance(
         attendance.id,
         attendance.period,
