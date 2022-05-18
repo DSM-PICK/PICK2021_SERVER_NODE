@@ -22,7 +22,7 @@ export class Teacher {
   @Column({ length: 256 })
   password: string;
 
-  @Column({ length: 7 })
+  @Column({ length: 12 })
   role: string;
 
   @OneToOne(() => Location, (location) => location.teacher, {
