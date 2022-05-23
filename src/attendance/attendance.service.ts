@@ -47,15 +47,12 @@ export class AttendanceService {
   //출결변동내역 등록
   public async postAttendance(attendanceReqData: AttendanceReqData[]) {
     return attendanceReqData.map(async (item) => {
-      const { state, term, reason, student_id, teacher_id, location_id } = item;
-      let firstperiod = Number(item.term.substring(11, 1));
-      let lastperiod = Number(item.term.substring(24));
+      const { state, term, reason, student_id, teacher_id } = item;
+      let firstperiod = Number(item.term.substr(11, 1));
+      let lastperiod = Number(item.term.substr(24));
 
       const student = await this.studentRepository.findOne({ id: student_id });
       const teacher = await this.teacherRepository.findOne({ id: teacher_id });
-      const location = await this.locationRepository.findOne({
-        id: location_id,
-      });
 
       for (firstperiod; firstperiod <= lastperiod; firstperiod++) {
         await this.attendanceRepository.save({
@@ -65,7 +62,6 @@ export class AttendanceService {
           teacher: teacher,
           state: state,
           period: firstperiod,
-          location,
         } as Attendance);
       }
     });
@@ -86,7 +82,7 @@ export class AttendanceService {
 
   //오늘출결변동내역 가져오기
   public async getAttendanceToday(floor) {
-    return await this.attendanceRepository.getAttendanceToday(floor );
+    return await this.attendanceRepository.getAttendanceToday(floor);
   }
 
   //출석조회 가져오기(필터링)

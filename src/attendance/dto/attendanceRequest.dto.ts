@@ -24,7 +24,4 @@ export class AttendanceReqData {
 
   @IsNumber()
   student_id: number;
-
-  @IsNumber()
-  location_id: number;
 }
