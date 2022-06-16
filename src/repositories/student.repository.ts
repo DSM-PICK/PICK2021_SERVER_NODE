@@ -30,8 +30,7 @@ export class StudentRepository extends Repository<Student> {
         [directorId, majorId],
       )
     ).map((attendance) => {
-      const locationName =
-        attendance.state === '이동' ? attendance.name() : null;
+      const locationName = attendance.state === '이동' ? attendance.name : null;
       return new StudentAttendance(
         attendance.id,
         attendance.period,
