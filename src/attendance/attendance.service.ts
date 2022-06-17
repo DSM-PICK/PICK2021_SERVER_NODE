@@ -47,12 +47,15 @@ export class AttendanceService {
   //출결변동내역 등록
   public async postAttendance(attendanceReqData: AttendanceReqData[]) {
     return attendanceReqData.map(async (item) => {
-      const { state, term, reason, student_id, teacher_id } = item;
+      const { state, term, reason, student_id, teacher_id, location_id } = item;
       let firstperiod = Number(item.term.substr(11, 1));
       let lastperiod = Number(item.term.substr(24));
 
       const student = await this.studentRepository.findOne({ id: student_id });
       const teacher = await this.teacherRepository.findOne({ id: teacher_id });
+      const location = await this.locationRepository.findOne({
+        id: location_id,
+      });
 
       for (firstperiod; firstperiod <= lastperiod; firstperiod++) {
         await this.attendanceRepository.save({
@@ -62,6 +65,7 @@ export class AttendanceService {
           teacher: teacher,
           state: state,
           period: firstperiod,
+          location,
         } as Attendance);
       }
     });
@@ -177,6 +181,7 @@ export class AttendanceService {
 
         const studentList: StudentInfo[] =
           await this.studentRepository.queryStudentInfo(major.id);
+        console.log(studentList);
 
         const tmp: StudentAttendance[] =
           await this.studentRepository.queryStudentAttendance(
