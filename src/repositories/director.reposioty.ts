@@ -8,8 +8,18 @@ export class DirectorRepository extends Repository<Director> {
     floor: number,
   ) {
     return await this.createQueryBuilder('tbl_director')
+      .select('tbl_director.id', 'director_id')
       .where('tbl_director.schedule_id= :id', { id: schedule_id })
       .andWhere('tbl_director.floor= :floor', { floor: floor })
+      .getOne();
+  }
+
+  public async querySchedulAndTeacher(schedule_id) {
+    return await this.createQueryBuilder('tbl_director')
+      .select('tbl_director.id', 'director_id')
+      .where('tbl_director.schedule_id= :schedule_id', {
+        schedule_id: schedule_id,
+      })
       .getOne();
   }
 }

@@ -56,6 +56,11 @@ export class AttendanceService {
       const location = await this.locationRepository.findOne({
         id: location_id,
       });
+      const schedule: Schedule =
+        await this.scheduleRepository.queryNowSchedule();
+      const director = await this.directorRepository.querySchedulAndTeacher(
+        schedule.id,
+      );
 
       for (firstperiod; firstperiod <= lastperiod; firstperiod++) {
         await this.attendanceRepository.save({
@@ -66,6 +71,7 @@ export class AttendanceService {
           state: state,
           period: firstperiod,
           location,
+          director,
         } as Attendance);
       }
     });
