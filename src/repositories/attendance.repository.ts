@@ -89,15 +89,25 @@ export class AttendanceRepository extends Repository<Attendance> {
       .addSelect('student.id', 'student_id')
       .addSelect('student.name', 'name')
       .addSelect('student.gcn', 'gcn')
-      .addSelect('student.state', 'state')
-      .leftJoin('tbl_attendance.director', 'director')
-      .addSelect('director.id', 'director_id')
-      .leftJoin('director.schedule', 'schedule')
       .leftJoin('tbl_attendance.teacher', 'teacher')
       .addSelect('teacher.id', 'teacher_id')
       .addSelect('teacher.name', 'teacher_name')
       .leftJoin('student.location', 'location')
       .where('location.floor= :floor', { floor: floor })
       .getRawMany();
+  }
+
+  public async getAttendanceDirectorAndSchedule() {
+    return await this.createQueryBuilder('tbl_attendance')
+      .select('tbl_attendance.id', 'attendance_id')
+      .addSelect('tbl_attendance.state', 'state')
+      .addSelect('tbl_attendance.reason', 'reason')
+      .addSelect('tbl_Attendance.period', 'period')
+      .addSelect('tbl_attendance.term', 'term')
+      .leftJoin('tbl_attendance.student', 'student')
+      .addSelect('student.id', 'student_id')
+      .addSelect('student.name', 'name')
+      .addSelect('student.gcn', 'gcn')
+      .addSelect('student.location', 'location');
   }
 }
